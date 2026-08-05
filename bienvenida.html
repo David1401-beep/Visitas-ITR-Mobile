@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Bienvenido - Control de Visitas</title>
+  
+  <!-- PicoCSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  
+  <style>
+    body {
+      background-color: #2d313a; 
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 414px;
+      height: 100vh;
+      max-height: 896px;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-container main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      text-align: center;
+    }
+
+    /* Estilos adaptados al diseño */
+    .title-container h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #000;
+      margin-bottom: 0.2rem;
+    }
+
+    .title-container p {
+      font-size: 1.1rem;
+      color: #333;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .logo-img {
+      width: 180px;
+      height: auto;
+      margin: 1.5rem 0;
+    }
+
+    .btn-yellow {
+      background-color: #ffc700;
+      color: #000;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      padding: 0.8rem 2rem;
+      width: 100%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .btn-yellow:hover {
+      background-color: #e6b400;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <main>
+      <div class="title-container">
+        <h1>¡Bienvenido!</h1>
+        <p>Control de Visitas<br>ITR</p>
+      </div>
+
+      <img src="img/logoRicaldone.png" alt="Salesianos Ricaldone" class="logo-img">
+
+      <div style="width: 100%;">
+        <a href="inicioSesion.html" role="button" class="btn-yellow">Iniciar Sesion</a>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

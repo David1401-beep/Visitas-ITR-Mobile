@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Iniciar Sesion - Control de Visitas</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  
+  <style>
+    body {
+      background-color: #2d313a; 
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 414px;
+      height: 100vh;
+      max-height: 896px;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-container main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .logo-small {
+      width: 70px;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #000;
+      margin-bottom: 2.5rem;
+    }
+
+    form {
+      width: 100%;
+    }
+
+    /* Inputs oscuros personalizados */
+    .custom-input {
+      background-color: #202938 !important;
+      color: #ffffff !important;
+      border: none !important;
+      border-radius: 12px !important;
+      padding: 0.8rem 1rem !important;
+      margin-bottom: 1.2rem !important;
+      font-size: 0.95rem;
+    }
+
+    .custom-input::placeholder {
+      color: #a0aec0;
+    }
+
+    .password-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    /* Icono del ojo interactivo */
+    .eye-icon {
+      position: absolute;
+      right: 15px;
+      top: 38%;
+      transform: translateY(-50%);
+      color: #a0aec0;
+      cursor: pointer;
+      user-select: none; /* Evita que se seleccione el texto del emoji al hacer muchos clics */
+      font-size: 1.1rem;
+    }
+
+    .btn-yellow {
+      background-color: #ffc700;
+      color: #000;
+      border: none;
+      border-radius: 25px;
+      font-weight: bold;
+      padding: 0.8rem;
+      width: 100%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      font-size: 1rem;
+      margin-top: 2rem;
+      cursor: pointer;
+    }
+
+    .btn-yellow:hover {
+      background-color: #e6b400;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <main>
+      <img src="img/logoRicaldone.png" alt="Salesianos Ricaldone" class="logo-small">
+
+      <h2>Iniciar Sesion</h2>
+
+      <form action="notificaciones.html">
+        <input type="email" class="custom-input" placeholder="Correo" required aria-label="Correo">
+        
+        <div class="password-wrapper">
+          <input type="password" id="passwordInput" class="custom-input" placeholder="Contraseña" required aria-label="Contraseña">
+          <span class="eye-icon" id="togglePassword" title="Mostrar/Ocultar contraseña">👁️</span>
+        </div>
+
+        <button type="submit" class="btn-yellow">Iniciar</button>
+      </form>
+    </main>
+  </div>
+
+  <script>
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('passwordInput');
+
+    togglePassword.addEventListener('click', function () {
+
+      const isPassword = passwordInput.getAttribute('type') === 'password';
+      passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+
+      this.textContent = isPassword ? '👁️' : '👁️';
+    });
+  </script>
+
+</body>
+</html>
