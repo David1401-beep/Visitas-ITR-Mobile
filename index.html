@@ -1,87 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
+
+<!doctype html>
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Document</title>
-    <link rel="shortcut icon" href="./img/logoRicaldone.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inicio | Visitas ITR</title>
+    <link rel="shortcut icon" href="img/logoRicaldone.png" type="image/x-icon">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-
-    <style>
-        /* Fondo oscuro para la pantalla de tu computadora, para que resalte la "app" */
-        body {
-            background-color: #2d313a;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* Contenedor principal que actúa como la pantalla del celular */
-        .app-container {
-            width: 100%;
-            max-width: 414px;
-            /* Ancho típico de un teléfono grande */
-            height: 100vh;
-            max-height: 896px;
-            /* Altura máxima para que no se estire infinito en PC */
-            background-color: var(--pico-background-color);
-            /* Respeta el modo oscuro/claro de PicoCSS */
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            /* Sombra para efecto 3D en PC */
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Encabezado superior de la App (Top Bar) */
-        .app-container header {
-            padding: 1rem;
-            border-bottom: 1px solid var(--pico-muted-border-color);
-            text-align: center;
-            background-color: var(--pico-card-background-color);
-            z-index: 10;
-        }
-
-        .app-container header h1 {
-            margin: 0;
-            font-size: 1.2rem;
-        }
-
-        /* Contenedor scrolleable (donde van tus vistas) */
-        .app-container main {
-            flex: 1;
-            /* Toma todo el espacio disponible entre el header y el footer */
-            overflow-y: auto;
-            /* Permite scroll vertical */
-            padding: 1rem;
-        }
-    </style>
 </head>
 
 <body>
-
     <div class="app-container">
+        <header class="home-header d-flex align-items-center justify-content-between">
+            <h1 class="h6 fw-bold mb-0">Inicio</h1>
+            <img class="school-logo" src="img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+        </header>
 
-        <main>
+        <main class="home-content container-fluid d-flex flex-column align-items-center">
+            <section class="home-card appointment-card card border-0 text-center"
+                aria-labelledby="pending-appointment-title">
+                <div class="card-body d-flex flex-column align-items-center w-100">
+                    <h2 id="pending-appointment-title" class="card-title fs-6 fw-bold mb-0">
+                        Tienes una cita pendiente:
+                    </h2>
+                    <p class="appointment-description mb-0">
+                        Oprime el botón amarillo<br>
+                        que está abajo.
+                    </p>
+                    <a class="appointment-link btn btn-warning rounded-pill fw-bold" href="Citas.html" role="button">
+                        Ver mis citas
+                    </a>
+                </div>
+            </section>
 
-
+            <section class="home-card notices-card card border-0 text-center" aria-labelledby="notices-title">
+                <div class="card-body w-100">
+                    <h2 id="notices-title" class="card-title fs-6 fw-bold">¡Avisos Importantes!</h2>
+                    <p>
+                        Reunion General Día<br>
+                        20 de Junio a las<br>
+                        8:00 A.M.
+                    </p>
+                    <p class="mb-0">
+                        Reunion General Día<br>
+                        15 de Septiembre a las<br>
+                        2:00 P.M.
+                    </p>
+                </div>
+            </section>
         </main>
 
         <footer>
-            <ul class="bottom-nav">
-                <li class="nav-item active"><a href="#"><img src="img/casa.png" alt="Inicio"></a></li>
-                <li class="nav-item"><a href="#"><img src="img/calendario.png" alt="Calendario"></a></li>
-                <li class="nav-item"><a href="#"><img src="img/notificacion.png" alt="Notificaciones"></a></li>
-                <li class="nav-item"><a href="#"><img src="img/usuario.png" alt="Usuario"></a></li>
-            </ul>
+            <nav aria-label="Navegación principal">
+                <ul class="bottom-nav">
+                    <li class="nav-item active">
+                        <a href="index.html" aria-label="Inicio" aria-current="page">
+                            <img src="img/casa.png" alt="">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="Citas.html" aria-label="Citas">
+                            <img src="img/calendario.png" alt="">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" aria-label="Notificaciones">
+                            <img src="img/notificacion.png" alt="">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" aria-label="Usuario">
+                            <img src="img/usuario.png" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </footer>
-
     </div>
 
     <script src="js/controlNavegacion.js"></script>

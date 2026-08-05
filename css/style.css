@@ -1,13 +1,449 @@
-/* Estilos de Navegación Inferior (Footer Bar) */
+
+/* Fondo exterior que permite resaltar la aplicación en una computadora. */
+body {
+  background-color: #212121;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Contenedor que simula la pantalla de un teléfono. */
+.app-container {
+  width: 100%;
+  max-width: 414px;
+  height: 100vh;
+  max-height: 896px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Encabezado de la pantalla de inicio. */
+.app-container header {
+  flex: 0 0 auto;
+  padding: 28px 40px 24px;
+  border-bottom: 0;
+  text-align: left;
+  background-color: #ffffff;
+  z-index: 10;
+}
+
+/* Título principal del encabezado. */
+.app-container header h1 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
+/* Dimensiones del logo institucional mostrado en el encabezado. */
+.school-logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+/* Área principal: ocupa el espacio disponible y permite desplazamiento. */
+.app-container main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+/* Distribución vertical del contenido de la pantalla de inicio. */
+.app-container .home-content {
+  gap: 48px;
+  padding: 17px 32px 64px;
+}
+
+/* Apariencia compartida por la tarjeta de citas y la tarjeta de avisos. */
+.home-card {
+  width: 100%;
+  max-width: 238px;
+  flex: 0 0 auto;
+  background-color: #d3d1d1;
+  border-radius: 9px;
+  box-shadow: 0 9px 4px rgba(0, 0, 0, 0.12);
+  color: #000000;
+}
+
+.home-card h2,
+.home-card p {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.appointment-card {
+  min-height: 226px;
+}
+
+.appointment-card .card-body {
+  padding: 18px 16px 27px;
+}
+
+.appointment-description {
+  margin-top: 28px;
+}
+
+/* El enlace conserva su semántica de navegación y se presenta como botón. */
+.appointment-link {
+  margin-top: auto;
+  padding: 4px 18px;
+  border-color: #ffca05;
+  background-color: #ffca05;
+  color: #000000;
+  font-size: 1rem;
+  line-height: 1.2;
+  box-shadow: 0 7px 3px rgba(0, 0, 0, 0.18);
+}
+
+.appointment-link:hover,
+.appointment-link:focus-visible {
+  border-color: #e7b700;
+  background-color: #e7b700;
+  color: #000000;
+}
+
+
+.notices-card {
+  min-height: 227px;
+}
+
+.notices-card .card-body {
+  padding: 20px 20px 14px;
+}
+
+.notices-card h2 {
+  margin-bottom: 29px;
+}
+
+.notices-card p {
+  margin-bottom: 14px;
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
+/* PANTALLA PARA CREAR UNA SOLICITUD */
+
+/* Posición del título y del logo en el encabezado de solicitudes. */
+.request-page .request-header {
+  padding: 30px 22px 24px 48px;
+}
+
+/* Separa el formulario del encabezado y conserva el desplazamiento en pantallas pequeñas. */
+.request-page .app-container .request-content {
+  padding: 123px 38px 70px;
+}
+
+.request-form {
+  width: 100%;
+  max-width: 320px;
+}
+
+.request-field {
+  margin-bottom: 13px;
+}
+
+.teacher-field {
+  margin-bottom: 18px;
+}
+
+.date-field {
+  margin-bottom: 24px;
+}
+
+.reason-field {
+  margin-bottom: 20px;
+}
+
+/* Etiquetas superiores de cada control. */
+.request-form .form-label {
+  margin: 0 0 2px 9px;
+  color: #555555;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+/* Apariencia compartida por las listas, la fecha y el motivo. */
+.request-control {
+  border: 0;
+  background-color: #1d2939;
+  color: #ffffff;
+  font-size: 0.9375rem;
+  box-shadow: 0 7px 4px rgba(0, 0, 0, 0.12);
+}
+
+.request-control:focus {
+  border-color: transparent;
+  background-color: #1d2939;
+  color: #ffffff;
+  box-shadow: 0 0 0 0.15rem rgba(108, 117, 125, 0.25);
+}
+
+/* Listas desplegables oscuras con texto centrado y flecha blanca. */
+.request-select {
+  --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  min-height: 35px;
+  padding: 6px 40px 6px 16px;
+  border-radius: 11px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.request-select option {
+  color: #ffffff;
+  background-color: #1d2939;
+}
+
+/* Campo de fecha con forma de cápsula. */
+.request-date {
+  min-height: 35px;
+  padding: 6px 16px;
+  border-radius: 18px;
+  color-scheme: dark;
+}
+
+.request-date::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: brightness(0) invert(1);
+}
+
+/* Área amplia para describir el motivo de la visita. */
+.request-reason {
+  min-height: 108px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  resize: none;
+}
+
+.request-reason::placeholder {
+  color: #d5d7db;
+  opacity: 1;
+}
+
+/* Botón principal de envío. */
+.request-submit {
+  width: 246px;
+  min-height: 41px;
+  padding: 7px 18px;
+  border-color: #ffca05;
+  background-color: #ffca05;
+  color: #000000;
+  font-size: 1rem;
+  box-shadow: 0 7px 3px rgba(0, 0, 0, 0.24);
+}
+
+.request-submit:hover,
+.request-submit:focus-visible {
+  border-color: #e7b700;
+  background-color: #e7b700;
+  color: #000000;
+}
+
+/* La barra es un poco más alta en esta vista, como en la referencia. */
+.request-page .app-container footer {
+  padding: 22px 16px 27px;
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
+/* MODAL DE CONFIRMACIÓN DE LA SOLICITUD */
+
+/* Mantiene visible el fondo blanco de la aplicación, como en la referencia. */
+.request-page .modal-backdrop.show {
+  opacity: 0;
+}
+
+.request-success-modal .modal-dialog {
+  align-items: flex-start;
+  width: calc(100% - 32px);
+  max-width: 254px;
+  min-height: 100%;
+  margin: 0 auto;
+  padding-top: clamp(110px, 20vh, 177px);
+}
+
+/* Tarjeta gris que contiene el mensaje de confirmación. */
+.request-success-modal .modal-content {
+  min-height: 371px;
+  border: 0;
+  border-radius: 15px;
+  background-color: #d8d8d8;
+  color: #000000;
+  box-shadow: none;
+}
+
+.request-success-modal .modal-body {
+  padding: 18px 14px 45px;
+}
+
+.request-success-modal h2 {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
+/* Confirmación gráfica verde dibujada con SVG. */
+.request-success-icon {
+  width: 77px;
+  height: 77px;
+  margin: 10px auto 28px;
+  color: #69bf3a;
+}
+
+.request-success-message {
+  max-width: 220px;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+/* Botón que cierra el modal y deja listo un formulario nuevo. */
+.request-modal-close {
+  width: 135px;
+  min-height: 35px;
+  margin-top: auto;
+  padding: 5px 16px;
+  border-color: #ffca05;
+  background-color: #ffca05;
+  color: #000000;
+  font-size: 0.875rem;
+  box-shadow: 0 6px 3px rgba(0, 0, 0, 0.22);
+}
+
+.request-modal-close:hover,
+.request-modal-close:focus-visible {
+  border-color: #e7b700;
+  background-color: #e7b700;
+  color: #000000;
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
+
+/* Fondo, espaciado y posición visual de la barra inferior. */
+/* PANTALLA DE CITAS */
+
+/* Alinea el titulo y el logo con la composicion mostrada en la referencia. */
+.appointments-page .appointments-header {
+  padding: 26px 20px 12px 48px;
+}
+
+/* Organiza las tarjetas y los enlaces de accion en una sola columna. */
+.appointments-page .app-container .appointments-content {
+  gap: 48px;
+  padding: 8px 32px 56px;
+}
+
+/* Tarjeta gris que muestra el resumen de una cita. */
+.appointments-card {
+  width: 100%;
+  max-width: 236px;
+  min-height: 132px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background-color: #d5d5d5;
+  color: #000000;
+  box-shadow: 0 8px 4px rgba(0, 0, 0, 0.12);
+}
+
+.appointments-card .card-body {
+  padding: 16px 10px;
+}
+
+.appointments-card-title {
+  font-size: 0.875rem;
+  line-height: 1.3;
+}
+
+.appointments-location {
+  display: flex;
+  align-items: center;
+  margin-top: 14px;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+}
+
+/* Pin rojo meramente estetico que acompana el numero de aula. */
+.appointment-pin {
+  width: 9px;
+  height: 12px;
+  margin-right: 3px;
+  flex: 0 0 auto;
+  color: #e64657;
+}
+
+.appointments-location strong {
+  margin-right: 3px;
+}
+
+.appointments-date {
+  margin-top: 12px;
+  font-size: 0.8125rem;
+  line-height: 1.25;
+}
+
+/* Agrupa los dos enlaces que visualmente se presentan como botones. */
+.appointments-actions {
+  width: 100%;
+  gap: 35px;
+  margin-top: 7px;
+}
+
+.appointments-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 207px;
+  min-height: 35px;
+  padding: 5px 18px;
+  border: 0;
+  color: #000000;
+  font-size: 0.875rem;
+  line-height: 1.2;
+  text-decoration: none;
+  box-shadow: 0 7px 3px rgba(0, 0, 0, 0.23);
+}
+
+.appointments-action-create {
+  background-color: #ffca05;
+}
+
+.appointments-action-create:hover,
+.appointments-action-create:focus-visible {
+  background-color: #e7b700;
+  color: #000000;
+}
+
+.appointments-action-list {
+  background-color: #86afe5;
+}
+
+.appointments-action-list:hover,
+.appointments-action-list:focus-visible {
+  background-color: #6f9bd4;
+  color: #000000;
+}
+
+/* Altura de la barra inferior especifica para esta pantalla. */
+.appointments-page .app-container footer {
+  padding: 14px 16px 22px;
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
 
 .app-container footer {
-  background-color: #1b2533; /* Color azul oscuro/marino del fondo del footer */
+  flex: 0 0 auto;
+  background-color: #1b2533;
   padding: 12px 16px 20px 16px;
   border-top: none;
   z-index: 10;
   box-sizing: border-box;
 }
 
+/* Distribuye uniformemente las opciones dentro de la barra. */
 .bottom-nav {
   display: flex;
   justify-content: space-around;
@@ -18,24 +454,25 @@
   width: 100%;
 }
 
-/* Elementos del menú */
+/* Forma, tamaño y alineación de cada opción de navegación. */
 .bottom-nav .nav-item {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 64px;
   height: 44px;
-  border-radius: 22px; /* Forma de cápsula/óvalo */
+  border-radius: 22px;
   transition: background-color 0.25s ease;
   margin: 0;
   padding: 0;
 }
 
-/* Icono activo con fondo negro */
+/* Resalta con una cápsula negra la opción seleccionada. */
 .bottom-nav .nav-item.active {
-  background-color: #000000; /* Fondo negro para la sección seleccionada */
+  background-color: #000000;
 }
 
+/* Hace que toda el área de la opción sea clicable y elimina estilos del enlace. */
 .bottom-nav .nav-item a {
   display: flex;
   align-items: center;
@@ -49,12 +486,53 @@
   border: none;
 }
 
-/* Estilo y color de los íconos */
+/* Mantiene uniformes el tamaño y el color blanco de los iconos. */
 .bottom-nav .nav-item img {
   width: 26px;
   height: 26px;
   object-fit: contain;
-  /* Asegura que los íconos se muestren en color blanco impecable como en la imagen */
   filter: brightness(0) invert(1);
   display: block;
 }
+
+/* Ajustes para teléfonos más estrechos que la maqueta de referencia. */
+@media (max-width: 360px) {
+  .app-container header {
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .app-container .home-content {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .request-page .request-header {
+    padding-right: 20px;
+    padding-left: 32px;
+  }
+
+  .request-page .app-container .request-content {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .request-submit {
+    width: min(246px, 100%);
+  }
+
+  .appointments-page .appointments-header {
+    padding-right: 18px;
+    padding-left: 32px;
+  }
+
+  .appointments-page .app-container .appointments-content {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .appointments-action {
+    width: min(207px, 100%);
+  }
+}
+

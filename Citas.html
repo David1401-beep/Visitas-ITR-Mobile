@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Citas | Visitas ITR</title>
+    <link rel="shortcut icon" href="img/logoRicaldone.png" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="appointments-page">
+    <div class="app-container">
+        <header class="appointments-header d-flex align-items-center justify-content-between">
+            <h1 class="h6 fw-bold mb-0">Citas</h1>
+            <img class="school-logo" src="img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+        </header>
+
+        <main class="appointments-content container-fluid d-flex flex-column align-items-center">
+            <section class="appointments-card card border-0" aria-labelledby="parents-meeting-title">
+                <div class="card-body">
+                    <h2 class="appointments-card-title fw-bold mb-0" id="parents-meeting-title">
+                        Reunión de padres
+                    </h2>
+                    <p class="appointments-location mb-0">
+                        <svg class="appointment-pin" viewBox="0 0 16 20" aria-hidden="true">
+                            <path
+                                d="M8 0a6 6 0 0 0-6 6c0 4.5 6 14 6 14s6-9.5 6-14A6 6 0 0 0 8 0Zm0 8.5A2.5 2.5 0 1 1 8 3a2.5 2.5 0 0 1 0 5.5Z"
+                                fill="currentColor" />
+                        </svg>
+                        <strong>Aula:</strong> 6.2.12
+                    </p>
+                    <p class="appointments-date mb-0">
+                        <time datetime="2026-08-20T09:00">20 de Agosto - 9:00 A.M</time>
+                    </p>
+                </div>
+            </section>
+
+            <section class="appointments-card card border-0" aria-labelledby="report-card-delivery-title">
+                <div class="card-body">
+                    <h2 class="appointments-card-title fw-bold mb-0" id="report-card-delivery-title">
+                        Entrega de Notas
+                    </h2>
+                    <p class="appointments-location mb-0">
+                        <svg class="appointment-pin" viewBox="0 0 16 20" aria-hidden="true">
+                            <path
+                                d="M8 0a6 6 0 0 0-6 6c0 4.5 6 14 6 14s6-9.5 6-14A6 6 0 0 0 8 0Zm0 8.5A2.5 2.5 0 1 1 8 3a2.5 2.5 0 0 1 0 5.5Z"
+                                fill="currentColor" />
+                        </svg>
+                        <strong>Aula:</strong> 6.2.13
+                    </p>
+                    <p class="appointments-date mb-0">
+                        <time datetime="2026-04-17T08:00">17 de Abril - 8:00 A.M</time>
+                    </p>
+                </div>
+            </section>
+
+            <div class="appointments-actions d-flex flex-column align-items-center">
+                <a class="appointments-action appointments-action-create btn rounded-pill fw-bold"
+                    href="CrearSolicitud.html" role="button">
+                    Crear Solicitud
+                </a>
+                <a class="appointments-action appointments-action-list btn rounded-pill fw-bold" href="#"
+                    role="button">
+                    Mis Solicitudes
+                </a>
+            </div>
+        </main>
+
+        <footer>
+            <nav aria-label="Navegación principal">
+                <ul class="bottom-nav">
+                    <li class="nav-item">
+                        <a href="index.html" aria-label="Inicio">
+                            <img src="img/casa.png" alt="">
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="Citas.html" aria-label="Citas" aria-current="page">
+                            <img src="img/calendario.png" alt="">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" aria-label="Notificaciones">
+                            <img src="img/notificacion.png" alt="">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" aria-label="Usuario">
+                            <img src="img/usuario.png" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+    </div>
+
+    <script src="js/controlNavegacion.js"></script>
+</body>
+
+</html>
