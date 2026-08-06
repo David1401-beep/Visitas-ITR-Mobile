@@ -1,44 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Iniciar Sesion - Control de Visitas</title>
-  
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iniciar Sesión | Visitas ITR</title>
+    <link rel="shortcut icon" href="img/logoRicaldone.png" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body class="login-page">
+    <div class="app-container">
+        <main class="login-content container-fluid d-flex flex-column align-items-center">
+            <img src="img/logoRicaldone.png" alt="Salesianos Ricaldone" class="logo-small">
 
-  <div class="app-container">
-    <main class="login-content">
-      <img src="img/logoRicaldone.png" alt="Salesianos Ricaldone" class="logo-small">
+            <h2 class="login-title">Iniciar Sesion</h2>
 
-      <h2 class="login-title">Iniciar Sesion</h2>
+            <form action="index.html" class="login-form">
+                <input type="email" class="custom-input" placeholder="Correo" required aria-label="Correo">
+                
+                <div class="password-wrapper">
+                    <input type="password" id="passwordInput" class="custom-input" placeholder="Contraseña" required aria-label="Contraseña">
+                    <span class="eye-icon" id="togglePassword" title="Mostrar/Ocultar contraseña">👁️</span>
+                </div>
 
-      <form action="index.html" class="login-form">
-        <input type="email" class="custom-input" placeholder="Correo" required aria-label="Correo">
-        
-        <div class="password-wrapper">
-          <input type="password" id="passwordInput" class="custom-input" placeholder="Contraseña" required aria-label="Contraseña">
-          <span class="eye-icon" id="togglePassword" title="Mostrar/Ocultar contraseña">👁️</span>
-        </div>
+                <button type="submit" class="btn-yellow">Iniciar</button>
+            </form>
+        </main>
+    </div>
 
-        <button type="submit" class="btn-yellow">Iniciar</button>
-      </form>
-    </main>
-  </div>
+    <script src="js/controlNavegacion.js"></script>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('passwordInput');
 
-  <script>
-    const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('passwordInput');
-
-    togglePassword.addEventListener('click', function () {
-      const isPassword = passwordInput.getAttribute('type') === 'password';
-      passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-      this.textContent = isPassword ? '👁️' : '👁️';
-    });
-  </script>
-
+        togglePassword.addEventListener('click', function () {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            this.textContent = isPassword ? '👁️' : '👁️';
+        });
+    </script>
 </body>
+
 </html>
