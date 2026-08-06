@@ -482,17 +482,18 @@ body.profile-page {
 }
 
 .profile-card {
-  background-color: #e5e7eb;
-  border-radius: 12px;
-  padding: 1rem;
+  background-color: #d8d8d8;
+  border-radius: 14px;
+  padding: 0.9rem;
   width: 100%;
+  max-width: 290px;
+  margin: 0 auto 2.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2.5rem;
 }
 
 .info-box {
   background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 0.75rem 1rem;
   margin-bottom: 0.8rem;
   font-size: 0.85rem;
@@ -516,6 +517,8 @@ body.profile-page {
   font-weight: bold;
   padding: 0.8rem;
   width: 100%;
+  max-width: 230px;
+  margin: 0 auto;
   font-size: 0.95rem;
   cursor: pointer;
   text-align: center;
@@ -587,11 +590,12 @@ body.login-page {
 .welcome-content {
   flex: 1;
   overflow-y: auto;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  gap: 2.2rem;
   text-align: center;
 }
 
@@ -599,50 +603,60 @@ body.login-page {
   font-size: 2.2rem;
   font-weight: 800;
   color: #000000;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.5rem;
 }
 
 .title-container p {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   color: #333333;
   margin: 0;
   font-weight: 500;
 }
 
 .logo-img {
-  width: 180px;
+  width: 150px;
   height: auto;
-  margin: 1.5rem 0;
+  margin: 0;
 }
 
 .full-width {
   width: 100%;
 }
 
+.welcome-content .btn-yellow {
+  max-width: 240px;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .login-content {
   flex: 1;
   overflow-y: auto;
-  padding: 2rem 1.5rem;
+  padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 
 .logo-small {
-  width: 70px;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+  width: 80px;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
 }
 
 .login-title {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 800;
   color: #000000;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.2rem;
 }
 
 .login-form {
   width: 100%;
+  max-width: 290px;
+  margin: 0 auto;
 }
 
 .custom-input {
@@ -684,9 +698,10 @@ body.login-page {
   font-weight: bold;
   padding: 0.8rem;
   width: 100%;
+  max-width: 220px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   font-size: 1rem;
-  margin-top: 2rem;
+  margin: 2rem auto 0;
   cursor: pointer;
   display: block;
   text-align: center;
