@@ -1,26 +1,28 @@
-
 // Control de Navegación Inferior (Footer Nav)
 document.addEventListener('DOMContentLoaded', () => {
   const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+  const currentPath = window.location.pathname.toLowerCase();
 
+  // Marcar automáticamente el ítem activo según la URL actual
   navItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-      e.preventDefault();
-      // Remueve la clase active de todos los items
-      navItems.forEach(i => i.classList.remove('active'));
-      // Agrega la clase active únicamente al item clickeado
-      item.classList.add('active');
-    });
-  });
-});
+    const link = item.querySelector('a');
+    const href = link?.getAttribute('href')?.toLowerCase();
 
-// Control de Navegación Inferior (Footer Nav)
-document.addEventListener('DOMContentLoaded', () => {
-  const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+    if (href) {
+      const pageName = href.split('/').pop();
+      if (
+        currentPath.endsWith(pageName) ||
+        (pageName === 'index.html' && (currentPath.endsWith('/') || currentPath === ''))
+      ) {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      } else if (pageName === 'citas.html' && currentPath.endsWith('crearsolicitud.html')) {
+        navItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      }
+    }
 
-  navItems.forEach(item => {
     item.addEventListener('click', (event) => {
-      const link = item.querySelector('a');
       const destination = link?.getAttribute('href');
 
       // Los enlaces con una página asignada navegan normalmente. Los que todavía
@@ -36,4 +38,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
-

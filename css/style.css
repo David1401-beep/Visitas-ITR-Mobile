@@ -433,6 +433,272 @@ body {
 }
 
 /*------------------------------------------------------------------------------------------------------------------*/
+/* PANTALLA DE PERFIL */
+
+body.profile-page {
+  background-color: #212121;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  background-color: #ffffff;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #000000;
+}
+
+.header-logo {
+  width: 40px;
+}
+
+.profile-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-icon {
+  width: 80px;
+  height: 80px;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.user-name {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 2rem;
+}
+
+.profile-card {
+  background-color: #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2.5rem;
+}
+
+.info-box {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.85rem;
+  color: #000000 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.info-box strong {
+  color: #000000 !important;
+}
+
+.info-box:last-child {
+  margin-bottom: 0;
+}
+
+.btn-logout {
+  background-color: #202938;
+  color: #ffffff !important;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  padding: 0.8rem;
+  width: 100%;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.btn-logout:hover {
+  background-color: #111827;
+  color: #ffffff !important;
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
+/* PANTALLA DE NOTIFICACIONES */
+
+body.notifications-page {
+  background-color: #212121;
+}
+
+.notifications-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.2rem;
+}
+
+.section-title {
+  font-weight: 800;
+  color: #000000;
+  margin-top: 1rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.notification-card {
+  background-color: #e5e7eb;
+  border-radius: 12px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #000000 !important;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.notification-card p,
+.notification-card strong,
+.notification-card span {
+  color: #000000 !important;
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.notification-card .time {
+  font-weight: bold;
+  margin-top: 0.8rem;
+  display: block;
+  font-size: 0.85rem;
+  color: #000000 !important;
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
+/* PANTALLA DE INICIO DE SESIÓN Y BIENVENIDA */
+
+body.welcome-page,
+body.login-page {
+  background-color: #212121;
+}
+
+.welcome-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.title-container h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 0.2rem;
+}
+
+.title-container p {
+  font-size: 1.1rem;
+  color: #333333;
+  margin: 0;
+  font-weight: 500;
+}
+
+.logo-img {
+  width: 180px;
+  height: auto;
+  margin: 1.5rem 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.login-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-small {
+  width: 70px;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.login-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 2.5rem;
+}
+
+.login-form {
+  width: 100%;
+}
+
+.custom-input {
+  background-color: #202938 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 0.8rem 1rem !important;
+  margin-bottom: 1.2rem !important;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.custom-input::placeholder {
+  color: #a0aec0;
+}
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 15px;
+  top: 38%;
+  transform: translateY(-50%);
+  color: #a0aec0;
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.1rem;
+}
+
+.btn-yellow {
+  background-color: #ffc700;
+  color: #000000 !important;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  padding: 0.8rem;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  font-size: 1rem;
+  margin-top: 2rem;
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.btn-yellow:hover {
+  background-color: #e6b400;
+  color: #000000 !important;
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
 
 .app-container footer {
   flex: 0 0 auto;
@@ -448,10 +714,22 @@ body {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  list-style: none !important;
+  list-style-type: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
   width: 100%;
+}
+
+.bottom-nav li {
+  list-style: none !important;
+  list-style-type: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.bottom-nav li::marker {
+  content: "" !important;
 }
 
 /* Forma, tamaño y alineación de cada opción de navegación. */
@@ -459,17 +737,25 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 64px;
+  width: 44px;
   height: 44px;
-  border-radius: 22px;
+  border-radius: 50%;
   transition: background-color 0.25s ease;
   margin: 0;
   padding: 0;
 }
 
-/* Resalta con una cápsula negra la opción seleccionada. */
+/* Resalta con un círculo negro perfecto la opción seleccionada. */
 .bottom-nav .nav-item.active {
   background-color: #000000;
+  border-radius: 50%;
+}
+
+.bottom-nav .nav-item.active a {
+  background-color: #000000;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
 }
 
 /* Hace que toda el área de la opción sea clicable y elimina estilos del enlace. */
@@ -484,12 +770,13 @@ body {
   padding: 0;
   margin: 0;
   border: none;
+  border-radius: 50%;
 }
 
 /* Mantiene uniformes el tamaño y el color blanco de los iconos. */
 .bottom-nav .nav-item img {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
   filter: brightness(0) invert(1);
   display: block;
@@ -535,4 +822,3 @@ body {
     width: min(207px, 100%);
   }
 }
-
