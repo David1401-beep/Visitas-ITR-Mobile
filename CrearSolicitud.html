@@ -25,18 +25,18 @@
                 <div class="request-field guardian-field">
                     <label class="form-label" for="guardian">Encargado</label>
                     <select class="request-control request-select form-select" id="guardian" name="guardian" required>
-                        <option value="madre" selected>Madre</option>
-                        <option value="padre">Padre</option>
-                        <option value="otro">Otro encargado</option>
+                        <option value="Madre">Madre</option>
+                        <option value="Padre">Padre</option>
+                        <option value="Otro">Otro encargado</option>
                     </select>
                 </div>
 
                 <div class="request-field teacher-field">
                     <label class="form-label" for="teacher">Docente</label>
                     <select class="request-control request-select form-select" id="teacher" name="teacher" required>
-                        <option value="ricardo-de-paz" selected>Prof. Ricardo De Paz</option>
-                        <option value="josue-guinea" selected>Prof. Josue Guinea</option>
-                        <option value="otro" selected>Otro</option>
+                        <option value="Prof. Ricardo De Paz">Prof. Ricardo De Paz</option>
+                        <option value="Prof. Josue Guinea">Prof. Josue Guinea</option>
+                        <option value="Dra. Maria Rodriguez">Dra. Maria Rodriguez</option>
                     </select>
                 </div>
 
@@ -52,7 +52,7 @@
                         placeholder="Motivo de la Visita" required></textarea>
                 </div>
 
-                <button class="request-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
+                <button id="submit-btn" class="request-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
                     Enviar solicitud
                 </button>
             </form>
