@@ -25,7 +25,6 @@
                 
                 <div class="password-wrapper">
                     <input type="password" id="passwordInput" class="custom-input" placeholder="Contraseña" required aria-label="Contraseña">
-                    <span class="eye-icon" id="togglePassword" title="Mostrar/Ocultar contraseña">👁️</span>
                 </div>
 
                 <button type="submit" class="btn-yellow">Iniciar</button>
@@ -34,16 +33,6 @@
     </div>
 
     <script src="js/controlNavegacion.js"></script>
-    <script>
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('passwordInput');
-
-        togglePassword.addEventListener('click', function () {
-            const isPassword = passwordInput.getAttribute('type') === 'password';
-            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
-            this.textContent = isPassword ? '👁️' : '👁️';
-        });
-    </script>
 </body>
 
 </html>
