@@ -126,6 +126,190 @@ body {
 }
 
 /*------------------------------------------------------------------------------------------------------------------*/
+/* PANTALLA DE LISTADO DE SOLICITUDES (Mis Solicitudes) */
+
+.requests-list-page .app-container .home-content {
+  gap: 20px;
+  padding: 16px 24px 64px;
+}
+
+.solicitud-card {
+  max-width: 320px;
+  background-color: #d3d1d1;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.12);
+  color: #000000;
+}
+
+.solicitud-card .card-body {
+  padding: 20px 22px;
+}
+
+.solicitud-titulo {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.solicitud-dato {
+  font-size: 0.875rem;
+  line-height: 1.35;
+  color: #212529;
+}
+
+.solicitud-divider {
+  border: 0;
+  border-top: 1px solid #757575;
+  opacity: 1;
+}
+
+.btn-solicitud {
+  border-radius: 10px;
+  padding: 6px 18px;
+  font-size: 0.875rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.btn-solicitud:active {
+  transform: translateY(1px);
+}
+
+.btn-editar {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #d0d0d0;
+}
+
+.btn-editar:hover {
+  background-color: #f5f5f5;
+  color: #000000;
+}
+
+.btn-cancelar {
+  background-color: #a84242;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-cancelar:hover {
+  background-color: #923737;
+  color: #ffffff;
+}
+
+/* Modal de confirmación para eliminar solicitud */
+.confirm-delete-modal .modal-dialog {
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.confirm-delete-modal .modal-content {
+  border-radius: 20px !important;
+  background-color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.modal-delete-title {
+  font-size: 1.1rem;
+  color: #000000;
+}
+
+.modal-delete-text {
+  font-size: 0.9rem;
+  color: #333333;
+  line-height: 1.3;
+}
+
+.modal-summary-card {
+  background-color: #d3d1d1;
+  color: #000000;
+  font-size: 0.85rem;
+}
+
+.btn-modal-cancel {
+  background-color: #1f2937;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 8px 24px;
+  font-size: 0.9rem;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-modal-cancel:hover {
+  background-color: #111827;
+  color: #ffffff;
+}
+
+.btn-modal-delete {
+  background-color: #a84242;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 8px 24px;
+  font-size: 0.9rem;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.btn-modal-delete:hover {
+  background-color: #923737;
+  color: #ffffff;
+}
+
+/* Modal de éxito de eliminación de solicitud */
+.delete-success-modal .modal-dialog {
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+.delete-success-modal .modal-content {
+  border-radius: 22px !important;
+  background-color: #d8d8d8;
+  color: #000000;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  min-height: 320px;
+}
+
+.delete-success-modal .modal-body {
+  padding: 28px 20px 24px;
+}
+
+.delete-success-title {
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: #000000;
+  max-width: 220px;
+}
+
+.delete-success-icon {
+  width: 72px;
+  height: 72px;
+}
+
+.delete-success-text {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: #212529;
+  max-width: 220px;
+}
+
+.btn-delete-success-close {
+  background-color: #ffca05;
+  color: #000000;
+  border: none;
+  width: 140px;
+  min-height: 36px;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.15s ease;
+}
+
+.btn-delete-success-close:hover,
+.btn-delete-success-close:focus-visible {
+  background-color: #e7b700;
+  color: #000000;
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
 /* PANTALLA PARA CREAR UNA SOLICITUD */
 
 /* Posición del título y del logo en el encabezado de solicitudes. */

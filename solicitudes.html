@@ -1,23 +1,235 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Solicitudes - Visitas ITR</title>
     <link rel="shortcut icon" href="img/logoRicaldone.png" type="image/x-icon">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
         crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+
+<body class="requests-list-page">
     <div class="app-container">
-            <header class="home-header d-flex align-items-center justify-content-between">
-            <h1 class="h6 fw-bold mb-0">Mis Solicitudes</h1>
+        <header class="home-header d-flex align-items-center justify-content-between">
+            <div>
+                <h1 class="h5 fw-bold mb-0">Mis Solicitudes</h1>
+            </div>
             <img class="school-logo" src="img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
+
+        <main class="home-content container-fluid d-flex flex-column align-items-center">
+            <!-- Tarjeta 1 -->
+            <article class="solicitud-card card border-0 w-100">
+                <div class="card-body">
+                    <h2 class="solicitud-titulo fw-bold">Revision de conducta</h2>
+                    <p class="solicitud-dato mb-1"><strong>Encargado:</strong> Madre</p>
+                    <p class="solicitud-dato mb-1"><strong>Docente:</strong> Prof. Ricardo De Paz</p>
+                    <p class="solicitud-dato mb-1"><strong>Fecha:</strong> Miercoles 9 de Abril a las 10:00 A.M</p>
+                    <p class="solicitud-dato mb-3"><strong>Motivo:</strong> Información sobre mi hijo</p>
+
+                    <hr class="solicitud-divider my-2">
+
+                    <div class="d-flex justify-content-around mt-3">
+                        <button class="btn btn-solicitud btn-editar d-flex align-items-center justify-content-center gap-1 fw-bold">
+                            <i class="bi bi-pencil-fill"></i> Editar
+                        </button>
+                        <button class="btn btn-solicitud btn-cancelar d-flex align-items-center justify-content-center gap-1 fw-bold">
+                            <i class="bi bi-trash-fill"></i> Eliminar
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Tarjeta 2 -->
+            <article class="solicitud-card card border-0 w-100">
+                <div class="card-body">
+                    <h2 class="solicitud-titulo fw-bold">Revision de conducta</h2>
+                    <p class="solicitud-dato mb-1"><strong>Encargado:</strong> Padre</p>
+                    <p class="solicitud-dato mb-1"><strong>Docente:</strong> Prof. Josue Guinea</p>
+                    <p class="solicitud-dato mb-1"><strong>Fecha:</strong> Jueves 10 de Abril a las 11:00 A.M</p>
+                    <p class="solicitud-dato mb-3"><strong>Motivo:</strong> Informacion sobre mi hijo</p>
+
+                    <hr class="solicitud-divider my-2">
+
+                    <div class="d-flex justify-content-around mt-3">
+                        <button class="btn btn-solicitud btn-editar d-flex align-items-center justify-content-center gap-1 fw-bold">
+                            <i class="bi bi-pencil-fill"></i> Editar
+                        </button>
+                        <button class="btn btn-solicitud btn-cancelar d-flex align-items-center justify-content-center gap-1 fw-bold">
+                            <i class="bi bi-trash-fill"></i> Eliminar
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <article class="solicitud-card card border-0 w-100">
+                <div class="card-body">
+                    <h2 class="solicitud-titulo fw-bold">Revision de conducta</h2>
+                    <p class="solicitud-dato mb-1"><strong>Encargado:</strong> Padre</p>
+                    <p class="solicitud-dato mb-1"><strong>Docente:</strong> Prof. Josue Guinea</p>
+                    <p class="solicitud-dato mb-1"><strong>Fecha:</strong> Jueves 15 de Abril a las 3:00 P.M</p>
+                    <p class="solicitud-dato mb-3"><strong>Motivo:</strong> Informacion sobre la conducta de mi hijo</p>
+
+                    <hr class="solicitud-divider my-2">
+
+                    <div class="d-flex justify-content-around mt-3">
+                        <button class="btn btn-solicitud btn-editar d-flex align-items-center justify-content-center gap-1 fw-bold">
+                            <i class="bi bi-pencil-fill"></i> Editar
+                        </button>
+                        <button class="btn btn-solicitud btn-cancelar d-flex align-items-center justify-content-center gap-1 fw-bold">
+                            <i class="bi bi-trash-fill"></i> Eliminar
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Tarjeta 3 -->
+            <article class="solicitud-card card border-0 w-100">
+                <div class="card-body">
+                    <h2 class="solicitud-titulo fw-bold">Rendimiento Académico</h2>
+                    <p class="solicitud-dato mb-1"><strong>Encargado:</strong> Madre</p>
+                    <p class="solicitud-dato mb-1"><strong>Docente:</strong> Prof. Ricardo De Paz</p>
+                    <p class="solicitud-dato mb-1"><strong>Fecha:</strong> Viernes 18 de Abril a las 09:00 A.M</p>
+                    <p class="solicitud-dato mb-3"><strong>Motivo:</strong> Consulta de bajo rendimiento</p>
+
+                    <hr class="solicitud-divider my-2">
+
+                    <div class="d-flex justify-content-around mt-3">
+                        <button class="btn btn-solicitud btn-editar d-flex align-items-center justify-content-center gap-1 fw-bold">
+                            <i class="bi bi-pencil-fill"></i> Editar
+                        </button>
+                        <button class="btn btn-solicitud btn-cancelar d-flex align-items-center justify-content-center gap-1 fw-bold">
+                            <i class="bi bi-trash-fill"></i> Eliminar
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </main>
+
+        <footer>
+            <nav aria-label="Navegación principal">
+                <ul class="bottom-nav">
+                    <li class="nav-item">
+                        <a href="index.html" aria-label="Inicio">
+                            <img src="img/casa.png" alt="">
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="Citas.html" aria-label="Citas" aria-current="page">
+                            <img src="img/calendario.png" alt="">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="notificaciones.html" aria-label="Notificaciones">
+                            <img src="img/notificacion.png" alt="">
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="perfil.html" aria-label="Usuario">
+                            <img src="img/usuario.png" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
     </div>
-    
+
+    <!-- Modal de confirmación para eliminar solicitud -->
+    <div class="modal fade confirm-delete-modal" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center border-0">
+                <div class="modal-body p-4">
+                    <h2 class="modal-delete-title fw-bold">¿Deseas eliminar esta solicitud?</h2>
+                    
+                    <p class="modal-delete-text mt-3 mb-1">Estas a punto de eliminar esta solicitud</p>
+                    <p class="modal-delete-text mb-4">Esta acción no se puede deshacer.</p>
+
+                    <div class="modal-summary-card p-3 rounded-4 mb-4 text-start">
+                        <p class="mb-1" id="modalEncargado"><strong>Encargado:</strong> </p>
+                        <p class="mb-1" id="modalDocente"><strong>Docente:</strong> </p>
+                        <p class="mb-0" id="modalFecha"><strong>Fecha:</strong> </p>
+                    </div>
+
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="button" class="btn btn-modal-cancel fw-bold" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-modal-delete fw-bold" id="btnConfirmDelete">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de éxito tras eliminar la solicitud -->
+    <div class="modal fade delete-success-modal" id="deleteSuccessModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center border-0">
+                <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+                    <h2 class="delete-success-title fw-bold">Solicitud Eliminada Correctamente</h2>
+
+                    <div class="delete-success-icon my-4">
+                        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="36" stroke="#FF4D4D" stroke-width="6"/>
+                            <path d="M26 26L54 54M54 26L26 54" stroke="#FF4D4D" stroke-width="6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+
+                    <p class="delete-success-text mb-4">Su Solicitud ha sido eliminada con éxito.</p>
+
+                    <button type="button" class="btn btn-delete-success-close rounded-pill fw-bold" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/controlNavegacion.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let cardToDelete = null;
+            const deleteModalEl = document.getElementById('deleteConfirmModal');
+            const deleteModal = new bootstrap.Modal(deleteModalEl);
+
+            const deleteSuccessModalEl = document.getElementById('deleteSuccessModal');
+            const deleteSuccessModal = new bootstrap.Modal(deleteSuccessModalEl);
+
+            document.querySelectorAll('.btn-cancelar').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    cardToDelete = e.target.closest('.solicitud-card');
+                    
+                    // Extraer datos de la tarjeta para el modal
+                    const datos = cardToDelete.querySelectorAll('.solicitud-dato');
+                    if (datos.length >= 3) {
+                        document.getElementById('modalEncargado').innerHTML = datos[0].innerHTML;
+                        document.getElementById('modalDocente').innerHTML = datos[1].innerHTML;
+                        document.getElementById('modalFecha').innerHTML = datos[2].innerHTML;
+                    }
+
+                    deleteModal.show();
+                });
+            });
+
+            document.getElementById('btnConfirmDelete').addEventListener('click', () => {
+                if (cardToDelete) {
+                    cardToDelete.remove();
+                    cardToDelete = null;
+                }
+                deleteModal.hide();
+
+                // Mostrar el modal de éxito tras cerrar el de confirmación
+                deleteModalEl.addEventListener('hidden.bs.modal', function onHidden() {
+                    deleteModalEl.removeEventListener('hidden.bs.modal', onHidden);
+                    deleteSuccessModal.show();
+                });
+            });
+        });
+    </script>
 </body>
+
 </html>
+
