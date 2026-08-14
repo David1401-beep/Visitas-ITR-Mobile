@@ -395,6 +395,94 @@ body {
   filter: brightness(0) invert(1);
 }
 
+/* Selectores de Fecha y Hora en cápsulas (Docentes / Boceto) */
+.datetime-group-container {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  width: 100%;
+}
+
+.datetime-field-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.datetime-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #555555;
+  margin-bottom: 6px;
+  margin-left: 8px;
+  text-align: left;
+  line-height: 1.2;
+  width: 100%;
+}
+
+.datetime-capsule {
+  position: relative;
+  width: 100%;
+  height: 42px;
+  background-color: #1d2939;
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.datetime-capsule:hover {
+  background-color: #2a3b52;
+}
+
+.datetime-capsule:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.datetime-value {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #ffffff;
+  text-align: left;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.datetime-icon {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  user-select: none;
+  filter: invert(1); /* Makes the icon white assuming it's black */
+}
+
+.datetime-native-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.docentes-request-page .request-content {
+  padding: 24px 28px 40px;
+}
+
 /* Área amplia para describir el motivo de la visita. */
 .request-reason {
   min-height: 108px;
@@ -979,6 +1067,73 @@ body.login-page {
   object-fit: contain;
   filter: brightness(0) invert(1);
   display: block;
+}
+
+/* Ajustes para el color gris en crear solicitud de docentes */
+.docentes-request-page .request-control {
+  background-color: #d8d8d8;
+  color: #000000;
+}
+
+.docentes-request-page .request-control:focus {
+  background-color: #d8d8d8;
+  color: #000000;
+  box-shadow: 0 0 0 0.15rem rgba(0, 0, 0, 0.25);
+}
+
+.docentes-request-page .request-reason::placeholder,
+.docentes-request-page .request-input-pill::placeholder,
+.docentes-request-page .request-description::placeholder {
+  color: #555555;
+}
+
+.docentes-request-page .request-select {
+  --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.docentes-request-page .request-select option {
+  color: #000000;
+  background-color: #d8d8d8;
+}
+
+.docentes-request-page .datetime-capsule {
+  background-color: #d8d8d8;
+}
+
+.docentes-request-page .datetime-capsule:hover {
+  background-color: #c8c8c8;
+}
+
+.docentes-request-page .datetime-value {
+  color: #000000;
+}
+
+.docentes-request-page .datetime-icon {
+  filter: none;
+}
+
+/* Espaciado disperso para la página de docentes */
+.docentes-request-page .margin-dispersed {
+  margin-bottom: 28px;
+}
+
+/* El input de Asunto con forma de píldora */
+.docentes-request-page .request-input-pill {
+  height: 42px;
+  border-radius: 9999px;
+  padding: 6px 16px;
+}
+
+/* Textarea de la Descripción más grande que el resto */
+.docentes-request-page .request-description {
+  min-height: 160px;
+  border-radius: 20px;
+  padding: 12px 16px;
+  resize: none;
+}
+
+.docentes-request-page .form-label {
+  color: #000000;
 }
 
 /* Ajustes para teléfonos más estrechos que la maqueta de referencia. */
