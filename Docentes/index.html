@@ -1,46 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio - Visitas ITR</title>
-    <link rel="shortcut icon" href="../img/logoRicaldone.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="../css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Inicio - Control de Visitas</title>
+  
+  <link rel="stylesheet" href="../css/styleDocente.css">
+
 </head>
 <body>
-    
-    <div class="app-container">
 
-        <footer>
-            <nav aria-label="Navegación principal">
-                <ul class="bottom-nav">
-                    <li class="nav-item active">
-                        <a href="dashboard.html" aria-label="Inicio" aria-current="page">
-                            <img src="../img/casa.png" alt="">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="crearSolicitud.html" aria-label="Citas">
-                            <img src="../img/calendario.png" alt="">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" aria-label="Notificaciones">
-                            <img src="../img/notificacion.png" alt="">
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" aria-label="Usuario">
-                            <img src="../img/usuario.png" alt="">
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </footer>
+  <div class="app-container">
+    
+
+    <div class="app-header">
+      <h1>Inicio</h1>
+      <img src="logo.png" alt="Logo" class="header-logo">
     </div>
-    <script src="../js/controlNavegacion.js"></script>
+
+    <main>
+
+      <div class="greeting-card">
+        <h2>¡Hola, Jose Pérez</h2>
+        <p>¡Que tengas un excelente dia.</p>
+      </div>
+
+
+      <div class="action-grid">
+        <a href="#" class="action-card active">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm1.8 12.1-4.5 4.5c-.2.2-.5.2-.7 0l-2.1-2.1c-.2-.2-.2-.5 0-.7l.7-.7c.2-.2.5-.2.7 0l1 1 3.8-3.8c.2-.2.5-.2.7 0l.7.7c.1.2.1.5-.1.7z"/></svg>
+          </div>
+          <span>Solicitudes</span>
+        </a>
+
+        <a href="#" class="action-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+          </div>
+          <span>Mis Citas</span>
+        </a>
+
+        <a href="#" class="action-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24"><path d="M20 2v3h2v2h-2v3h-2V2h2M4 9v6h3l5 5V4L7 9H4m11 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02Z"/></svg>
+          </div>
+          <span>Comunicados</span>
+        </a>
+      </div>
+
+      <div class="tasks-container">
+        <div class="tasks-title">Tareas Pendientes</div>
+        <div class="tasks-card">
+          <div class="task-item">
+            <span>1- Revisar Solicitud de Cita</span>
+            <button class="btn-review">Revisar</button>
+          </div>
+          <div class="task-item">
+            <span>2- Confirmar Cita para Mañana</span>
+            <button class="btn-review">Revisar</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+        <nav aria-label="Navegación principal">
+            <ul class="bottom-nav">
+                <li class="nav-item">
+                    <a href="index.html" aria-label="Inicio">
+                        <img src="img/casa.png" alt="">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="Citas.html" aria-label="Citas">
+                        <img src="img/calendario.png" alt="">
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="notificaciones.html" aria-label="Notificaciones" aria-current="page">
+                        <img src="img/notificacion.png" alt="">
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="perfil.html" aria-label="Usuario">
+                        <img src="img/usuario.png" alt="">
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
+
+  </div>
+
 </body>
 </html>

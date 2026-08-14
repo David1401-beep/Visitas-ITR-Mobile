@@ -1,0 +1,222 @@
+body {
+    background-color: #2d313a; 
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  .app-container {
+    width: 100%;
+    max-width: 414px;
+    height: 100vh;
+    max-height: 896px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    background-color: #ffffff;
+  }
+
+  .app-header h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #000000;
+  }
+
+  .header-logo {
+    width: 40px;
+  }
+
+  .app-container main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 1.2rem;
+  }
+
+  .greeting-card {
+    background-color: #202938;
+    border-radius: 16px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
+
+  .greeting-card h2 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+  }
+
+  .greeting-card p {
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    margin: 0;
+  }
+
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .action-card {
+    border-radius: 14px;
+    padding: 1rem 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    background-color: #e5e7eb;
+    color: #000000;
+  }
+
+  .action-card.active {
+    background-color: #202938;
+    color: #ffffff;
+  }
+
+  .icon-box {
+    background-color: #000000;
+    border-radius: 12px;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.6rem;
+  }
+
+  .icon-box svg {
+    width: 24px;
+    height: 24px;
+    fill: #ffffff;
+  }
+
+  .action-card span {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-align: center;
+  }
+
+
+  .tasks-container {
+    background-color: #e5e7eb;
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .tasks-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #000000;
+    margin-bottom: 0.8rem;
+  }
+
+  .tasks-card {
+    background-color: #202938;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .task-item:last-child {
+    border-bottom: none;
+  }
+
+  .task-item span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .btn-review {
+    background-color: #e5e7eb !important;
+    color: #000000 !important;
+    border: none !important;
+    border-radius: 20px !important;
+    padding: 0.3rem 0.9rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    cursor: pointer;
+    margin: 0 !important;
+    width: auto !important;
+  }
+
+
+  footer {
+    background-color: #202938;
+    padding: 0.6rem 0;
+  }
+
+  .bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none !important;
+    list-style-type: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .bottom-nav li {
+    list-style: none !important;
+    list-style-type: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .bottom-nav li::marker {
+    content: "" !important;
+  }
+
+  .bottom-nav li a {
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+  }
+
+  .bottom-nav li.active a {
+    background-color: #000000;
+    border-radius: 20px;
+    padding: 0.5rem 1.2rem;
+    width: auto;
+  }
+
+  .nav-icon {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
