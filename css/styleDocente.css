@@ -333,3 +333,56 @@ footer {
     color: #212529;
     max-width: 220px;
 }
+
+/* MODAL DE SOLICITUD RECHAZADA EN DOCENTES */
+.reject-success-modal .modal-dialog {
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.reject-success-modal .modal-content {
+    border-radius: 22px !important;
+    background-color: #d8d8d8;
+    color: #000000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    min-height: 320px;
+}
+
+.reject-success-modal .modal-body {
+    padding: 28px 20px 24px;
+}
+
+.reject-success-title {
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: #000000;
+    max-width: 220px;
+}
+
+.reject-success-icon {
+    width: 72px;
+    height: 72px;
+}
+
+.reject-success-text {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #212529;
+    max-width: 220px;
+}
+
+.btn-cerrar-modal-rechazo {
+    background-color: #8b2500 !important;
+    color: #ffffff !important;
+    border: none !important;
+    width: 140px;
+    min-height: 36px;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.18);
+    transition: background-color 0.15s ease !important;
+}
+
+.btn-cerrar-modal-rechazo:hover {
+    background-color: #701b00 !important;
+    color: #ffffff !important;
+}
