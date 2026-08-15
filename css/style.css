@@ -395,6 +395,117 @@ body {
   filter: brightness(0) invert(1);
 }
 
+/* Agrupador de fecha y hora en paralelo tipo botón */
+.datetime-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 22px;
+  width: 100%;
+}
+
+.datetime-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.datetime-label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #000000;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+/* Estilos unificados para todos los campos de formulario de la solicitud de docente */
+.docentes-request-page .request-field,
+.docentes-request-page .datetime-row {
+  margin-bottom: 22px;
+}
+
+.docentes-request-page .form-label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #000000;
+  margin-bottom: 6px;
+  margin-left: 2px;
+  text-align: left;
+  display: block;
+}
+
+.docentes-request-page .datetime-label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #000000;
+  margin-bottom: 6px;
+  text-align: center;
+  display: block;
+}
+
+.docentes-request-page .request-control {
+  border: 0;
+  background-color: #d8d8d8 !important;
+  color: #000000 !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: left;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 50px;
+  min-height: 42px;
+  padding: 8px 18px;
+}
+
+.docentes-request-page .request-control::placeholder {
+  color: #666666;
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.docentes-request-page .request-control:focus {
+  background-color: #cccccc !important;
+  color: #000000 !important;
+  box-shadow: 0 0 0 0.15rem rgba(0, 0, 0, 0.1) !important;
+  outline: none;
+}
+
+/* Campos de fecha y hora centrados */
+.docentes-request-page input[type="date"].request-control,
+.docentes-request-page input[type="time"].request-control {
+  text-align: center;
+}
+
+/* Selector desplegable con estilo claro a la izquierda */
+.docentes-request-page select.request-control {
+  --bs-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  text-align: left;
+  text-align-last: left;
+  padding-left: 18px;
+  font-weight: 500;
+}
+
+.docentes-request-page select.request-control option {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Indicadores de fecha y hora */
+.docentes-request-page input[type="date"]::-webkit-calendar-picker-indicator,
+.docentes-request-page input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: none;
+  opacity: 0.7;
+}
+
+/* Motivo de la visita / Descripción de la convocatoria más grande */
+.docentes-request-page textarea.request-reason-large {
+  min-height: 140px;
+  border-radius: 20px;
+  padding: 12px 18px;
+  resize: none;
+  text-align: left;
+}
+
 /* Área amplia para describir el motivo de la visita. */
 .request-reason {
   min-height: 108px;

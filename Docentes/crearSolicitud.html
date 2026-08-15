@@ -20,45 +20,35 @@
         </header>
 
         <main class="request-content container-fluid">
+        
             <form class="request-form needs-validation mx-auto" action="#" method="post" novalidate>
-
-                <div class="request-field margin-dispersed">
-                    <label class="form-label fw-bold ms-1 mb-1" for="visit-subject">Asunto</label>
-                    <input type="text" class="request-control request-input-pill form-control" id="visit-subject" name="visit_subject"
+                <div class="request-field">
+                    <label class="form-label" for="visit-subject">Asunto</label>
+                    <input class="request-control form-control" type="text" id="visit-subject" name="visit_subject"
                         placeholder="Asunto" required>
                 </div>
 
-                <div class="datetime-group-container margin-dispersed">
-                    <div class="datetime-field-item">
-                        <label class="datetime-label fw-bold ms-1 mb-1" for="visit-date">Fecha</label>
-                        <div class="datetime-capsule" id="date-capsule" title="Seleccionar fecha">
-                            <input class="datetime-native-input" type="date" id="visit-date" name="visit_date" value="2026-06-15" required>
-                            <span class="datetime-value" id="date-display">15/6/2026</span>
-                            <img src="../img/calendario.png" alt="Calendario" class="datetime-icon">
-                        </div>
+                <div class="datetime-row">
+                    <div class="datetime-field">
+                        <label class="datetime-label" for="visit-date">Fecha</label>
+                        <input class="request-control form-control" type="date" id="visit-date"
+                            name="visit_date" required>
                     </div>
-
-                    <div class="datetime-field-item">
-                        <label class="datetime-label fw-bold ms-1 mb-1" for="visit-time">Hora</label>
-                        <div class="datetime-capsule" id="time-capsule" title="Seleccionar hora">
-                            <input class="datetime-native-input" type="time" id="visit-time" name="visit_time" value="10:30" required>
-                            <span class="datetime-value" id="time-display">10:30 A.M</span>
-                            <svg class="datetime-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                        </div>
+                    <div class="datetime-field">
+                        <label class="datetime-label" for="visit-time">Hora</label>
+                        <input class="request-control form-control" type="time" id="visit-time"
+                            name="visit_time" required>
                     </div>
                 </div>
 
-                <div class="request-field margin-dispersed">
-                    <label class="form-label fw-bold ms-1 mb-1" for="visit-description">Descripción de la convocatoria</label>
-                    <textarea class="request-control request-description form-control" id="visit-description" name="visit_description"
+                <div class="request-field">
+                    <label class="form-label" for="visit-reason">Descripción de la convocatoria</label>
+                    <textarea class="request-control request-reason-large form-control" id="visit-reason" name="visit_reason"
                         placeholder="Mensaje" required></textarea>
                 </div>
 
-                <div class="request-field teacher-field margin-dispersed">
-                    <label class="form-label fw-bold ms-1 mb-1" for="teacher">Estudiante</label>
+                <div class="request-field">
+                    <label class="form-label" for="teacher">Estudiante</label>
                     <select class="request-control request-select form-select" id="teacher" name="teacher" required>
                         <option value="David Eduardo Ramírez Escobar">David Eduardo Ramírez Escobar</option>
                         <option value="Samuel Antonio Cabrera Molina">Samuel Antonio Cabrera Molina</option>
@@ -78,7 +68,7 @@
             <nav aria-label="Navegación principal">
                 <ul class="bottom-nav">
                     <li class="nav-item">
-                        <a href="dashboard.html" aria-label="Inicio">
+                        <a href="index.html" aria-label="Inicio">
                             <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
                         </a>
                     </li>
@@ -88,12 +78,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" aria-label="Notificaciones">
+                        <a href="Agenda.html" aria-label="Notificaciones">
                             <i class="bi bi-bell-fill nav-icon" aria-hidden="true"></i>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" aria-label="Usuario">
+                        <a href="perfil.html" aria-label="Usuario">
                             <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
                         </a>
                     </li>
