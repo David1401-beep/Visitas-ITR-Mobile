@@ -1127,6 +1127,38 @@ body.login-page {
     padding-left: 32px;
   }
 
+
+/* Ajustes para teléfonos más estrechos que la maqueta de referencia. */
+@media (max-width: 360px) {
+  .app-container header {
+    padding-right: 28px;
+    padding-left: 28px;
+  }
+
+  .app-container .home-content {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .request-page .request-header {
+    padding-right: 20px;
+    padding-left: 32px;
+  }
+
+  .request-page .app-container .request-content {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .request-submit {
+    width: min(246px, 100%);
+  }
+
+  .appointments-page .appointments-header {
+    padding-right: 18px;
+    padding-left: 32px;
+  }
+
   .appointments-page .app-container .appointments-content {
     padding-right: 24px;
     padding-left: 24px;
@@ -1137,4 +1169,134 @@ body.login-page {
   }
 
   
+}
+
+/*------------------------------------------------------------------------------------------------------------------*/
+/* PANTALLA DE INICIO DOCENTE */
+
+.docentes-home-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.2rem;
+}
+
+.greeting-card {
+  background-color: #202938;
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.greeting-card h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.greeting-card p {
+  font-size: 0.95rem;
+  color: #e5e7eb;
+  margin: 0;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  margin-bottom: 1.8rem;
+}
+
+.action-card {
+  border-radius: 14px;
+  padding: 1rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  background-color: #e5e7eb;
+  color: #000000;
+}
+
+.action-card.active {
+  background-color: #202938;
+  color: #ffffff;
+}
+
+.icon-box {
+  background-color: #000000;
+  border-radius: 12px;
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.6rem;
+}
+
+.icon-box svg {
+  width: 24px;
+  height: 24px;
+  fill: #ffffff;
+}
+
+.action-card span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.tasks-container {
+  background-color: #e5e7eb;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tasks-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #000000;
+  margin-bottom: 0.8rem;
+}
+
+.tasks-card {
+  background-color: #202938;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-item span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.btn-review {
+  background-color: #e5e7eb !important;
+  color: #000000 !important;
+  border: none !important;
+  border-radius: 20px !important;
+  padding: 0.3rem 0.9rem !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  margin: 0 !important;
+  width: auto !important;
 }
