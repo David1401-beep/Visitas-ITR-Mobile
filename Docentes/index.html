@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Inicio - Control de Visitas</title>
-  
+  <link rel="shortcut icon" href="../img/logoRicaldone.png" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../css/styleDocente.css">
 
 </head>
@@ -13,16 +15,16 @@
   <div class="app-container">
     
 
-    <div class="app-header">
+    <header class="app-header">
       <h1>Inicio</h1>
-      <img src="logo.png" alt="Logo" class="header-logo">
-    </div>
+      <img src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone" class="header-logo">
+    </header>
 
     <main>
 
       <div class="greeting-card">
-        <h2>¡Hola, Jose Pérez</h2>
-        <p>¡Que tengas un excelente dia.</p>
+        <h2>¡Hola, José Pérez!</h2>
+        <p>¡Que tengas un excelente día!</p>
       </div>
 
 
@@ -67,24 +69,24 @@
     <footer>
         <nav aria-label="Navegación principal">
             <ul class="bottom-nav">
-                <li class="nav-item">
-                    <a href="index.html" aria-label="Inicio">
-                        <img src="img/casa.png" alt="">
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="Citas.html" aria-label="Citas">
-                        <img src="img/calendario.png" alt="">
-                    </a>
-                </li>
                 <li class="nav-item active">
-                    <a href="notificaciones.html" aria-label="Notificaciones" aria-current="page">
-                        <img src="img/notificacion.png" alt="">
+                    <a href="index.html" aria-label="Inicio" aria-current="page">
+                        <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="perfil.html" aria-label="Usuario">
-                        <img src="img/usuario.png" alt="">
+                    <a href="crearSolicitud.html" aria-label="Citas">
+                        <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" aria-label="Notificaciones">
+                        <i class="bi bi-bell-fill nav-icon" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" aria-label="Usuario">
+                        <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
                     </a>
                 </li>
             </ul>
@@ -93,5 +95,6 @@
 
   </div>
 
+  <script src="../js/controlNavegacion.js"></script>
 </body>
 </html>
