@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revisión de Solicitud - Visitas ITR</title>
+  <link rel="shortcut icon" href="../img/logoRicaldone.png" type="image/x-icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/styleDocente.css">
+</head>
+
+<body>
+
+  <div class="app-container">
+    <!-- Header con botón de regresar -->
+    <header class="home-header d-flex align-items-center justify-content-between px-3 py-3">
+      <div class="d-flex align-items-center gap-2">
+        <a href="solicitudes.html" class="text-dark fs-5 text-decoration-none" aria-label="Volver">
+          <i class="bi bi-arrow-left"></i>
+        </a>
+        <h1 class="h6 fw-bold mb-0 text-dark">Solicitudes</h1>
+      </div>
+      <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+    </header>
+
+    <main class="main-content flex-grow-1 px-3 py-2 overflow-auto d-flex flex-column align-items-center">
+      <h2 class="text-center fw-bold fs-5 mb-4 text-dark">Revision de Solicitud</h2>
+
+      <div class="review-card p-4 mx-auto shadow-sm">
+        <h3 id="review-nombre" class="fw-bold fs-5 mb-3 text-dark">Jholman Alegria</h3>
+
+        <h4 class="fw-bold fs-6 mb-2 text-dark">Detalles de la Solicitud</h4>
+
+        <p class="mb-2 text-dark">
+          <b>Motivo:</b> <span id="review-motivo">Reunion Academica</span>
+        </p>
+
+        <p class="mb-3 text-dark">
+          <b>Descripcion:</b> <span id="review-descripcion">Quisiera aclarar unas dudas con respecto a las notas de mi hijo</span>
+        </p>
+
+        <label for="review-comments" class="fw-bold mb-2 text-dark d-block">Comentarios de la revision</label>
+        <textarea id="review-comments" class="form-control bg-white border-0 rounded-3 p-3 mb-4 shadow-sm" rows="3" placeholder="Realizar comentarios"></textarea>
+
+        <div class="d-flex justify-content-center gap-3">
+          <button id="btn-aceptar-solicitud" class="btn btn-warning rounded-pill fw-bold px-4" type="button">Aceptar</button>
+          <button class="btn btn-danger rounded-pill fw-bold px-4" type="button">Rechazar</button>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <nav aria-label="Navegación principal">
+        <ul class="bottom-nav">
+          <li class="nav-item">
+            <a href="index.html" aria-label="Inicio">
+              <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a href="Agenda.html" aria-label="Citas" aria-current="page">
+              <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="comunicados.html" aria-label="Notificaciones">
+              <i class="bi bi-megaphone-fill nav-icon" aria-hidden="true"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="perfil.html" aria-label="Usuario">
+              <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </footer>
+  </div>
+
+  <!-- Modal de éxito tras aceptar la solicitud (con idénticas dimensiones al modal de Padre) -->
+  <div class="modal fade accept-success-modal" id="acceptSuccessModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center border-0">
+        <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+          <h2 class="accept-success-title fw-bold">Solicitud Aceptada</h2>
+
+          <div class="accept-success-icon my-3">
+            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="36" stroke="#70c745" stroke-width="6"/>
+              <path d="M24 40L36 52L58 28" stroke="#70c745" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <p class="accept-success-text mb-4">
+            La solicitud de <span id="modal-solicitante-texto">Jholman Alegría</span> ha sido aceptada con éxito.<br>
+            Se ha enviado una notificación al solicitante.
+          </p>
+
+          <button type="button" class="btn btn-delete-success-close rounded-pill fw-bold" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <script src="../js/Docente/Controller/controlRevisarSolicitud.js"></script>
+</body>
+
+</html>

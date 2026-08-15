@@ -87,6 +87,12 @@ body {
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     background-color: #e5e7eb;
     color: #000000;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.action-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .action-card.active {
@@ -243,4 +249,87 @@ footer {
 
 .bottom-nav .nav-item .nav-icon::before {
     vertical-align: 0;
+}
+
+/* AJUSTE DE TAMAÑO Y ESPACIADOS EN TARJETA DE SOLICITUDES EN DOCENTES */
+.appointment-card {
+    min-height: auto !important;
+    max-width: 330px !important;
+    width: 100% !important;
+    border-radius: 16px !important;
+}
+
+.appointment-card .card-body {
+    padding: 1.8rem 1.4rem !important;
+}
+
+.appointment-card #pending-appointment-title {
+    font-size: 1.25rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.appointment-card .appointment-description {
+    margin-top: 0.6rem !important;
+    font-size: 0.98rem !important;
+}
+
+.appointment-card .btn-primary {
+    color: #000000 !important;
+}
+
+/* PANTALLA DE REVISIÓN DE SOLICITUD */
+.review-card {
+    background-color: #d3d1d1;
+    border-radius: 20px;
+    max-width: 340px;
+    width: 100%;
+    padding: 2.8rem 1.4rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    color: #000000;
+}
+
+.review-card textarea {
+    resize: none;
+    font-size: 0.95rem;
+}
+
+.review-card textarea::placeholder {
+    color: #9ca3af;
+}
+
+/* MODAL DE SOLICITUD ACEPTADA (Idéntico a Padre delete-success-modal) */
+.accept-success-modal .modal-dialog {
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.accept-success-modal .modal-content {
+    border-radius: 22px !important;
+    background-color: #d8d8d8;
+    color: #000000;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    min-height: 320px;
+}
+
+.accept-success-modal .modal-body {
+    padding: 28px 20px 24px;
+}
+
+.accept-success-title {
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: #000000;
+    max-width: 220px;
+}
+
+.accept-success-icon {
+    width: 72px;
+    height: 72px;
+}
+
+.accept-success-text {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: #212529;
+    max-width: 220px;
 }
