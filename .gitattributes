@@ -1,0 +1,5 @@
+# Mantiene consistentes los archivos de código y reduce conflictos por saltos de línea.
+.gitattributes text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
