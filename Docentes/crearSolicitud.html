@@ -32,21 +32,16 @@
                     <div class="datetime-field-item">
                         <label class="datetime-label fw-bold ms-1 mb-1" for="visit-date">Fecha</label>
                         <div class="datetime-capsule" id="date-capsule" title="Seleccionar fecha">
-                            <input class="datetime-native-input" type="date" id="visit-date" name="visit_date" value="2026-06-15" required>
-                            <span class="datetime-value" id="date-display">15/6/2026</span>
-                            <img src="../img/calendario.png" alt="Calendario" class="datetime-icon">
+                            <input class="datetime-native-input" type="date" id="visit-date" name="visit_date"
+                                value="2026-06-15" aria-label="Fecha de la cita" required>
                         </div>
                     </div>
 
                     <div class="datetime-field-item">
                         <label class="datetime-label fw-bold ms-1 mb-1" for="visit-time">Hora</label>
                         <div class="datetime-capsule" id="time-capsule" title="Seleccionar hora">
-                            <input class="datetime-native-input" type="time" id="visit-time" name="visit_time" value="10:30" required>
-                            <span class="datetime-value" id="time-display">10:30 A.M</span>
-                            <svg class="datetime-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
+                            <input class="datetime-native-input" type="time" id="visit-time" name="visit_time"
+                                value="10:30" aria-label="Hora de la cita" required>
                         </div>
                     </div>
                 </div>
@@ -78,12 +73,12 @@
             <nav aria-label="Navegación principal">
                 <ul class="bottom-nav">
                     <li class="nav-item">
-                        <a href="dashboard.html" aria-label="Inicio">
+                        <a href="index.html" aria-label="Inicio">
                             <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a href="crearSolicitud.html" aria-label="Citas" aria-current="page">
+                        <a href="Agenda.html" aria-label="Agenda" aria-current="location">
                             <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
                         </a>
                     </li>

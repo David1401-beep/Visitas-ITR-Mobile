@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Solicitudes - Visitas ITR</title>
+    <link rel="shortcut icon" href="../img/logoRicaldone.png" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="request-list-page">
+    <div class="app-container">
+        <header class="request-list-header d-flex align-items-center justify-content-between">
+            <h1 class="request-list-title fw-bold">Solicitudes</h1>
+            <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+        </header>
+
+        <main class="request-list-content container-fluid">
+            <section class="request-list" aria-label="Solicitudes pendientes">
+                <article class="request-summary-card">
+                    <h2 class="request-summary-student fw-bold">Jholman Alegría</h2>
+
+                    <dl class="request-summary-details">
+                        <div>
+                            <dt>Motivo:</dt>
+                            <dd>Reunión Académica</dd>
+                        </div>
+                        <div>
+                            <dt>Fecha:</dt>
+                            <dd>10/5/2026</dd>
+                        </div>
+                        <div>
+                            <dt>Hora:</dt>
+                            <dd>9:00 A.M</dd>
+                        </div>
+                    </dl>
+
+                    <div class="request-summary-actions">
+                        <a class="request-list-action request-list-review" href="revisarSolicitud.html?solicitud=1">
+                            Revisar
+                        </a>
+                        <button class="request-list-action request-list-postpone" type="button">
+                            Posponer
+                        </button>
+                    </div>
+                </article>
+
+                <article class="request-summary-card">
+                    <h2 class="request-summary-student fw-bold">David Ramírez</h2>
+
+                    <dl class="request-summary-details">
+                        <div>
+                            <dt>Motivo:</dt>
+                            <dd>Aclarar dudas</dd>
+                        </div>
+                        <div>
+                            <dt>Fecha:</dt>
+                            <dd>11/5/2026</dd>
+                        </div>
+                        <div>
+                            <dt>Hora:</dt>
+                            <dd>10:00 A.M</dd>
+                        </div>
+                    </dl>
+
+                    <div class="request-summary-actions">
+                        <a class="request-list-action request-list-review" href="revisarSolicitud.html?solicitud=2">
+                            Revisar
+                        </a>
+                        <button class="request-list-action request-list-postpone" type="button">
+                            Posponer
+                        </button>
+                    </div>
+                </article>
+            </section>
+        </main>
+
+        <footer>
+            <nav aria-label="Navegación principal">
+                <ul class="bottom-nav">
+                    <li class="nav-item">
+                        <a href="index.html" aria-label="Inicio">
+                            <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="Agenda.html" aria-label="Agenda" aria-current="location">
+                            <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" aria-label="Comunicados">
+                            <i class="bi bi-megaphone-fill nav-icon" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" aria-label="Usuario">
+                            <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+    </div>
+</body>
+
+</html>

@@ -1,24 +1,45 @@
+/* ========================================================================== */
+/* VARIABLES Y ESTRUCTURA COMPARTIDA                                           */
+/* ========================================================================== */
+
+:root {
+  --app-max-width: 414px;
+  --app-max-height: 896px;
+  --color-page-background: #212121;
+  --color-surface: #ffffff;
+  --color-text: #000000;
+  --color-panel-dark: #202938;
+  --color-footer: #1b2533;
+  --color-muted-surface: #e5e7eb;
+  --color-accent: #ffca05;
+  --color-accent-hover: #e7b700;
+  --app-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  --main-padding: 1rem;
+  --footer-background: var(--color-footer);
+  --footer-padding: 12px 16px 20px;
+}
 
 /* Fondo exterior que permite resaltar la aplicación en una computadora. */
 body {
-  background-color: #212121;
+  background-color: var(--color-page-background);
   margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 /* Contenedor que simula la pantalla de un teléfono. */
 .app-container {
   width: 100%;
-  max-width: 414px;
+  max-width: var(--app-max-width);
   height: 100vh;
-  max-height: 896px;
-  background-color: white;
+  max-height: var(--app-max-height);
+  background-color: var(--color-surface);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--app-shadow);
   position: relative;
   overflow: hidden;
 }
@@ -51,7 +72,38 @@ body {
 .app-container main {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem;
+  padding: var(--main-padding);
+}
+
+/* Estados visuales compartidos por las acciones amarillas. */
+.appointment-link:hover,
+.appointment-link:focus-visible,
+.request-submit:hover,
+.request-submit:focus-visible,
+.request-modal-close:hover,
+.request-modal-close:focus-visible,
+.btn-delete-success-close:hover,
+.btn-delete-success-close:focus-visible,
+.appointments-action-create:hover,
+.appointments-action-create:focus-visible {
+  background-color: var(--color-accent-hover);
+  color: var(--color-text);
+}
+
+.appointment-link:hover,
+.appointment-link:focus-visible,
+.request-submit:hover,
+.request-submit:focus-visible,
+.request-modal-close:hover,
+.request-modal-close:focus-visible {
+  border-color: var(--color-accent-hover);
+}
+
+/* Estado compartido por las acciones destructivas. */
+.btn-cancelar:hover,
+.btn-modal-delete:hover {
+  background-color: #923737;
+  color: #ffffff;
 }
 
 /* Distribución vertical del contenido de la pantalla de inicio. */
@@ -93,21 +145,13 @@ body {
 .appointment-link {
   margin-top: auto;
   padding: 4px 18px;
-  border-color: #ffca05;
-  background-color: #ffca05;
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
   color: #000000;
   font-size: 1rem;
   line-height: 1.2;
   box-shadow: 0 7px 3px rgba(0, 0, 0, 0.18);
 }
-
-.appointment-link:hover,
-.appointment-link:focus-visible {
-  border-color: #e7b700;
-  background-color: #e7b700;
-  color: #000000;
-}
-
 
 .notices-card {
   min-height: 227px;
@@ -191,11 +235,6 @@ body {
   border: none;
 }
 
-.btn-cancelar:hover {
-  background-color: #923737;
-  color: #ffffff;
-}
-
 /* Modal de confirmación para eliminar solicitud */
 .confirm-delete-modal .modal-dialog {
   max-width: 320px;
@@ -250,11 +289,6 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.btn-modal-delete:hover {
-  background-color: #923737;
-  color: #ffffff;
-}
-
 /* Modal de éxito de eliminación de solicitud */
 .delete-success-modal .modal-dialog {
   max-width: 280px;
@@ -293,7 +327,7 @@ body {
 }
 
 .btn-delete-success-close {
-  background-color: #ffca05;
+  background-color: var(--color-accent);
   color: #000000;
   border: none;
   width: 140px;
@@ -301,12 +335,6 @@ body {
   font-size: 0.9rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.18);
   transition: background-color 0.15s ease;
-}
-
-.btn-delete-success-close:hover,
-.btn-delete-success-close:focus-visible {
-  background-color: #e7b700;
-  color: #000000;
 }
 
 /*------------------------------------------------------------------------------------------------------------------*/
@@ -413,18 +441,11 @@ body {
   width: 246px;
   min-height: 41px;
   padding: 7px 18px;
-  border-color: #ffca05;
-  background-color: #ffca05;
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
   color: #000000;
   font-size: 1rem;
   box-shadow: 0 7px 3px rgba(0, 0, 0, 0.24);
-}
-
-.request-submit:hover,
-.request-submit:focus-visible {
-  border-color: #e7b700;
-  background-color: #e7b700;
-  color: #000000;
 }
 
 /* La barra es un poco más alta en esta vista, como en la referencia. */
@@ -490,18 +511,11 @@ body {
   min-height: 35px;
   margin-top: auto;
   padding: 5px 16px;
-  border-color: #ffca05;
-  background-color: #ffca05;
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
   color: #000000;
   font-size: 0.875rem;
   box-shadow: 0 6px 3px rgba(0, 0, 0, 0.22);
-}
-
-.request-modal-close:hover,
-.request-modal-close:focus-visible {
-  border-color: #e7b700;
-  background-color: #e7b700;
-  color: #000000;
 }
 
 /*------------------------------------------------------------------------------------------------------------------*/
@@ -592,13 +606,7 @@ body {
 }
 
 .appointments-action-create {
-  background-color: #ffca05;
-}
-
-.appointments-action-create:hover,
-.appointments-action-create:focus-visible {
-  background-color: #e7b700;
-  color: #000000;
+  background-color: var(--color-accent);
 }
 
 .appointments-action-list {
@@ -619,33 +627,12 @@ body {
 /*------------------------------------------------------------------------------------------------------------------*/
 /* PANTALLA DE PERFIL */
 
-body.profile-page {
-  background-color: #212121;
-}
-
-.app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.2rem;
-  background-color: #ffffff;
-}
-
-.app-header h1 {
-  margin: 0;
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #000000;
-}
-
-.header-logo {
-  width: 40px;
+body.profile-page,
+body.notifications-page {
+  --main-padding: 1rem 1.2rem;
 }
 
 .profile-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem 1.2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -718,16 +705,6 @@ body.profile-page {
 /*------------------------------------------------------------------------------------------------------------------*/
 /* PANTALLA DE NOTIFICACIONES */
 
-body.notifications-page {
-  background-color: #212121;
-}
-
-.notifications-content {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem 1.2rem;
-}
-
 .section-title {
   font-weight: 800;
   color: #000000;
@@ -766,14 +743,7 @@ body.notifications-page {
 /*------------------------------------------------------------------------------------------------------------------*/
 /* PANTALLA DE INICIO DE SESIÓN Y BIENVENIDA */
 
-body.welcome-page,
-body.login-page {
-  background-color: #212121;
-}
-
 .welcome-content {
-  flex: 1;
-  overflow-y: auto;
   padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -815,8 +785,6 @@ body.login-page {
 }
 
 .login-content {
-  flex: 1;
-  overflow-y: auto;
   padding: 2.5rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -899,11 +867,178 @@ body.login-page {
 
 /*------------------------------------------------------------------------------------------------------------------*/
 
+/* ========================================================================== */
+/* PANTALLA DE INICIO PARA DOCENTES                                            */
+/* ========================================================================== */
+
+/* Estandariza el footer compacto en todas las pantallas de Docentes. */
+body.teacher-home-page,
+body.agenda-page,
+body.docentes-request-page,
+body.review-request-page,
+body.request-list-page {
+  --footer-background: var(--color-panel-dark);
+  --footer-padding: 0.6rem 0;
+}
+
+/* Conserva las variaciones visuales propias del inicio docente. */
+body.teacher-home-page {
+  --color-page-background: #2d313a;
+  --main-padding: 1rem 1.2rem;
+}
+
+.teacher-home-page .app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  background-color: var(--color-surface);
+}
+
+.teacher-home-page .app-header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.teacher-home-page .header-logo {
+  width: 40px;
+  height: auto;
+}
+
+.teacher-home-page .greeting-card {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem 1rem;
+  border-radius: 16px;
+  background-color: var(--color-panel-dark);
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.teacher-home-page .greeting-card h2 {
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.teacher-home-page .greeting-card p {
+  margin: 0;
+  color: var(--color-muted-surface);
+  font-size: 0.95rem;
+}
+
+.teacher-home-page .action-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  margin-right: 1.25rem;
+  margin-bottom: 1.8rem;
+  margin-left: 1.25rem;
+}
+
+.teacher-home-page .action-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0.4rem;
+  border-radius: 14px;
+  background-color: var(--color-muted-surface);
+  color: var(--color-text);
+  text-decoration: none !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.teacher-home-page .action-card.active {
+  background-color: var(--color-panel-dark);
+  color: #ffffff;
+}
+
+.teacher-home-page .icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  margin-bottom: 0.6rem;
+  border-radius: 12px;
+  background-color: var(--color-text);
+}
+
+.teacher-home-page .icon-box svg {
+  width: 24px;
+  height: 24px;
+  fill: #ffffff;
+}
+
+.teacher-home-page .action-card span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.teacher-home-page .tasks-container {
+  padding: 1rem;
+  border-radius: 16px;
+  background-color: var(--color-muted-surface);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.teacher-home-page .tasks-title {
+  margin-bottom: 0.8rem;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.teacher-home-page .tasks-card {
+  overflow: hidden;
+  border-radius: 12px;
+  background-color: var(--color-panel-dark);
+}
+
+.teacher-home-page .task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.teacher-home-page .task-item:last-child {
+  border-bottom: 0;
+}
+
+.teacher-home-page .task-item span {
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.teacher-home-page .btn-review {
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0.3rem 0.9rem !important;
+  border: 0 !important;
+  border-radius: 20px !important;
+  background-color: var(--color-muted-surface) !important;
+  color: var(--color-text) !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+}
+
+/* ========================================================================== */
+/* NAVEGACIÓN INFERIOR COMPARTIDA                                              */
+/* ========================================================================== */
+
 .app-container footer {
   flex: 0 0 auto;
-  background-color: #1b2533;
-  padding: 12px 16px 20px 16px;
+  padding: var(--footer-padding);
   border-top: none;
+  background-color: var(--footer-background);
   z-index: 10;
   box-sizing: border-box;
 }
@@ -914,21 +1049,9 @@ body.login-page {
   justify-content: space-around;
   align-items: center;
   list-style: none !important;
-  list-style-type: none !important;
   margin: 0 !important;
   padding: 0 !important;
   width: 100%;
-}
-
-.bottom-nav li {
-  list-style: none !important;
-  list-style-type: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.bottom-nav li::marker {
-  content: "" !important;
 }
 
 /* Forma, tamaño y alineación de cada opción de navegación. */
@@ -944,19 +1067,6 @@ body.login-page {
   padding: 0;
 }
 
-/* Resalta con un círculo negro perfecto la opción seleccionada. */
-.bottom-nav .nav-item.active {
-  background-color: #000000;
-  border-radius: 50%;
-}
-
-.bottom-nav .nav-item.active a {
-  background-color: #000000;
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-}
-
 /* Hace que toda el área de la opción sea clicable y elimina estilos del enlace. */
 .bottom-nav .nav-item a {
   display: flex;
@@ -965,11 +1075,20 @@ body.login-page {
   width: 100%;
   height: 100%;
   text-decoration: none;
+  color: #ffffff;
   background: transparent;
   padding: 0;
   margin: 0;
   border: none;
   border-radius: 50%;
+}
+
+/* Resalta con un círculo negro perfecto la opción seleccionada. */
+.bottom-nav .nav-item.active a {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--color-text);
 }
 
 /* Mantiene uniformes el tamaño y el color de los Bootstrap Icons del footer. */
@@ -992,7 +1111,9 @@ body.login-page {
     padding-left: 28px;
   }
 
-  .app-container .home-content {
+  .app-container .home-content,
+  .request-page .app-container .request-content,
+  .appointments-page .app-container .appointments-content {
     padding-right: 24px;
     padding-left: 24px;
   }
@@ -1000,11 +1121,6 @@ body.login-page {
   .request-page .request-header {
     padding-right: 20px;
     padding-left: 32px;
-  }
-
-  .request-page .app-container .request-content {
-    padding-right: 24px;
-    padding-left: 24px;
   }
 
   .request-submit {
@@ -1016,14 +1132,497 @@ body.login-page {
     padding-left: 32px;
   }
 
-  .appointments-page .app-container .appointments-content {
-    padding-right: 24px;
-    padding-left: 24px;
-  }
-
   .appointments-action {
     width: min(207px, 100%);
   }
 
   
+}
+/* -------------------------------------------------- */
+/* PANTALLA PARA CREAR UNA SOLICITUD DOCENTE */
+
+/* Mantiene el formulario centrado y con el mismo margen lateral de la referencia. */
+.docentes-request-page .request-content {
+  padding: 20px 40px 48px;
+}
+
+.docentes-request-page .request-form {
+  width: 100%;
+  max-width: 320px;
+}
+
+.docentes-request-page .margin-dispersed {
+  margin-bottom: 18px;
+}
+
+.docentes-request-page .request-form .form-label,
+.docentes-request-page .datetime-label {
+  display: block;
+  margin: 0 0 4px 4px !important;
+  color: #555555;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+.docentes-request-page .request-input-pill {
+  min-height: 35px;
+  padding: 6px 12px;
+  border-radius: 7px;
+}
+
+/* Fecha y hora comparten una cuadrícula de dos columnas. */
+.docentes-request-page .datetime-group-container {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.docentes-request-page .datetime-field-item {
+  min-width: 0;
+}
+
+/* Cápsula oscura que contiene un input nativo y completamente funcional. */
+.docentes-request-page .datetime-capsule {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #1d2939;
+  box-shadow: 0 7px 4px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.15s ease;
+}
+
+.docentes-request-page .datetime-capsule:focus-within {
+  box-shadow: 0 0 0 0.15rem rgba(108, 117, 125, 0.25);
+}
+
+.docentes-request-page .datetime-native-input {
+  width: 100%;
+  min-width: 0;
+  min-height: 40px;
+  padding: 6px 10px;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  color: #ffffff;
+  color-scheme: dark;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.docentes-request-page .datetime-native-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: brightness(0) invert(1);
+}
+
+.docentes-request-page .request-description {
+  min-height: 108px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  resize: none;
+}
+
+.docentes-request-page .request-input-pill::placeholder,
+.docentes-request-page .request-description::placeholder {
+  color: #d5d7db;
+  opacity: 1;
+}
+
+.docentes-request-page .request-select {
+  font-size: 0.875rem;
+}
+
+.docentes-request-page .request-submit {
+  margin-top: 4px;
+}
+
+/* -------------------------------------------------- */
+/* PANTALLA DE REVISIÓN DE SOLICITUD */
+
+.review-request-page .review-header {
+  padding: 24px 16px 10px;
+}
+
+.review-header-heading {
+  gap: 14px;
+}
+
+.review-back-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--color-text);
+  font-size: 1.125rem;
+  text-decoration: none;
+}
+
+.review-back-link:hover,
+.review-back-link:focus-visible {
+  color: var(--color-text);
+}
+
+.review-section-name {
+  font-size: 0.875rem;
+}
+
+.review-request-page .review-content {
+  padding: 0 clamp(27px, 9.7vw, 40px) 56px;
+}
+
+.review-title {
+  margin: 0 0 32px;
+  color: var(--color-text);
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 330px;
+  min-height: clamp(314px, 121vw, 500px);
+  margin: 0 auto;
+  padding: 18px 16px 22px;
+  border-radius: 9px;
+  background-color: #d3d1d1;
+  color: var(--color-text);
+  box-shadow: 0 9px 4px rgba(0, 0, 0, 0.12);
+}
+
+.review-student {
+  margin: 0 0 24px;
+  font-size: 0.9375rem;
+  line-height: 1.2;
+}
+
+.review-details {
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.review-subtitle {
+  margin: 0 0 12px;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+.review-detail {
+  margin: 0 0 8px;
+}
+
+.review-description {
+  margin-bottom: 18px;
+}
+
+.review-form {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.review-comments-label {
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+.review-request-page .review-comments {
+  flex: 0 0 104px;
+  height: 104px;
+  min-height: 104px;
+  padding: 10px;
+  border: 0;
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  resize: none;
+}
+
+.review-request-page .review-comments:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 0.15rem rgba(108, 117, 125, 0.25);
+}
+
+.review-request-page .review-comments::placeholder {
+  color: #777777;
+  opacity: 1;
+}
+
+.review-actions {
+  gap: 24px;
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+.review-action {
+  width: 100%;
+  max-width: 100px;
+  min-height: 40px;
+  padding: 6px 14px;
+  border: 0;
+  color: var(--color-text);
+  font-size: 0.8125rem;
+  box-shadow: 0 6px 3px rgba(0, 0, 0, 0.2);
+}
+
+.review-accept {
+  background-color: var(--color-accent);
+}
+
+.review-accept:hover,
+.review-accept:focus-visible {
+  background-color: var(--color-accent-hover);
+  color: var(--color-text);
+}
+
+.review-reject {
+  background-color: #982b0c;
+  color: #ffffff;
+}
+
+.review-reject:hover,
+.review-reject:focus-visible {
+  background-color: #7f220a;
+  color: #ffffff;
+}
+
+/* -------------------------------------------------- */
+/* LISTADO DE SOLICITUDES PARA DOCENTES */
+
+/* Alinea el título de la sección y el logo con la maqueta móvil. */
+.request-list-page .request-list-header {
+  padding: 30px clamp(10px, 3.9vw, 16px) 27px clamp(30px, 9.7vw, 40px);
+}
+
+.request-list-page .request-list-title {
+  margin: 0;
+  font-size: clamp(0.6875rem, 4.25vw, 1rem);
+  line-height: 1.2;
+}
+
+.request-list-page .school-logo {
+  width: clamp(38px, 14vw, 58px);
+  height: clamp(38px, 14vw, 58px);
+}
+
+/* Reserva el espacio central para las tarjetas y permite desplazarlas si fuera necesario. */
+.request-list-page .request-list-content {
+  padding: 20px clamp(21px, 7.8vw, 32px) 28px clamp(30px, 9.7vw, 40px);
+}
+
+.request-list {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* Resume los datos esenciales de cada solicitud pendiente. */
+.request-summary-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 330px;
+  min-height: clamp(151px, 58.5vw, 242px);
+  margin: 0 auto;
+  padding: clamp(11px, 4.3vw, 18px) clamp(12px, 4.3vw, 18px) clamp(17px, 5.8vw, 24px);
+  border-radius: 8px;
+  background-color: #d3d1d1;
+  color: var(--color-text);
+  text-align: center;
+  box-shadow: 0 8px 4px rgba(0, 0, 0, 0.12);
+}
+
+.request-summary-student {
+  margin: 0 0 clamp(8px, 2.9vw, 12px);
+  font-size: clamp(0.6875rem, 4.25vw, 0.9375rem);
+  line-height: 1.2;
+}
+
+/* dl conserva la relación semántica entre cada etiqueta y su valor. */
+.request-summary-details {
+  margin: 0;
+  font-size: clamp(0.625rem, 3.9vw, 0.875rem);
+  line-height: 1.25;
+}
+
+.request-summary-details div {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: clamp(8px, 2.9vw, 12px);
+}
+
+.request-summary-details div:last-child {
+  margin-bottom: 0;
+}
+
+.request-summary-details dt {
+  font-weight: 700;
+}
+
+.request-summary-details dd {
+  margin: 0;
+}
+
+/* Acciones visuales de cada tarjeta: revisar abre el detalle y posponer queda listo para su lógica. */
+.request-summary-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(27px, 9vw, 38px);
+  margin-top: auto;
+  padding-top: clamp(13px, 4.6vw, 19px);
+}
+
+.request-list-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(58px, 23vw, 95px);
+  min-height: clamp(19px, 6.7vw, 28px);
+  padding: 3px 8px;
+  border: 0;
+  border-radius: 999px;
+  color: var(--color-text);
+  font-size: clamp(0.5625rem, 3.4vw, 0.75rem);
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: 0 5px 3px rgba(0, 0, 0, 0.2);
+}
+
+.request-list-review {
+  background-color: var(--color-accent);
+}
+
+.request-list-review:hover,
+.request-list-review:focus-visible {
+  background-color: var(--color-accent-hover);
+  color: var(--color-text);
+}
+
+.request-list-postpone {
+  background-color: #8ab6ea;
+}
+
+.request-list-postpone:hover,
+.request-list-postpone:focus-visible {
+  background-color: #73a5df;
+  color: var(--color-text);
+}
+
+/* -------------------------------------------------- */
+/* PANTALLA DE AGENDA */
+
+/* Posición del título y del logo. */
+.agenda-page .agenda-header {
+    padding: 34px 18px 30px 48px;
+}
+
+/* Espacio disponible para las tarjetas y los enlaces. */
+.agenda-page .agenda-content {
+    padding: 12px 40px 48px;
+}
+
+/* Coloca las tarjetas una debajo de la otra. */
+.agenda-list {
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+}
+
+/* Apariencia general de cada tarjeta. */
+.agenda-card {
+    width: 100%;
+    min-height: 147px;
+    border-radius: 8px;
+    background-color: #d3d1d1;
+    color: #000000;
+    box-shadow: 0 9px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* Espacio interior de la tarjeta. */
+.agenda-card .card-body {
+    padding: 12px 13px;
+}
+
+/* Fecha principal de cada tarjeta. */
+.agenda-date {
+    margin-bottom: 18px;
+    font-size: 0.9375rem;
+    line-height: 1.2;
+}
+
+/* Horario y descripción del evento. */
+.agenda-event {
+    margin-bottom: 26px;
+    font-size: 0.9375rem;
+    line-height: 1.2;
+}
+
+/* Separación entre las tarjetas y los enlaces inferiores. */
+.agenda-actions {
+    gap: 33px;
+    margin-top: 82px;
+}
+
+/* Enlaces con apariencia de botón. */
+.agenda-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 178px;
+    min-height: 39px;
+    padding: 6px 18px;
+    border: 0;
+    background-color: var(--color-accent);
+    color: #000000;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    box-shadow: 0 7px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* Cambio visual al colocar el cursor o usar el teclado. */
+.agenda-button:hover,
+.agenda-button:focus-visible {
+    background-color: var(--color-accent-hover);
+    color: #000000;
+}
+
+@media (max-width: 360px) {
+  .teacher-home-page .action-grid {
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+  }
+
+  .docentes-request-page .request-content {
+    padding-right: 24px;
+    padding-left: 24px;
+  }
+
+  .docentes-request-page .datetime-group-container {
+    grid-template-columns: 1fr;
+  }
+
+  .review-title {
+    margin-bottom: 24px;
+  }
+
+  .review-card {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .review-actions {
+    gap: 16px;
+  }
 }
