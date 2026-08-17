@@ -13,25 +13,25 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="login-page">
-    <div class="app-container">
-        <main class="login-content container-fluid d-flex flex-column align-items-center justify-content-center">
-            <img src="../img/logoRicaldone.png" alt="Salesianos Ricaldone" class="logo-small">
+<body class="login-page" id="cuerpo-inicio-sesion">
+    <div class="app-container" id="contenedor-aplicacion">
+        <main class="login-content container-fluid d-flex flex-column align-items-center justify-content-center" id="contenido-inicio-sesion">
+            <img id="imagen-logo" src="../img/logoRicaldone.png" alt="Salesianos Ricaldone" class="logo-small">
 
-            <h2 class="login-title">Iniciar Sesion</h2>
+            <h2 class="login-title" id="titulo-inicio-sesion">Iniciar Sesion</h2>
 
-            <form action="index.html" class="login-form">
-                <input type="email" class="custom-input" placeholder="Correo" required aria-label="Correo">
+            <form action="index.html" class="login-form" id="formulario-inicio-sesion">
+                <input type="email" id="correo-usuario" class="custom-input" placeholder="Correo" required aria-label="Correo">
                 
-                <div class="password-wrapper">
-                    <input type="password" id="passwordInput" class="custom-input" placeholder="Contraseña" required aria-label="Contraseña">
+                <div class="password-wrapper" id="contenedor-contrasena">
+                    <input type="password" id="contrasena-usuario" class="custom-input" placeholder="Contraseña" required aria-label="Contraseña">
                 </div>
 
-                <button type="submit" class="btn-yellow">Iniciar</button>
+                <button type="submit" class="btn-yellow" id="btn-iniciar-sesion">Iniciar</button>
             </form>
         </main>
     </div>
 
-    <script src="../js/Padre/Controller/controlNavegacion.js"></script>
+    <script id="script-control-navegacion" src="../js/Padre/Controller/controlNavegacion.js"></script>
 </body>
 </html>

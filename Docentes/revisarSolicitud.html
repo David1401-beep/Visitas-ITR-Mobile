@@ -13,36 +13,36 @@
   <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="review-request-page">
-  <div class="app-container">
-        <header class="profile-header d-flex align-items-center justify-content-between">
-            <h1 class="h6 fw-bold mb-0">Revisión de Solicitud</h1>
-            <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+<body class="review-request-page" id="cuerpo-revision-solicitud">
+  <div class="app-container" id="contenedor-aplicacion">
+        <header class="profile-header d-flex align-items-center justify-content-between" id="encabezado-principal">
+            <h1 class="h6 fw-bold mb-0" id="titulo-encabezado">Revisión de Solicitud</h1>
+            <img class="school-logo" id="imagen-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
 
-    <main class="review-content container-fluid">
-      <h1 class="review-title fw-bold text-center">Revisión de Solicitud</h1>
+    <main class="review-content container-fluid" id="contenido-revision-solicitud">
+      <h1 class="review-title fw-bold text-center" id="titulo-revision">Revisión de Solicitud</h1>
 
-      <article class="review-card" aria-labelledby="review-nombre">
-        <h2 class="review-student fw-bold" id="review-nombre">Jholman Alegría</h2>
+      <article class="review-card" id="tarjeta-revision" aria-labelledby="nombre-solicitante-revision">
+        <h2 class="review-student fw-bold" id="nombre-solicitante-revision">Jholman Alegría</h2>
 
-        <section class="review-details" aria-labelledby="request-details-title">
-          <h3 class="review-subtitle fw-bold" id="request-details-title">Detalles de la Solicitud</h3>
-          <p class="review-detail">
-            <strong>Motivo:</strong> <span id="review-motivo">Reunión Académica</span>
+        <section class="review-details" id="seccion-detalles-solicitud" aria-labelledby="titulo-detalles-solicitud">
+          <h3 class="review-subtitle fw-bold" id="titulo-detalles-solicitud">Detalles de la Solicitud</h3>
+          <p class="review-detail" id="parrafo-motivo">
+            <strong id="etiqueta-motivo">Motivo:</strong> <span id="motivo-solicitud">Reunión Académica</span>
           </p>
-          <p class="review-detail review-description">
-            <strong>Descripción:</strong>
-            <span id="review-descripcion">Quisiera aclarar unas dudas con respecto a las notas de mi hijo</span>
+          <p class="review-detail review-description" id="parrafo-descripcion">
+            <strong id="etiqueta-descripcion">Descripción:</strong>
+            <span id="descripcion-solicitud">Quisiera aclarar unas dudas con respecto a las notas de mi hijo</span>
           </p>
         </section>
 
-        <form class="review-form" action="#" method="post">
-          <label class="review-comments-label fw-bold" for="review-comments">Comentarios de la revisión</label>
-          <textarea class="review-comments form-control" id="review-comments" name="review_comments"
+        <form class="review-form" id="formulario-revision-solicitud" action="#" method="post">
+          <label class="review-comments-label fw-bold" id="etiqueta-comentarios-revision" for="comentarios-revision">Comentarios de la revisión</label>
+          <textarea class="review-comments form-control" id="comentarios-revision" name="review_comments"
             placeholder="Realizar comentarios"></textarea>
 
-          <div class="review-actions d-flex align-items-center justify-content-around">
+          <div class="review-actions d-flex align-items-center justify-content-around" id="contenedor-acciones-revision">
             <button class="review-action review-accept btn rounded-pill fw-bold" id="btn-aceptar-solicitud"
               type="button">Aceptar</button>
             <button class="review-action review-reject btn rounded-pill fw-bold" id="btn-rechazar-solicitud"
@@ -52,78 +52,79 @@
       </article>
     </main>
 
-    <footer>
-      <nav aria-label="Navegación principal">
-        <ul class="bottom-nav">
-          <li class="nav-item">
-            <a href="index.html" aria-label="Inicio"><i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i></a>
+    <footer id="pie-pagina">
+      <nav id="navegacion-principal" aria-label="Navegación principal">
+        <ul class="bottom-nav" id="lista-navegacion-inferior">
+          <li class="nav-item" id="item-nav-inicio">
+            <a id="enlace-nav-inicio" href="index.html" aria-label="Inicio"><i class="bi bi-house-door-fill nav-icon" id="icono-nav-inicio" aria-hidden="true"></i></a>
           </li>
-          <li class="nav-item active">
-            <a href="Agenda.html" aria-label="Citas" aria-current="location"><i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i></a>
+          <li class="nav-item active" id="item-nav-agenda">
+            <a id="enlace-nav-agenda" href="Agenda.html" aria-label="Citas" aria-current="location"><i class="bi bi-calendar3 nav-icon" id="icono-nav-agenda" aria-hidden="true"></i></a>
           </li>
-          <li class="nav-item">
-            <a href="comunicados.html" aria-label="Comunicados"><i class="bi bi-megaphone-fill nav-icon" aria-hidden="true"></i></a>
+          <li class="nav-item" id="item-nav-comunicados">
+            <a id="enlace-nav-comunicados" href="comunicados.html" aria-label="Comunicados"><i class="bi bi-megaphone-fill nav-icon" id="icono-nav-comunicados" aria-hidden="true"></i></a>
           </li>
-          <li class="nav-item">
-            <a href="perfil.html" aria-label="Usuario"><i class="bi bi-person-circle nav-icon" aria-hidden="true"></i></a>
+          <li class="nav-item" id="item-nav-perfil">
+            <a id="enlace-nav-perfil" href="perfil.html" aria-label="Usuario"><i class="bi bi-person-circle nav-icon" id="icono-nav-perfil" aria-hidden="true"></i></a>
           </li>
         </ul>
       </nav>
     </footer>
   </div>
 
-  <div class="modal fade accept-success-modal" id="acceptSuccessModal" tabindex="-1"
-    aria-labelledby="accept-success-title" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content text-center border-0">
-        <div class="modal-body d-flex flex-column align-items-center justify-content-center">
-          <h2 class="accept-success-title fw-bold" id="accept-success-title">Solicitud Aceptada</h2>
-          <div class="accept-success-icon my-3" aria-hidden="true">
-            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Modal de Solicitud Aceptada -->
+  <div class="modal fade accept-success-modal" id="modal-exito-aceptar" tabindex="-1"
+    aria-labelledby="titulo-exito-aceptar" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="dialogo-modal-aceptar">
+      <div class="modal-content text-center border-0" id="contenido-modal-aceptar">
+        <div class="modal-body d-flex flex-column align-items-center justify-content-center" id="cuerpo-modal-aceptar">
+          <h2 class="accept-success-title fw-bold" id="titulo-exito-aceptar">Solicitud Aceptada</h2>
+          <div class="accept-success-icon my-3" id="contenedor-icono-exito-aceptar" aria-hidden="true">
+            <svg id="svg-icono-exito-aceptar" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="40" cy="40" r="36" stroke="#70c745" stroke-width="6" />
               <path d="M24 40L36 52L58 28" stroke="#70c745" stroke-width="6" stroke-linecap="round"
                 stroke-linejoin="round" />
             </svg>
           </div>
-          <p class="accept-success-text mb-4">
-            La solicitud de <span id="modal-solicitante-texto">Jholman Alegría</span> ha sido aceptada con éxito.<br>
+          <p class="accept-success-text mb-4" id="mensaje-exito-aceptar">
+            La solicitud de <span id="texto-solicitante-aceptar">Jholman Alegría</span> ha sido aceptada con éxito.<br>
             Se ha enviado una notificación al solicitante.
           </p>
-          <button class="btn btn-delete-success-close rounded-pill fw-bold" type="button"
+          <button class="btn btn-delete-success-close rounded-pill fw-bold" id="btn-cerrar-modal-aceptar" type="button"
             data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="modal fade reject-success-modal" id="rejectSuccessModal" tabindex="-1"
-    aria-labelledby="reject-success-title" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content text-center border-0">
-        <div class="modal-body d-flex flex-column align-items-center justify-content-center">
-          <h2 class="reject-success-title fw-bold" id="reject-success-title">Solicitud Rechazada</h2>
-          <div class="reject-success-icon my-3" aria-hidden="true">
-            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Modal de Solicitud Rechazada -->
+  <div class="modal fade reject-success-modal" id="modal-exito-rechazar" tabindex="-1"
+    aria-labelledby="titulo-exito-rechazar" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" id="dialogo-modal-rechazar">
+      <div class="modal-content text-center border-0" id="contenido-modal-rechazar">
+        <div class="modal-body d-flex flex-column align-items-center justify-content-center" id="cuerpo-modal-rechazar">
+          <h2 class="reject-success-title fw-bold" id="titulo-exito-rechazar">Solicitud Rechazada</h2>
+          <div class="reject-success-icon my-3" id="contenedor-icono-exito-rechazar" aria-hidden="true">
+            <svg id="svg-icono-exito-rechazar" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="40" cy="40" r="36" stroke="#ff4d4d" stroke-width="6" />
               <path d="M26 26L54 54M54 26L26 54" stroke="#ff4d4d" stroke-width="6" stroke-linecap="round" />
             </svg>
           </div>
-          <h3 class="fw-bold fs-6 mb-2 text-dark" id="modal-solicitante-rechazo-nombre">Jholman Alegría</h3>
-          <p class="reject-success-text mb-4">
+          <h3 class="fw-bold fs-6 mb-2 text-dark" id="texto-solicitante-rechazar-nombre">Jholman Alegría</h3>
+          <p class="reject-success-text mb-4" id="mensaje-exito-rechazar">
             La solicitud ha sido rechazada con éxito.<br>
             Se le notificará el motivo al solicitante.
           </p>
-          <button class="btn btn-cerrar-modal-rechazo rounded-pill fw-bold" type="button"
+          <button class="btn btn-cerrar-modal-rechazo rounded-pill fw-bold" id="btn-cerrar-modal-rechazar" type="button"
             data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+  <script id="script-bootstrap" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
     crossorigin="anonymous"></script>
-  <script src="../js/Docente/Controller/controlRevisarSolicitud.js"></script>
+  <script id="script-control-revisar-solicitud" src="../js/Docente/Controller/controlRevisarSolicitud.js"></script>
 </body>
-
 </html>

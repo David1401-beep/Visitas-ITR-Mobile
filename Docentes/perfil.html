@@ -14,50 +14,50 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="profile-page">
-    <div class="app-container">
-        <header class="profile-header d-flex align-items-center justify-content-between">
-            <h1 class="h6 fw-bold mb-0">Perfil</h1>
-            <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+<body class="profile-page" id="cuerpo-perfil">
+    <div class="app-container" id="contenedor-aplicacion">
+        <header class="profile-header d-flex align-items-center justify-content-between" id="encabezado-principal">
+            <h1 class="h6 fw-bold mb-0" id="titulo-encabezado">Perfil</h1>
+            <img class="school-logo" id="imagen-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
 
-        <main class="profile-content container-fluid d-flex flex-column align-items-center">
-            <svg class="avatar-icon" viewBox="0 0 24 24">
+        <main class="profile-content container-fluid d-flex flex-column align-items-center" id="contenido-perfil">
+            <svg class="avatar-icon" id="icono-avatar-usuario" viewBox="0 0 24 24">
                 <path fill="#000" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
             </svg>
 
-            <div class="user-name">David Ramirez</div>
+            <div class="user-name" id="nombre-usuario">David Ramirez</div>
 
-            <div class="profile-card">
-                <div class="info-box">
-                    <strong>Correo:</strong> 20250119@ricaldone.edu.sv
+            <div class="profile-card" id="tarjeta-perfil">
+                <div class="info-box" id="caja-informacion-correo">
+                    <strong id="etiqueta-correo">Correo:</strong> 20250119@ricaldone.edu.sv
                 </div>
             </div>
 
-            <a href="../Padres/bienvenida.html" role="button" class="btn-logout">Cerrar Sesión</a>
+            <a href="../Padres/bienvenida.html" role="button" class="btn-logout" id="btn-cerrar-sesion">Cerrar Sesión</a>
         </main>
 
-        <footer>
-            <nav aria-label="Navegación principal">
-                <ul class="bottom-nav">
-                    <li class="nav-item">
-                        <a href="index.html" aria-label="Inicio">
-                            <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
+        <footer id="pie-pagina">
+            <nav id="navegacion-principal" aria-label="Navegación principal">
+                <ul class="bottom-nav" id="lista-navegacion-inferior">
+                    <li class="nav-item" id="item-nav-inicio">
+                        <a id="enlace-nav-inicio" href="index.html" aria-label="Inicio">
+                            <i class="bi bi-house-door-fill nav-icon" id="icono-nav-inicio" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="Agenda.html" aria-label="Citas">
-                            <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-agenda">
+                        <a id="enlace-nav-agenda" href="Agenda.html" aria-label="Citas">
+                            <i class="bi bi-calendar3 nav-icon" id="icono-nav-agenda" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="comunicados.html" aria-label="Notificaciones">
-                            <i class="bi bi-megaphone-fill nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-comunicados">
+                        <a id="enlace-nav-comunicados" href="comunicados.html" aria-label="Notificaciones">
+                            <i class="bi bi-megaphone-fill nav-icon" id="icono-nav-comunicados" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a href="perfil.html" aria-label="Usuario" aria-current="page">
-                            <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item active" id="item-nav-perfil">
+                        <a id="enlace-nav-perfil" href="perfil.html" aria-label="Usuario" aria-current="page">
+                            <i class="bi bi-person-circle nav-icon" id="icono-nav-perfil" aria-hidden="true"></i>
                         </a>
                     </li>
                 </ul>

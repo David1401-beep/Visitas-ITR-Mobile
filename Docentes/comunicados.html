@@ -12,53 +12,52 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="docentes-request-page communications-page">
+<body class="docentes-request-page communications-page" id="cuerpo-comunicados">
 
-    <div class="app-container">
-        <header class="profile-header d-flex align-items-center justify-content-between">
-            <h1 class="h6 fw-bold mb-0">Comunicados</h1>
-            <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+    <div class="app-container" id="contenedor-aplicacion">
+        <header class="profile-header d-flex align-items-center justify-content-between" id="encabezado-principal">
+            <h1 class="h6 fw-bold mb-0" id="titulo-encabezado">Comunicados</h1>
+            <img class="school-logo" id="imagen-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
 
-        <main class="communications-content container-fluid">
-            <form class="communications-form" id="communications-form" action="#" method="post">
-                <label class="visually-hidden" for="communication-message">Contenido del comunicado</label>
-                <textarea class="communications-textarea form-control" id="communication-message"
+        <main class="communications-content container-fluid" id="contenido-comunicados">
+            <form class="communications-form" id="formulario-comunicados" action="#" method="post">
+                <label class="visually-hidden" id="etiqueta-mensaje-comunicado" for="mensaje-comunicado">Contenido del comunicado</label>
+                <textarea class="communications-textarea form-control" id="mensaje-comunicado"
                     name="communication_message" placeholder="Escribe un Aviso..." maxlength="250" required></textarea>
 
-                <button id="submit-btn"
+                <button id="btn-enviar-comunicado"
                     class="communications-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
                     Enviar
                 </button>
             </form>
 
             <!-- Los comunicados enviados se agregan aquí sin recargar la pantalla. -->
-            <section class="communications-list" id="communications-list" aria-label="Comunicados enviados"
+            <section class="communications-list" id="lista-comunicados" aria-label="Comunicados enviados"
                 aria-live="polite"></section>
         </main>
 
-
-        <footer>
-            <nav aria-label="Navegación principal">
-                <ul class="bottom-nav">
-                    <li class="nav-item">
-                        <a href="index.html" aria-label="Inicio">
-                            <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
+        <footer id="pie-pagina">
+            <nav id="navegacion-principal" aria-label="Navegación principal">
+                <ul class="bottom-nav" id="lista-navegacion-inferior">
+                    <li class="nav-item" id="item-nav-inicio">
+                        <a id="enlace-nav-inicio" href="index.html" aria-label="Inicio">
+                            <i class="bi bi-house-door-fill nav-icon" id="icono-nav-inicio" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="Agenda.html" aria-label="Citas">
-                            <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-agenda">
+                        <a id="enlace-nav-agenda" href="Agenda.html" aria-label="Citas">
+                            <i class="bi bi-calendar3 nav-icon" id="icono-nav-agenda" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a href="comunicados.html" aria-label="Notificaciones" aria-current="page">
-                            <i class="bi bi-megaphone-fill nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item active" id="item-nav-comunicados">
+                        <a id="enlace-nav-comunicados" href="comunicados.html" aria-label="Notificaciones" aria-current="page">
+                            <i class="bi bi-megaphone-fill nav-icon" id="icono-nav-comunicados" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="perfil.html" aria-label="Usuario">
-                            <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-perfil">
+                        <a id="enlace-nav-perfil" href="perfil.html" aria-label="Usuario">
+                            <i class="bi bi-person-circle nav-icon" id="icono-nav-perfil" aria-hidden="true"></i>
                         </a>
                     </li>
                 </ul>
@@ -66,7 +65,7 @@
         </footer>
     </div>
 
-    <script src="../js/Docente/Controller/controlComunicados.js"></script>
+    <script id="script-control-comunicados" src="../js/Docente/Controller/controlComunicados.js"></script>
 </body>
 
 </html>

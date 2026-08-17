@@ -12,90 +12,91 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="postpone-request-page">
-    <div class="app-container">
-        <header class="profile-header d-flex align-items-center justify-content-between">
-            <h1 class="h6 fw-bold mb-0">Posponer Solicitud</h1>
-            <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+<body class="postpone-request-page" id="cuerpo-posponer-solicitud">
+    <div class="app-container" id="contenedor-aplicacion">
+        <header class="profile-header d-flex align-items-center justify-content-between" id="encabezado-principal">
+            <h1 class="h6 fw-bold mb-0" id="titulo-encabezado">Posponer Solicitud</h1>
+            <img class="school-logo" id="imagen-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
         
-        <main class="postpone-content container-fluid">
-            <form class="postpone-card" action="#" method="post">
-                <div class="postpone-field">
-                    <label class="postpone-label" for="postpone-date">Nueva fecha sugerida</label>
-                    <input class="postpone-control form-control" id="postpone-date" name="suggested_date"
+        <main class="postpone-content container-fluid" id="contenido-posponer-solicitud">
+            <form class="postpone-card" id="formulario-posponer-solicitud" action="#" method="post">
+                <div class="postpone-field" id="campo-fecha-sugerida">
+                    <label class="postpone-label" id="etiqueta-fecha-sugerida" for="fecha-sugerida">Nueva fecha sugerida</label>
+                    <input class="postpone-control form-control" id="fecha-sugerida" name="suggested_date"
                         type="date" required>
                 </div>
 
-                <div class="postpone-field postpone-time-field">
-                    <label class="postpone-label" for="postpone-time">Nueva hora sugerida</label>
-                    <input class="postpone-control form-control" id="postpone-time" name="suggested_time"
+                <div class="postpone-field postpone-time-field" id="campo-hora-sugerida">
+                    <label class="postpone-label" id="etiqueta-hora-sugerida" for="hora-sugerida">Nueva hora sugerida</label>
+                    <input class="postpone-control form-control" id="hora-sugerida" name="suggested_time"
                         type="time" required>
                 </div>
 
-                <div class="postpone-field postpone-reason-field">
-                    <label class="postpone-label" for="postpone-reason">Motivo de la reprogramación</label>
-                    <textarea class="postpone-control postpone-reason form-control" id="postpone-reason"
+                <div class="postpone-field postpone-reason-field" id="campo-motivo-reprogramacion">
+                    <label class="postpone-label" id="etiqueta-motivo-reprogramacion" for="motivo-reprogramacion">Motivo de la reprogramación</label>
+                    <textarea class="postpone-control postpone-reason form-control" id="motivo-reprogramacion"
                         name="reschedule_reason" required></textarea>
                 </div>
 
-                <button class="postpone-submit btn btn-warning rounded-pill fw-bold" type="submit">
+                <button class="postpone-submit btn btn-warning rounded-pill fw-bold" id="btn-enviar-propuesta" type="submit">
                     Enviar Propuesta
                 </button>
             </form>
         </main>
 
-        <section class="postpone-success-panel" id="postpone-success-panel" role="dialog" aria-modal="true"
-            aria-labelledby="postpone-success-title" hidden>
-            <svg class="postpone-success-icon" viewBox="0 0 100 100" aria-hidden="true">
+        <!-- Panel de éxito -->
+        <section class="postpone-success-panel" id="panel-exito-posponer" role="dialog" aria-modal="true"
+            aria-labelledby="titulo-exito-posponer" hidden>
+            <svg class="postpone-success-icon" id="icono-exito-posponer" viewBox="0 0 100 100" aria-hidden="true">
                 <circle cx="48" cy="52" r="34" fill="none" stroke="currentColor" stroke-width="6" />
                 <path d="M27 48 L47 68 L80 27" fill="none" stroke="currentColor" stroke-width="7"
                     stroke-linecap="round" stroke-linejoin="round" />
             </svg>
 
-            <h2 class="postpone-success-title fw-bold" id="postpone-success-title">
+            <h2 class="postpone-success-title fw-bold" id="titulo-exito-posponer">
                 Propuesta enviada<br>correctamente.
             </h2>
 
-            <p class="postpone-success-message">
+            <p class="postpone-success-message" id="mensaje-exito-posponer">
                 Tu propuesta de reprogramación<br>
                 ha sido enviada con éxito al<br>
                 solicitante.
             </p>
 
-            <div class="postpone-success-details">
-                <h3 class="fw-bold">Detalles de la propuesta:</h3>
-                <p><strong>Nueva Fecha:</strong> <span id="postpone-success-date"></span></p>
-                <p><strong>Nueva Hora:</strong> <span id="postpone-success-time"></span></p>
+            <div class="postpone-success-details" id="detalles-exito-posponer">
+                <h3 class="fw-bold" id="titulo-detalles-exito">Detalles de la propuesta:</h3>
+                <p id="parrafo-fecha-exito"><strong>Nueva Fecha:</strong> <span id="fecha-exito-posponer"></span></p>
+                <p id="parrafo-hora-exito"><strong>Nueva Hora:</strong> <span id="hora-exito-posponer"></span></p>
             </div>
 
-            <button class="postpone-success-close btn btn-warning rounded-pill fw-bold" id="postpone-success-close"
+            <button class="postpone-success-close btn btn-warning rounded-pill fw-bold" id="btn-cerrar-exito-posponer"
                 type="button">
                 Cerrar
             </button>
         </section>
 
-        <footer>
-            <nav aria-label="Navegación principal">
-                <ul class="bottom-nav">
-                    <li class="nav-item">
-                        <a href="index.html" aria-label="Inicio">
-                            <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
+        <footer id="pie-pagina">
+            <nav id="navegacion-principal" aria-label="Navegación principal">
+                <ul class="bottom-nav" id="lista-navegacion-inferior">
+                    <li class="nav-item" id="item-nav-inicio">
+                        <a id="enlace-nav-inicio" href="index.html" aria-label="Inicio">
+                            <i class="bi bi-house-door-fill nav-icon" id="icono-nav-inicio" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a href="Agenda.html" aria-label="Citas" aria-current="location">
-                            <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item active" id="item-nav-agenda">
+                        <a id="enlace-nav-agenda" href="Agenda.html" aria-label="Citas" aria-current="location">
+                            <i class="bi bi-calendar3 nav-icon" id="icono-nav-agenda" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="comunicados.html" aria-label="Comunicados">
-                            <i class="bi bi-megaphone-fill nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-comunicados">
+                        <a id="enlace-nav-comunicados" href="comunicados.html" aria-label="Comunicados">
+                            <i class="bi bi-megaphone-fill nav-icon" id="icono-nav-comunicados" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="perfil.html" aria-label="Usuario">
-                            <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-perfil">
+                        <a id="enlace-nav-perfil" href="perfil.html" aria-label="Usuario">
+                            <i class="bi bi-person-circle nav-icon" id="icono-nav-perfil" aria-hidden="true"></i>
                         </a>
                     </li>
                 </ul>
@@ -103,7 +104,7 @@
         </footer>
     </div>
 
-    <script src="../js/Docente/Controller/controlPosponerSolicitud.js"></script>
+    <script id="script-control-posponer-solicitud" src="../js/Docente/Controller/controlPosponerSolicitud.js"></script>
 </body>
 
 </html>

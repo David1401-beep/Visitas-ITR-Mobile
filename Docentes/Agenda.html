@@ -14,86 +14,88 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="agenda-page">
-    <div class="app-container">
-        <header class="profile-header d-flex align-items-center justify-content-between">
-            <h1 class="h6 fw-bold mb-0">Agenda</h1>
-            <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+<body class="agenda-page" id="cuerpo-agenda">
+    <div class="app-container" id="contenedor-aplicacion">
+        <header class="profile-header d-flex align-items-center justify-content-between" id="encabezado-principal">
+            <h1 class="h6 fw-bold mb-0" id="titulo-encabezado">Agenda</h1>
+            <img class="school-logo" id="imagen-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
 
-        <main class="agenda-content container-fluid">
-            <div class="agenda-list">
+        <main class="agenda-content container-fluid" id="contenido-agenda">
+            <div class="agenda-list" id="lista-agenda">
 
-                <section class="agenda-card card border-0">
-                    <div class="card-body">
-                        <h2 class="agenda-date fw-bold">
+                <!-- Tarjeta de Agenda 1 -->
+                <section class="agenda-card card border-0" id="tarjeta-agenda-1">
+                    <div class="card-body" id="cuerpo-tarjeta-agenda-1">
+                        <h2 class="agenda-date fw-bold" id="fecha-agenda-1">
                             20 de Septiembre
                         </h2>
 
-                        <p class="agenda-event">
-                            <strong>2:00 P.M</strong>
-                            <span>– Escuela de padres</span>
+                        <p class="agenda-event" id="evento-agenda-1-1">
+                            <strong id="hora-evento-1-1">2:00 P.M</strong>
+                            <span id="descripcion-evento-1-1">– Escuela de padres</span>
                         </p>
 
-                        <p class="agenda-event mb-0">
-                            <strong>3:30 P.M</strong>
-                            <span>– Charla</span>
+                        <p class="agenda-event mb-0" id="evento-agenda-1-2">
+                            <strong id="hora-evento-1-2">3:30 P.M</strong>
+                            <span id="descripcion-evento-1-2">– Charla</span>
                         </p>
                     </div>
                 </section>
 
-                <section class="agenda-card card border-0">
-                    <div class="card-body">
-                        <h2 class="agenda-date fw-bold">
+                <!-- Tarjeta de Agenda 2 -->
+                <section class="agenda-card card border-0" id="tarjeta-agenda-2">
+                    <div class="card-body" id="cuerpo-tarjeta-agenda-2">
+                        <h2 class="agenda-date fw-bold" id="fecha-agenda-2">
                             22 de Agosto
                         </h2>
 
-                        <p class="agenda-event">
-                            <strong>2:00 P.M</strong>
-                            <span>– Reunión de padres</span>
+                        <p class="agenda-event" id="evento-agenda-2-1">
+                            <strong id="hora-evento-2-1">2:00 P.M</strong>
+                            <span id="descripcion-evento-2-1">– Reunión de padres</span>
                         </p>
 
-                        <p class="agenda-event mb-0">
-                            <strong>3:30 P.M</strong>
-                            <span>– Tutoría</span>
+                        <p class="agenda-event mb-0" id="evento-agenda-2-2">
+                            <strong id="hora-evento-2-2">3:30 P.M</strong>
+                            <span id="descripcion-evento-2-2">– Tutoría</span>
                         </p>
                     </div>
                 </section>
 
             </div>
 
-            <div class="agenda-actions d-flex flex-column align-items-center">
-                <a class="agenda-button btn rounded-pill fw-bold" href="verSolicitud.html" role="button">
+            <div class="agenda-actions d-flex flex-column align-items-center" id="contenedor-acciones-agenda">
+                <a class="agenda-button btn rounded-pill fw-bold" id="btn-ver-solicitudes" href="verSolicitud.html" role="button">
                     Ver Solicitudes
                 </a>
 
-                <a class="agenda-button btn rounded-pill fw-bold" href="crearSolicitud.html" role="button">
+                <a class="agenda-button btn rounded-pill fw-bold" id="btn-realizar-cita" href="crearSolicitud.html" role="button">
                     Realizar Cita
                 </a>
             </div>
         </main>
 
-        <footer>
-            <nav aria-label="Navegación principal">
-                <ul class="bottom-nav">
-                    <li class="nav-item">
-                        <a href="index.html" aria-label="Inicio">
-                            <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
+        <footer id="pie-pagina">
+            <nav id="navegacion-principal" aria-label="Navegación principal">
+                <ul class="bottom-nav" id="lista-navegacion-inferior">
+                    <li class="nav-item" id="item-nav-inicio">
+                        <a id="enlace-nav-inicio" href="index.html" aria-label="Inicio">
+                            <i class="bi bi-house-door-fill nav-icon" id="icono-nav-inicio" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a href="Agenda.html" aria-label="Citas" aria-current="page">
-                            <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item active" id="item-nav-agenda">
+                        <a id="enlace-nav-agenda" href="Agenda.html" aria-label="Citas" aria-current="page">
+                            <i class="bi bi-calendar3 nav-icon" id="icono-nav-agenda" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="comunicados.html" aria-label="Notificaciones">
-                            <i class="bi bi-megaphone-fill nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-comunicados">
+                        <a id="enlace-nav-comunicados" href="comunicados.html" aria-label="Notificaciones">
+                            <i class="bi bi-megaphone-fill nav-icon" id="icono-nav-comunicados" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="perfil.html" aria-label="Usuario">
-                            <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-perfil">
+                        <a id="enlace-nav-perfil" href="perfil.html" aria-label="Usuario">
+                            <i class="bi bi-person-circle nav-icon" id="icono-nav-perfil" aria-hidden="true"></i>
                         </a>
                     </li>
                 </ul>

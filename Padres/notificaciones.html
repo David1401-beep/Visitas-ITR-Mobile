@@ -14,47 +14,47 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="notifications-page">
-    <div class="app-container">
-        <header class="notifications-header d-flex align-items-center justify-content-between">
-            <h1 class="h6 fw-bold mb-0">Notificaciones</h1>
-            <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+<body class="notifications-page" id="cuerpo-notificaciones">
+    <div class="app-container" id="contenedor-aplicacion">
+        <header class="notifications-header d-flex align-items-center justify-content-between" id="encabezado-principal">
+            <h1 class="h6 fw-bold mb-0" id="titulo-encabezado">Notificaciones</h1>
+            <img class="school-logo" id="imagen-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
 
-        <main class="notifications-content container-fluid">
-            <div class="section-title">Hoy</div>
-            <div class="notification-card">
-                <p><strong>Recordatorio:</strong> Tienen una reunión mañana a las 10:00 A.M.</p>
+        <main class="notifications-content container-fluid" id="contenido-notificaciones">
+            <div class="section-title" id="titulo-seccion-hoy">Hoy</div>
+            <div class="notification-card" id="tarjeta-notificacion-hoy">
+                <p id="texto-notificacion-hoy"><strong id="etiqueta-recordatorio">Recordatorio:</strong> Tienen una reunión mañana a las 10:00 A.M.</p>
             </div>
 
-            <div class="section-title">Anteriores</div>
-            <div class="notification-card">
-                <p>Reunión general de padres este sábado.</p>
-                <span class="time">Ayer</span>
+            <div class="section-title" id="titulo-seccion-anteriores">Anteriores</div>
+            <div class="notification-card" id="tarjeta-notificacion-anterior">
+                <p id="texto-notificacion-anterior">Reunión general de padres este sábado.</p>
+                <span class="time" id="tiempo-notificacion-anterior">Ayer</span>
             </div>
         </main>
 
-        <footer>
-            <nav aria-label="Navegación principal">
-                <ul class="bottom-nav">
-                    <li class="nav-item">
-                        <a href="index.html" aria-label="Inicio">
-                            <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
+        <footer id="pie-pagina">
+            <nav id="navegacion-principal" aria-label="Navegación principal">
+                <ul class="bottom-nav" id="lista-navegacion-inferior">
+                    <li class="nav-item" id="item-nav-inicio">
+                        <a id="enlace-nav-inicio" href="index.html" aria-label="Inicio">
+                            <i class="bi bi-house-door-fill nav-icon" id="icono-nav-inicio" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="Citas.html" aria-label="Citas">
-                            <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-citas">
+                        <a id="enlace-nav-citas" href="Citas.html" aria-label="Citas">
+                            <i class="bi bi-calendar3 nav-icon" id="icono-nav-citas" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a href="notificaciones.html" aria-label="Notificaciones" aria-current="page">
-                            <i class="bi bi-bell-fill nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item active" id="item-nav-notificaciones">
+                        <a id="enlace-nav-notificaciones" href="notificaciones.html" aria-label="Notificaciones" aria-current="page">
+                            <i class="bi bi-bell-fill nav-icon" id="icono-nav-notificaciones" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="perfil.html" aria-label="Usuario">
-                            <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-perfil">
+                        <a id="enlace-nav-perfil" href="perfil.html" aria-label="Usuario">
+                            <i class="bi bi-person-circle nav-icon" id="icono-nav-perfil" aria-hidden="true"></i>
                         </a>
                     </li>
                 </ul>
@@ -62,7 +62,7 @@
         </footer>
     </div>
 
-    <script src="../js/Padre/Controller/controlNavegacion.js"></script>
+    <script id="script-control-navegacion" src="../js/Padre/Controller/controlNavegacion.js"></script>
 </body>
 
 </html>

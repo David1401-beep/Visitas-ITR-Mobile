@@ -11,81 +11,81 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="docentes-request-page">
+<body class="docentes-request-page" id="cuerpo-crear-solicitud">
 
-    <div class="app-container">
-        <header class="home-header d-flex align-items-center justify-content-between">
-            <h1 class="h6 fw-bold mb-0">Crear Solicitud</h1>
-            <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+    <div class="app-container" id="contenedor-aplicacion">
+        <header class="home-header d-flex align-items-center justify-content-between" id="encabezado-principal">
+            <h1 class="h6 fw-bold mb-0" id="titulo-encabezado">Crear Solicitud</h1>
+            <img class="school-logo" id="imagen-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
 
-        <main class="request-content container-fluid">
+        <main class="request-content container-fluid" id="contenido-crear-solicitud">
 
-            <form class="request-form needs-validation mx-auto" action="#" method="post" novalidate>
-                <div class="request-field">
-                    <label class="form-label" for="visit-subject">Asunto</label>
-                    <input class="request-control form-control" type="text" id="visit-subject" name="visit_subject"
+            <form class="request-form needs-validation mx-auto" id="formulario-solicitud" action="#" method="post" novalidate>
+                <div class="request-field" id="campo-asunto">
+                    <label class="form-label" id="etiqueta-asunto" for="asunto-visita">Asunto</label>
+                    <input class="request-control form-control" type="text" id="asunto-visita" name="visit_subject"
                         placeholder="Asunto" required>
                 </div>
 
-                <div class="datetime-row">
-                    <div class="datetime-field">
-                        <label class="datetime-label" for="visit-date">Fecha</label>
-                        <input class="request-control form-control" type="date" id="visit-date"
+                <div class="datetime-row" id="contenedor-fecha-hora">
+                    <div class="datetime-field" id="campo-fecha">
+                        <label class="datetime-label" id="etiqueta-fecha" for="fecha-visita">Fecha</label>
+                        <input class="request-control form-control" type="date" id="fecha-visita"
                             name="visit_date" required>
                     </div>
-                    <div class="datetime-field">
-                        <label class="datetime-label" for="visit-time">Hora</label>
-                        <input class="request-control form-control" type="time" id="visit-time"
+                    <div class="datetime-field" id="campo-hora">
+                        <label class="datetime-label" id="etiqueta-hora" for="hora-visita">Hora</label>
+                        <input class="request-control form-control" type="time" id="hora-visita"
                             name="visit_time" required>
                     </div>
                 </div>
 
-                <div class="request-field">
-                    <label class="form-label" for="visit-reason">Descripción de la convocatoria</label>
-                    <textarea class="request-control request-reason-large form-control" id="visit-reason" name="visit_reason"
+                <div class="request-field" id="campo-descripcion">
+                    <label class="form-label" id="etiqueta-descripcion" for="descripcion-visita">Descripción de la convocatoria</label>
+                    <textarea class="request-control request-reason-large form-control" id="descripcion-visita" name="visit_reason"
                         placeholder="Mensaje" required></textarea>
                 </div>
 
-                <div class="request-field">
-                    <label class="form-label" for="teacher">Estudiante</label>
-                    <select class="request-control request-select form-select" id="teacher" name="teacher" required>
-                        <option value="" selected disabled>Seleccione un estudiante</option>
-                        <option value="David Eduardo Ramírez Escobar">David Eduardo Ramírez Escobar</option>
-                        <option value="Samuel Antonio Cabrera Molina">Samuel Antonio Cabrera Molina</option>
-                        <option value="Jason Steven Miranda Navarrete">Jason Steven Miranda Navarrete</option>
-                        <option value="Allan Adalberto Buendia Vasquez">Allan Adalberto Buendia Vasquez</option>
-                        <option value="Raul Ernesto Mena Quito">Raul Ernesto Mena Quito</option>
+                <div class="request-field" id="campo-estudiante">
+                    <label class="form-label" id="etiqueta-estudiante" for="estudiante-seleccionado">Estudiante</label>
+                    <select class="request-control request-select form-select" id="estudiante-seleccionado" name="teacher" required>
+                        <option id="opcion-predeterminada" value="" selected disabled>Seleccione un estudiante</option>
+                        <option id="opcion-estudiante-1" value="David Eduardo Ramírez Escobar">David Eduardo Ramírez Escobar</option>
+                        <option id="opcion-estudiante-2" value="Samuel Antonio Cabrera Molina">Samuel Antonio Cabrera Molina</option>
+                        <option id="opcion-estudiante-3" value="Jason Steven Miranda Navarrete">Jason Steven Miranda Navarrete</option>
+                        <option id="opcion-estudiante-4" value="Allan Adalberto Buendia Vasquez">Allan Adalberto Buendia Vasquez</option>
+                        <option id="opcion-estudiante-5" value="Raul Ernesto Mena Quito">Raul Ernesto Mena Quito</option>
                     </select>
                 </div>
 
-                <button id="submit-btn" class="request-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
+                <button id="btn-enviar-solicitud" class="request-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
                     Enviar
                 </button>
             </form>
         </main>
 
-        <footer>
-            <nav aria-label="Navegación principal">
-                <ul class="bottom-nav">
-                    <li class="nav-item">
-                        <a href="index.html" aria-label="Inicio">
-                            <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
+        <footer id="pie-pagina">
+            <nav id="navegacion-principal" aria-label="Navegación principal">
+                <ul class="bottom-nav" id="lista-navegacion-inferior">
+                    <li class="nav-item" id="item-nav-inicio">
+                        <a id="enlace-nav-inicio" href="index.html" aria-label="Inicio">
+                            <i class="bi bi-house-door-fill nav-icon" id="icono-nav-inicio" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a href="Agenda.html" aria-label="Citas" aria-current="page">
-                            <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item active" id="item-nav-agenda">
+                        <a id="enlace-nav-agenda" href="Agenda.html" aria-label="Citas" aria-current="page">
+                            <i class="bi bi-calendar3 nav-icon" id="icono-nav-agenda" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="comunicados.html" aria-label="Notificaciones">
-                            <i class="bi bi-megaphone-fill nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-comunicados">
+                        <a id="enlace-nav-comunicados" href="comunicados.html" aria-label="Notificaciones">
+                            <i class="bi bi-megaphone-fill nav-icon" id="icono-nav-comunicados" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="perfil.html" aria-label="Usuario">
-                            <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-perfil">
+                        <a id="enlace-nav-perfil" href="perfil.html" aria-label="Usuario">
+                            <i class="bi bi-person-circle nav-icon" id="icono-nav-perfil" aria-hidden="true"></i>
                         </a>
                     </li>
                 </ul>
@@ -93,25 +93,26 @@
         </footer>
     </div>
 
-    <div class="request-success-modal modal fade" id="requestSuccessModal" tabindex="-1"
-        aria-labelledby="request-success-title" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body d-flex flex-column align-items-center text-center">
-                    <h2 class="fw-bold" id="request-success-title">Solicitud Enviada Correctamente</h2>
+    <!-- Modal de confirmación -->
+    <div class="request-success-modal modal fade" id="modal-solicitud-exitosa" tabindex="-1"
+        aria-labelledby="titulo-modal-exito" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" id="dialogo-modal-exito">
+            <div class="modal-content" id="contenido-modal-exito">
+                <div class="modal-body d-flex flex-column align-items-center text-center" id="cuerpo-modal-exito">
+                    <h2 class="fw-bold" id="titulo-modal-exito">Solicitud Enviada Correctamente</h2>
 
-                    <svg class="request-success-icon" viewBox="0 0 100 100" aria-hidden="true">
+                    <svg class="request-success-icon" id="icono-modal-exito" viewBox="0 0 100 100" aria-hidden="true">
                         <circle cx="48" cy="52" r="34" fill="none" stroke="currentColor" stroke-width="6" />
                         <path d="M27 48 L47 68 L80 27" fill="none" stroke="currentColor" stroke-width="7"
                             stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
 
-                    <p class="request-success-message">
+                    <p class="request-success-message" id="mensaje-modal-exito">
                         La solicitud ha sido enviada con éxito.<br>
                         Se le notificará sobre el estado de su solicitud.
                     </p>
 
-                    <button class="request-modal-close btn btn-warning rounded-pill fw-bold" type="button"
+                    <button class="request-modal-close btn btn-warning rounded-pill fw-bold" id="btn-cerrar-modal" type="button"
                         data-bs-dismiss="modal">
                         Cerrar
                     </button>
@@ -120,9 +121,9 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    <script id="script-bootstrap" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-    <script src="../js/Docente/Controller/controlSolicitud.js"></script>
+    <script id="script-control-solicitud" src="../js/Docente/Controller/controlSolicitud.js"></script>
 </body>
 </html>

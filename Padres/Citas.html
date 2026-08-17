@@ -14,85 +14,85 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="appointments-page">
-    <div class="app-container">
-        <header class="home-header d-flex align-items-center justify-content-between">
-            <h1 class="h6 fw-bold mb-0">Citas</h1>
-            <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+<body class="appointments-page" id="cuerpo-citas">
+    <div class="app-container" id="contenedor-aplicacion">
+        <header class="home-header d-flex align-items-center justify-content-between" id="encabezado-principal">
+            <h1 class="h6 fw-bold mb-0" id="titulo-encabezado">Citas</h1>
+            <img class="school-logo" id="imagen-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
 
-        <main class="appointments-content container-fluid d-flex flex-column align-items-center">
-            <section class="appointments-card card border-0" aria-labelledby="parents-meeting-title">
-                <div class="card-body">
-                    <h2 class="appointments-card-title fw-bold mb-0" id="parents-meeting-title">
+        <main class="appointments-content container-fluid d-flex flex-column align-items-center" id="contenido-citas">
+            <section class="appointments-card card border-0" id="seccion-reunion-padres" aria-labelledby="titulo-reunion-padres">
+                <div class="card-body" id="cuerpo-tarjeta-reunion">
+                    <h2 class="appointments-card-title fw-bold mb-0" id="titulo-reunion-padres">
                         Reunión de padres
                     </h2>
-                    <p class="appointments-location mb-0">
-                        <svg class="appointment-pin" viewBox="0 0 16 20" aria-hidden="true">
+                    <p class="appointments-location mb-0" id="ubicacion-reunion-padres">
+                        <svg class="appointment-pin" id="icono-pin-reunion" viewBox="0 0 16 20" aria-hidden="true">
                             <path
                                 d="M8 0a6 6 0 0 0-6 6c0 4.5 6 14 6 14s6-9.5 6-14A6 6 0 0 0 8 0Zm0 8.5A2.5 2.5 0 1 1 8 3a2.5 2.5 0 0 1 0 5.5Z"
                                 fill="currentColor" />
                         </svg>
-                        <strong>Aula:</strong> 6.2.12
+                        <strong id="etiqueta-aula-reunion">Aula:</strong> 6.2.12
                     </p>
-                    <p class="appointments-date mb-0">
-                        <time datetime="2026-08-20T09:00">20 de Agosto - 9:00 A.M</time>
+                    <p class="appointments-date mb-0" id="fecha-reunion-padres">
+                        <time id="tiempo-reunion-padres" datetime="2026-08-20T09:00">20 de Agosto - 9:00 A.M</time>
                     </p>
                 </div>
             </section>
 
-            <section class="appointments-card card border-0" aria-labelledby="report-card-delivery-title">
-                <div class="card-body">
-                    <h2 class="appointments-card-title fw-bold mb-0" id="report-card-delivery-title">
+            <section class="appointments-card card border-0" id="seccion-entrega-notas" aria-labelledby="titulo-entrega-notas">
+                <div class="card-body" id="cuerpo-tarjeta-notas">
+                    <h2 class="appointments-card-title fw-bold mb-0" id="titulo-entrega-notas">
                         Entrega de Notas
                     </h2>
-                    <p class="appointments-location mb-0">
-                        <svg class="appointment-pin" viewBox="0 0 16 20" aria-hidden="true">
+                    <p class="appointments-location mb-0" id="ubicacion-entrega-notas">
+                        <svg class="appointment-pin" id="icono-pin-notas" viewBox="0 0 16 20" aria-hidden="true">
                             <path
                                 d="M8 0a6 6 0 0 0-6 6c0 4.5 6 14 6 14s6-9.5 6-14A6 6 0 0 0 8 0Zm0 8.5A2.5 2.5 0 1 1 8 3a2.5 2.5 0 0 1 0 5.5Z"
                                 fill="currentColor" />
                         </svg>
-                        <strong>Aula:</strong> 6.2.13
+                        <strong id="etiqueta-aula-notas">Aula:</strong> 6.2.13
                     </p>
-                    <p class="appointments-date mb-0">
-                        <time datetime="2026-04-17T08:00">17 de Abril - 8:00 A.M</time>
+                    <p class="appointments-date mb-0" id="fecha-entrega-notas">
+                        <time id="tiempo-entrega-notas" datetime="2026-04-17T08:00">17 de Abril - 8:00 A.M</time>
                     </p>
                 </div>
             </section>
 
-            <div class="appointments-actions d-flex flex-column align-items-center">
+            <div class="appointments-actions d-flex flex-column align-items-center" id="contenedor-acciones">
                 <a class="appointments-action appointments-action-create btn rounded-pill fw-bold"
-                    href="CrearSolicitud.html" role="button">
+                    id="btn-crear-solicitud" href="CrearSolicitud.html" role="button">
                     Crear Solicitud
                 </a>
-                <a class="appointments-action appointments-action-list btn rounded-pill fw-bold" href="solicitudes.html"
-                    role="button">
+                <a class="appointments-action appointments-action-list btn rounded-pill fw-bold"
+                    id="btn-mis-solicitudes" href="solicitudes.html" role="button">
                     Mis Solicitudes
                 </a>
             </div>
         </main>
 
-        <footer>
-            <nav aria-label="Navegación principal">
-                <ul class="bottom-nav">
-                    <li class="nav-item">
-                        <a href="./index.html" aria-label="Inicio">
-                            <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
+        <footer id="pie-pagina">
+            <nav id="navegacion-principal" aria-label="Navegación principal">
+                <ul class="bottom-nav" id="lista-navegacion-inferior">
+                    <li class="nav-item" id="item-nav-inicio">
+                        <a id="enlace-nav-inicio" href="./index.html" aria-label="Inicio">
+                            <i class="bi bi-house-door-fill nav-icon" id="icono-nav-inicio" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a href="./Citas.html" aria-label="Citas" aria-current="page">
-                            <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item active" id="item-nav-citas">
+                        <a id="enlace-nav-citas" href="./Citas.html" aria-label="Citas" aria-current="page">
+                            <i class="bi bi-calendar3 nav-icon" id="icono-nav-citas" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="./notificaciones.html" aria-label="Notificaciones">
-                            <i class="bi bi-bell-fill nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-notificaciones">
+                        <a id="enlace-nav-notificaciones" href="./notificaciones.html" aria-label="Notificaciones">
+                            <i class="bi bi-bell-fill nav-icon" id="icono-nav-notificaciones" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="./perfil.html" aria-label="Usuario">
-                            <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
+                    <li class="nav-item" id="item-nav-perfil">
+                        <a id="enlace-nav-perfil" href="./perfil.html" aria-label="Usuario">
+                            <i class="bi bi-person-circle nav-icon" id="icono-nav-perfil" aria-hidden="true"></i>
                         </a>
                     </li>
                 </ul>
@@ -100,7 +100,6 @@
         </footer>
     </div>
 
-    <script src="../js/Padre/Controller/controlNavegacion.js"></script>
+    <script id="script-control-navegacion" src="../js/Padre/Controller/controlNavegacion.js"></script>
 </body>
-
 </html>
