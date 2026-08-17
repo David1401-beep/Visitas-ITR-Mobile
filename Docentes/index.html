@@ -11,23 +11,24 @@
     crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../css/style.css">
+  
 </head>
 
 <body class="teacher-home-page">
   <div class="app-container">
-    <header class="app-header">
-      <h1>Inicio</h1>
-      <img class="header-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
-    </header>
+        <header class="profile-header d-flex align-items-center justify-content-between">
+            <h1 class="h6 fw-bold mb-0">Inicio</h1>
+            <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
+        </header>
 
     <main>
-      <section class="greeting-card" aria-labelledby="teacher-greeting">
+      <section class="greeting-card py-5" aria-labelledby="teacher-greeting">
         <h2 id="teacher-greeting">¡Hola, José Pérez!</h2>
         <p>¡Que tengas un excelente día!</p>
       </section>
 
-      <nav class="action-grid" aria-label="Accesos rápidos">
-        <a href="verSolicitud.html" class="action-card active">
+      <nav class="action-grid py-3" aria-label="Accesos rápidos">
+        <a href="solicitudes.html" class="action-card">
           <div class="icon-box" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm1.8 12.1-4.5 4.5c-.2.2-.5.2-.7 0l-2.1-2.1c-.2-.2-.2-.5 0-.7l.7-.7c.2-.2.5-.2.7 0l1 1 3.8-3.8c.2-.2.5-.2.7 0l.7.7c.1.2.1.5-.1.7z"/></svg>
           </div>
@@ -50,11 +51,11 @@
       </nav>
 
       <section class="tasks-container" aria-labelledby="pending-tasks-title">
-        <h2 class="tasks-title" id="pending-tasks-title">Tareas Pendientes</h2>
+        <h2 class="tasks-title" id="pending-tasks-title">Actividades Pendientes</h2>
         <div class="tasks-card">
           <div class="task-item">
             <span>1- Tienes solicitudes pendientes</span>
-            <a href="verSolicitud.html" class="btn-review text-decoration-none">Revisar</a>
+            <a href="solicitudes.html" class="btn-review text-decoration-none">Revisar</a>
           </div>
           <div class="task-item">
             <span>2- Confirmar cita para mañana</span>

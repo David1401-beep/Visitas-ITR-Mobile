@@ -996,7 +996,6 @@ body.profile-page {
 
 /* Conserva las variaciones visuales propias del inicio docente. */
 body.teacher-home-page {
-  --color-page-background: #2d313a;
   --main-padding: 1rem 1.2rem;
 }
 
@@ -1062,11 +1061,17 @@ body.teacher-home-page {
   color: var(--color-text);
   text-decoration: none !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.teacher-home-page .action-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .teacher-home-page .action-card.active {
-  background-color: var(--color-panel-dark);
-  color: #ffffff;
+  background-color: var(--color-muted-surface);
+  color: var(--color-text);
 }
 
 .teacher-home-page .icon-box {
