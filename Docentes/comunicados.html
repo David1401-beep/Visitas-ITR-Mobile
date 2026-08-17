@@ -12,25 +12,29 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body class="docentes-request-page">
+<body class="docentes-request-page communications-page">
 
     <div class="app-container">
-        <header class="home-header d-flex align-items-center justify-content-between">
+        <header class="communications-header d-flex align-items-center justify-content-between">
             <h1 class="h6 fw-bold mb-0">Comunicados</h1>
             <img class="school-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
 
-        <main class="request-content container-fluid">
+        <main class="communications-content container-fluid">
+            <form class="communications-form" id="communications-form" action="#" method="post">
+                <label class="visually-hidden" for="communication-message">Contenido del comunicado</label>
+                <textarea class="communications-textarea form-control" id="communication-message"
+                    name="communication_message" placeholder="Escribe un Aviso..." maxlength="250" required></textarea>
 
-        <div class="request-field">
-            <textarea class="request-control request-reason-large form-control" id="visit-reason" name="visit_reason"
-                placeholder="Escriba un aviso" required></textarea>
-        </div>
-
-        <button id="submit-btn" class="request-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
+                <button id="submit-btn"
+                    class="communications-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
                     Enviar
                 </button>
+            </form>
 
+            <!-- Los comunicados enviados se agregan aquí sin recargar la pantalla. -->
+            <section class="communications-list" id="communications-list" aria-label="Comunicados enviados"
+                aria-live="polite"></section>
         </main>
 
 
@@ -60,3 +64,9 @@
                 </ul>
             </nav>
         </footer>
+    </div>
+
+    <script src="../js/Docente/Controller/controlComunicados.js"></script>
+</body>
+
+</html>
