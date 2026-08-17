@@ -559,9 +559,8 @@ body {
   box-shadow: 0 7px 3px rgba(0, 0, 0, 0.24);
 }
 
-/* La barra es un poco más alta en esta vista, como en la referencia. */
 .request-page .app-container footer {
-  padding: 22px 16px 27px;
+  padding: var(--footer-padding);
 }
 
 /*------------------------------------------------------------------------------------------------------------------*/
@@ -730,9 +729,8 @@ body {
   color: #000000;
 }
 
-/* Altura de la barra inferior especifica para esta pantalla. */
 .appointments-page .app-container footer {
-  padding: 14px 16px 22px;
+  padding: var(--footer-padding);
 }
 
 /*------------------------------------------------------------------------------------------------------------------*/
@@ -990,8 +988,8 @@ body.review-request-page,
 body.request-list-page,
 body.postpone-request-page,
 body.profile-page {
-  --footer-background: var(--color-panel-dark);
-  --footer-padding: 0.6rem 0;
+  --footer-background: var(--color-footer);
+  --footer-padding: 12px 16px 20px;
 }
 
 /* Conserva las variaciones visuales propias del inicio docente. */
@@ -1154,6 +1152,7 @@ body.teacher-home-page {
 
 .app-container footer {
   flex: 0 0 auto;
+  margin-top: auto !important;
   padding: var(--footer-padding);
   border-top: none;
   background-color: var(--footer-background);
@@ -1830,7 +1829,7 @@ body.teacher-home-page {
 
 /* Al mostrarse la confirmación, el encabezado deja únicamente el nombre de la sección. */
 .postpone-success-visible {
-  --footer-padding: 12px 16px 22px;
+  --footer-padding: 12px 16px 20px;
 }
 
 .postpone-success-visible .postpone-header {
