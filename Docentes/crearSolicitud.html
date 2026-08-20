@@ -50,18 +50,14 @@
                 <div class="request-field" id="campo-estudiante">
                     <label class="form-label" id="etiqueta-estudiante" for="estudiante-seleccionado">Estudiante</label>
                     <select class="request-control request-select form-select" id="estudiante-seleccionado" name="teacher" required>
-                        <option id="opcion-predeterminada" value="" selected disabled>Seleccione un estudiante</option>
-                        <option id="opcion-estudiante-1" value="David Eduardo Ramírez Escobar">David Eduardo Ramírez Escobar</option>
-                        <option id="opcion-estudiante-2" value="Samuel Antonio Cabrera Molina">Samuel Antonio Cabrera Molina</option>
-                        <option id="opcion-estudiante-3" value="Jason Steven Miranda Navarrete">Jason Steven Miranda Navarrete</option>
-                        <option id="opcion-estudiante-4" value="Allan Adalberto Buendia Vasquez">Allan Adalberto Buendia Vasquez</option>
-                        <option id="opcion-estudiante-5" value="Raul Ernesto Mena Quito">Raul Ernesto Mena Quito</option>
+                        <option id="opcion-predeterminada" value="" selected>Cargando estudiantes...</option>
                     </select>
                 </div>
 
                 <button id="btn-enviar-solicitud" class="request-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
                     Enviar
                 </button>
+                <p class="small text-center mt-3 mb-0" id="mensaje-estado-solicitud" role="status" aria-live="polite"></p>
             </form>
         </main>
 
@@ -124,6 +120,6 @@
     <script id="script-bootstrap" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-    <script id="script-control-solicitud" src="../js/Docente/Controller/controlSolicitud.js"></script>
+    <script type="module" id="script-control-solicitud" src="../js/Docente/Controller/controlSolicitud.js"></script>
 </body>
 </html>

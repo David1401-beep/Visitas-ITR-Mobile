@@ -5,6 +5,7 @@ const hostApi = ["", "localhost", "127.0.0.1"].includes(window.location.hostname
 const API_BASE_URL = `http://${hostApi}:8080/api/v1`;
 const CLAVE_CORREO_SESION = "visitasITR.correoPadre";
 const CLAVE_DATOS_SESION = "visitasITR.sesionPadre";
+const MARCADOR_SOLICITUD_PADRE = "[SOLICITUD_PADRE]";
 
 async function solicitarApi(ruta, opciones = {}) {
   const configuracion = {
@@ -130,6 +131,7 @@ export async function obtenerConvocatoriasPadre() {
   );
 
   return (Array.isArray(citas) ? citas : [])
+    .filter(cita => !cita.observaciones?.startsWith(MARCADOR_SOLICITUD_PADRE))
     .map(convertirConvocatoria)
     .sort((primera, segunda) =>
       (primera.fechaReunion || "").localeCompare(segunda.fechaReunion || "")

@@ -1,3 +1,8 @@
+import {
+  crearCitaDocente,
+  obtenerDatosFormularioCita
+} from '../Service/CrearCitaService.js';
+
 // Crea un modal compatible: usa Bootstrap cuando está disponible y una alternativa local si el CDN falla.
 function createCompatibleModal(modalElement, options = {}) {
   if (window.bootstrap?.Modal) {
@@ -148,12 +153,52 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Validación del formulario actual de docentes.
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const form = document.getElementById('formulario-solicitud');
   const dateInput = document.getElementById('fecha-visita');
   const timeInput = document.getElementById('hora-visita');
   const modalElement = document.getElementById('modal-solicitud-exitosa');
+  const subjectInput = document.getElementById('asunto-visita');
+  const descriptionInput = document.getElementById('descripcion-visita');
+  const studentSelect = document.getElementById('estudiante-seleccionado');
+  const submitButton = document.getElementById('btn-enviar-solicitud');
+  const statusMessage = document.getElementById('mensaje-estado-solicitud');
   if (!form || !dateInput || !timeInput) return;
+
+  let idEmpleadoSesion = 0;
+
+  const showStatus = (message, isError = false) => {
+    if (!statusMessage) return;
+    statusMessage.textContent = message;
+    statusMessage.classList.toggle('text-danger', isError);
+    statusMessage.classList.toggle('text-success', !isError && Boolean(message));
+  };
+
+  const loadStudents = async () => {
+    studentSelect.disabled = true;
+    submitButton.disabled = true;
+
+    try {
+      const datosFormulario = await obtenerDatosFormularioCita();
+      idEmpleadoSesion = datosFormulario.idEmpleado;
+      studentSelect.innerHTML = '<option value="">Seleccione un estudiante</option>';
+
+      datosFormulario.relaciones.forEach((relacion) => {
+        const option = document.createElement('option');
+        option.value = relacion.idEstudianteEncargado;
+        option.textContent = relacion.nombreEstudiante;
+        option.dataset.idEstudiante = relacion.idEstudiante;
+        studentSelect.appendChild(option);
+      });
+
+      studentSelect.disabled = false;
+      submitButton.disabled = false;
+      showStatus('');
+    } catch (error) {
+      studentSelect.innerHTML = '<option value="">No fue posible cargar estudiantes</option>';
+      showStatus(error.message, true);
+    }
+  };
 
   const getToday = () => {
     const now = new Date();
@@ -172,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else timeInput.removeAttribute('min');
     dateInput.setCustomValidity(dateInput.value && dateInput.value < today
       ? 'La fecha de la convocatoria no puede ser anterior a hoy.' : '');
-    timeInput.setCustomValidity(isToday && timeInput.value && timeInput.value < currentTime
+    timeInput.setCustomValidity(isToday && timeInput.value && timeInput.value <= currentTime
       ? 'La hora de la convocatoria no puede ser anterior a la hora actual.' : '');
   };
 
@@ -182,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
   timeInput.addEventListener('input', validateDateTime);
   timeInput.addEventListener('change', validateDateTime);
   window.setInterval(validateDateTime, 60_000);
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
     validateDateTime();
     form.classList.add('was-validated');
@@ -190,11 +235,37 @@ document.addEventListener('DOMContentLoaded', () => {
       form.reportValidity();
       return;
     }
-    if (modalElement && window.bootstrap?.Modal) bootstrap.Modal.getOrCreateInstance(modalElement).show();
+
+    submitButton.disabled = true;
+    showStatus('Guardando la cita...');
+
+    try {
+      await crearCitaDocente({
+        asunto: subjectInput.value.trim(),
+        fecha: dateInput.value,
+        hora: timeInput.value,
+        descripcion: descriptionInput.value.trim(),
+        idEstudianteEncargado: studentSelect.value
+      }, idEmpleadoSesion);
+
+      showStatus('');
+      if (modalElement) {
+        createCompatibleModal(modalElement, {
+          backdrop: 'static',
+          keyboard: false
+        }).show();
+      }
+    } catch (error) {
+      showStatus(error.message, true);
+    } finally {
+      submitButton.disabled = false;
+    }
   });
   modalElement?.addEventListener('hidden.bs.modal', () => {
     form.reset();
     form.classList.remove('was-validated');
     validateDateTime();
   });
+
+  await loadStudents();
 });
