@@ -27,13 +27,16 @@ async function solicitarApi(ruta, opciones = {}) {
   }
 
   const tipoContenido = respuesta.headers.get("content-type") || "";
-  const contenido = tipoContenido.includes("application/json")
+  const contenido = tipoContenido.includes("json")
     ? await respuesta.json()
     : null;
 
   if (!respuesta.ok) {
     throw new Error(
-      contenido?.message || contenido?.error || `La API respondió con el estado ${respuesta.status}.`
+      contenido?.message ||
+      contenido?.detail ||
+      contenido?.error ||
+      `La API respondió con el estado ${respuesta.status}.`
     );
   }
 
@@ -44,29 +47,7 @@ async function solicitarApi(ruta, opciones = {}) {
   return contenido;
 }
 
-function separarFechaHora(fechaReunion) {
-  if (!fechaReunion) return { fecha: "", hora: "" };
-
-  const [fecha = "", horaCompleta = ""] = fechaReunion.split("T");
-  return {
-    fecha,
-    hora: horaCompleta.slice(0, 5)
-  };
-}
-
-function normalizarEstado(estado) {
-  const estados = {
-    PENDIENTE: "pendiente",
-    ACEPTADA: "aceptada",
-    RECHAZADA: "rechazada",
-    CANCELADA: "cancelada",
-    FINALIZADA: "finalizada"
-  };
-
-  return estados[estado] || estado?.toLowerCase() || "pendiente";
-}
-
-export async function obtenerConvocatoriasPadre() {
+function obtenerSesionPadre() {
   const correoSesion = localStorage.getItem(CLAVE_CORREO_SESION)?.trim().toLowerCase();
   let sesion;
 
@@ -84,65 +65,111 @@ export async function obtenerConvocatoriasPadre() {
     throw new Error("La sesión no es válida. Vuelva a iniciar sesión.");
   }
 
-  const idsEstudianteSesion = new Set(
-    (sesion.idsEstudiante || []).map(id => Number(id))
-  );
-  const idsRelacionSesion = new Set(
-    (sesion.idsEstudianteEncargado || []).map(id => Number(id))
-  );
+  const idsEstudianteEncargado = (sesion.idsEstudianteEncargado || [])
+    .map(id => Number(id))
+    .filter(id => Number.isInteger(id) && id > 0);
 
-  if (idsEstudianteSesion.size === 0 || idsRelacionSesion.size === 0) {
+  if (idsEstudianteEncargado.length === 0) {
     throw new Error("El estudiante no tiene un encargado asociado.");
   }
 
-  const [estudiantes, relaciones, citas] = await Promise.all([
-    solicitarApi("/estudiantes"),
-    solicitarApi("/estudiante-encargados"),
-    solicitarApi("/citas-reuniones")
-  ]);
+  return {
+    ...sesion,
+    idsEstudianteEncargado: [...new Set(idsEstudianteEncargado)]
+  };
+}
 
-  const estudiantesSesion = estudiantes.filter(
-    estudiante => idsEstudianteSesion.has(Number(estudiante.idEstudiante))
+function separarFechaHora(fechaReunion) {
+  if (!fechaReunion) return { fecha: "", hora: "" };
+
+  const [fecha = "", horaCompleta = ""] = fechaReunion.split("T");
+  return {
+    fecha,
+    hora: horaCompleta.slice(0, 5)
+  };
+}
+
+function normalizarEstado(estado) {
+  const estados = {
+    PENDIENTE: "pendiente",
+    ACEPTADA: "aceptada",
+    POSPUESTA: "pospuesta",
+    RECHAZADA: "rechazada",
+    CANCELADA: "cancelada",
+    FINALIZADA: "finalizada"
+  };
+
+  return estados[estado] || estado?.toLowerCase() || "pendiente";
+}
+
+function convertirConvocatoria(cita) {
+  const fechaHora = separarFechaHora(cita.fechaReunion);
+
+  return {
+    idCita: Number(cita.idCita),
+    idEstudiante: Number(cita.idEstudiante),
+    idEstudianteEncargado: Number(cita.idEstudianteEncargado),
+    asunto: cita.motivo,
+    descripcion: cita.observaciones || "Sin descripción.",
+    fecha: fechaHora.fecha,
+    hora: fechaHora.hora,
+    fechaReunion: cita.fechaReunion,
+    estudianteNombre: cita.nombreEstudiante || "Estudiante no disponible",
+    estado: normalizarEstado(cita.estado)
+  };
+}
+
+export async function obtenerConvocatoriasPadre() {
+  const sesion = obtenerSesionPadre();
+  const parametros = new URLSearchParams();
+
+  sesion.idsEstudianteEncargado.forEach(id => parametros.append("ids", String(id)));
+
+  const citas = await solicitarApi(
+    `/citas-reuniones/por-estudiante-encargado?${parametros.toString()}`
   );
 
-  if (estudiantesSesion.length === 0) {
-    throw new Error("Los estudiantes de la sesión ya no están disponibles.");
-  }
-
-  const relacionesSesion = relaciones.filter(
-    relacion =>
-      idsEstudianteSesion.has(Number(relacion.idEstudiante)) &&
-      idsRelacionSesion.has(Number(relacion.idEstudianteEncargado))
-  );
-
-  return citas
-    .filter(cita => idsRelacionSesion.has(Number(cita.idEstudianteEncargado)))
-    .map(cita => {
-      const relacion = relacionesSesion.find(
-        item => Number(item.idEstudianteEncargado) === Number(cita.idEstudianteEncargado)
-      );
-      const estudiante = estudiantesSesion.find(
-        item => Number(item.idEstudiante) === Number(relacion?.idEstudiante)
-      );
-      const fechaHora = separarFechaHora(cita.fechaReunion);
-      const nombreEstudiante = relacion?.nombreEstudiante ||
-        `${estudiante?.estNombre || ""} ${estudiante?.estApellido || ""}`.trim() ||
-        "Estudiante no disponible";
-
-      return {
-        idCita: cita.idCita,
-        idEstudiante: relacion?.idEstudiante,
-        idEstudianteEncargado: cita.idEstudianteEncargado,
-        asunto: cita.motivo,
-        descripcion: cita.observaciones || "Sin descripción.",
-        fecha: fechaHora.fecha,
-        hora: fechaHora.hora,
-        fechaReunion: cita.fechaReunion,
-        estudianteNombre: nombreEstudiante,
-        estado: normalizarEstado(cita.estado)
-      };
-    })
+  return (Array.isArray(citas) ? citas : [])
+    .map(convertirConvocatoria)
     .sort((primera, segunda) =>
       (primera.fechaReunion || "").localeCompare(segunda.fechaReunion || "")
     );
+}
+
+export async function aceptarConvocatoria(idCita, idEstudianteEncargado) {
+  const citaActualizada = await solicitarApi(
+    `/citas-reuniones/${encodeURIComponent(idCita)}/respuesta-encargado`,
+    {
+      method: "PATCH",
+      body: JSON.stringify({
+        idEstudianteEncargado: Number(idEstudianteEncargado),
+        estado: "ACEPTADA"
+      })
+    }
+  );
+
+  return convertirConvocatoria(citaActualizada);
+}
+
+export async function posponerConvocatoria(
+  idCita,
+  idEstudianteEncargado,
+  nuevaFecha,
+  nuevaHora,
+  motivoReprogramacion
+) {
+  const citaActualizada = await solicitarApi(
+    `/citas-reuniones/${encodeURIComponent(idCita)}/respuesta-encargado`,
+    {
+      method: "PATCH",
+      body: JSON.stringify({
+        idEstudianteEncargado: Number(idEstudianteEncargado),
+        estado: "POSPUESTA",
+        nuevaFechaReunion: `${nuevaFecha}T${nuevaHora}:00`,
+        motivoReprogramacion: motivoReprogramacion.trim()
+      })
+    }
+  );
+
+  return convertirConvocatoria(citaActualizada);
 }

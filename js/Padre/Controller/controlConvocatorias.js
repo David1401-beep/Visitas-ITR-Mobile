@@ -1,8 +1,11 @@
-import { obtenerConvocatoriasPadre } from '../Service/ConvocatoriasService.js';
+import {
+  aceptarConvocatoria,
+  obtenerConvocatoriasPadre,
+  posponerConvocatoria
+} from '../Service/ConvocatoriasService.js';
 
 // Controla las convocatorias recibidas desde la API y las respuestas del encargado.
 document.addEventListener('DOMContentLoaded', async () => {
-  const STORAGE_KEY = 'visitasItr.convocatorias.estado.v1';
   const list = document.getElementById('lista-convocatorias');
   const postponeModal = document.getElementById('modal-posponer-convocatoria');
   const resultModal = document.getElementById('modal-resultado-convocatoria');
@@ -11,6 +14,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const dateInput = document.getElementById('nueva-fecha-convocatoria');
   const timeInput = document.getElementById('nueva-hora-convocatoria');
   const reasonInput = document.getElementById('motivo-posponer-convocatoria');
+  const postponeButton = document.getElementById('btn-confirmar-posponer');
   const resultTitle = document.getElementById('titulo-resultado-convocatoria');
   const resultMessage = document.getElementById('mensaje-resultado-convocatoria');
   const liveRegion = document.getElementById('anuncios-convocatorias');
@@ -38,21 +42,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     return `${year}-${month}-${day}`;
   };
 
-  const readSavedStates = () => {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    } catch (error) {
-      return {};
-    }
-  };
-
-  const saveState = (convocationId, state) => {
-    const states = readSavedStates();
-    states[convocationId] = state;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(states));
-  };
-
   const formatDate = (dateValue) => {
+    if (!dateValue) return 'Fecha no disponible';
+
     const date = new Date(`${dateValue}T00:00:00`);
     const weekdays = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
     const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -61,6 +53,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   const formatTime = (timeValue) => {
+    if (!timeValue) return 'Hora no disponible';
+
     const [hourValue, minutes] = timeValue.split(':');
     const hour = Number(hourValue);
     const hour12 = hour % 12 || 12;
@@ -142,26 +136,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       `;
 
       list.appendChild(article);
+      applyState(article, convocatoria);
     });
-  };
-
-  // Este objeto tiene nombres estables para poder enviarlo luego mediante fetch a la API.
-  const buildApiPayload = (card, status, extraData = {}) => ({
-    convocatoriaId: Number(card.dataset.convocatoriaId),
-    estudianteId: Number(card.dataset.estudianteId),
-    estudianteEncargadoId: Number(card.dataset.estudianteEncargadoId),
-    asunto: card.querySelector('[data-api-field="asunto"]')?.textContent.trim() || '',
-    fecha: card.querySelector('[data-api-field="fecha"]')?.dateTime || '',
-    hora: card.querySelector('[data-api-field="hora"]')?.dateTime || '',
-    descripcion: card.querySelector('[data-api-field="descripcion"]')?.textContent.trim() || '',
-    estudianteNombre: card.querySelector('[data-api-field="estudianteNombre"]')?.textContent.trim() || '',
-    estado: status,
-    ...extraData,
-  });
-
-  const emitApiReadyEvent = (payload) => {
-    // Este evento queda disponible para conectar después las respuestas del encargado con la API.
-    window.dispatchEvent(new CustomEvent('convocatoria:actualizada', { detail: payload }));
   };
 
   const openModal = (modal, elementToFocus) => {
@@ -183,7 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     openModal(resultModal, document.getElementById('btn-cerrar-resultado-convocatoria'));
   };
 
-  const applyState = (card, state, announce = false) => {
+  function applyState(card, state, announce = false) {
     const status = state.estado || 'pendiente';
     const statusElement = card.querySelector('[data-api-field="estado"]');
     const buttons = card.querySelectorAll('[data-action]');
@@ -193,13 +169,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     card.classList.toggle('is-postponed', status === 'pospuesta');
     statusElement.textContent = statusLabels[status] || status;
 
-    if (status === 'pospuesta' && state.nuevaFecha && state.nuevaHora) {
+    if (state.fecha && state.hora) {
       const dateElement = card.querySelector('[data-api-field="fecha"]');
       const timeElement = card.querySelector('[data-api-field="hora"]');
-      dateElement.dateTime = state.nuevaFecha;
-      dateElement.textContent = formatDate(state.nuevaFecha);
-      timeElement.dateTime = state.nuevaHora;
-      timeElement.textContent = formatTime(state.nuevaHora);
+      dateElement.dateTime = state.fecha;
+      dateElement.textContent = formatDate(state.fecha);
+      timeElement.dateTime = state.hora;
+      timeElement.textContent = formatTime(state.hora);
     }
 
     buttons.forEach((button) => {
@@ -208,6 +184,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (announce) {
       liveRegion.textContent = `La convocatoria ${card.dataset.convocatoriaId} ahora está ${statusLabels[status].toLowerCase()}.`;
+    }
+  }
+
+  const setCardBusy = (card, busy) => {
+    card.dataset.actualizando = busy ? 'true' : 'false';
+    card.querySelectorAll('[data-action]').forEach((button) => {
+      button.disabled = busy || card.dataset.estado !== 'pendiente';
+    });
+  };
+
+  const validateProposedDateTime = () => {
+    timeInput.setCustomValidity('');
+
+    if (!dateInput.value || !timeInput.value) {
+      return;
+    }
+
+    const proposal = new Date(`${dateInput.value}T${timeInput.value}:00`);
+    if (Number.isNaN(proposal.getTime()) || proposal <= new Date()) {
+      timeInput.setCustomValidity('La nueva fecha y hora deben ser futuras.');
     }
   };
 
@@ -218,8 +214,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   `;
 
   try {
-    const convocatorias = await obtenerConvocatoriasPadre();
-    renderConvocations(convocatorias);
+    renderConvocations(await obtenerConvocatoriasPadre());
   } catch (error) {
     list.innerHTML = `
       <div class="text-center py-5" id="mensaje-error-convocatorias">
@@ -230,21 +225,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // Restaura las decisiones aunque se recargue la página.
-  const savedStates = readSavedStates();
-  document.querySelectorAll('.convocation-card').forEach((card) => {
-    const apiState = { estado: card.dataset.estado || 'pendiente' };
-    const savedState = savedStates[card.dataset.convocatoriaId];
-    if (apiState.estado === 'pendiente' && savedState) {
-      applyState(card, savedState);
-    } else {
-      applyState(card, apiState);
-    }
-  });
-
   dateInput.min = getToday();
+  dateInput.addEventListener('input', validateProposedDateTime);
+  timeInput.addEventListener('input', validateProposedDateTime);
 
-  list.addEventListener('click', (event) => {
+  list.addEventListener('click', async (event) => {
     const button = event.target.closest('[data-action]');
     if (!button || button.disabled) {
       return;
@@ -258,29 +243,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (button.dataset.action === 'aceptar') {
-      const state = {
-        estado: 'aceptada',
-        actualizadoEn: new Date().toISOString(),
-      };
-      applyState(card, state, true);
-      saveState(convocationId, state);
+      setCardBusy(card, true);
 
-      const payload = buildApiPayload(card, 'aceptada', {
-        actualizadoEn: state.actualizadoEn,
-      });
-      emitApiReadyEvent(payload);
-      showResult('Convocatoria aceptada', 'Tu aceptación fue registrada correctamente.');
+      try {
+        const updated = await aceptarConvocatoria(
+          convocationId,
+          card.dataset.estudianteEncargadoId
+        );
+        applyState(card, updated, true);
+        showResult('Convocatoria aceptada', 'Tu aceptación fue guardada en el sistema correctamente.');
+      } catch (error) {
+        setCardBusy(card, false);
+        showResult('No se pudo aceptar', error.message);
+      }
       return;
     }
 
     postponeForm.reset();
+    timeInput.setCustomValidity('');
     convocationIdInput.value = convocationId;
     dateInput.min = getToday();
     openModal(postponeModal, dateInput);
   });
 
-  postponeForm.addEventListener('submit', (event) => {
+  postponeForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    validateProposedDateTime();
 
     if (!postponeForm.checkValidity()) {
       postponeForm.reportValidity();
@@ -293,27 +281,28 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    const state = {
-      estado: 'pospuesta',
-      nuevaFecha: dateInput.value,
-      nuevaHora: timeInput.value,
-      motivo: reasonInput.value.trim(),
-      actualizadoEn: new Date().toISOString(),
-    };
+    postponeButton.disabled = true;
+    setCardBusy(card, true);
 
-    applyState(card, state, true);
-    saveState(convocationId, state);
+    try {
+      const updated = await posponerConvocatoria(
+        convocationId,
+        card.dataset.estudianteEncargadoId,
+        dateInput.value,
+        timeInput.value,
+        reasonInput.value
+      );
 
-    const payload = buildApiPayload(card, 'pospuesta', {
-      nuevaFecha: state.nuevaFecha,
-      nuevaHora: state.nuevaHora,
-      motivoReprogramacion: state.motivo,
-      actualizadoEn: state.actualizadoEn,
-    });
-    emitApiReadyEvent(payload);
-
-    closeModal(postponeModal);
-    showResult('Propuesta enviada', 'La nueva fecha y hora fueron registradas correctamente.');
+      applyState(card, updated, true);
+      closeModal(postponeModal);
+      showResult('Propuesta enviada', 'La nueva fecha y hora fueron guardadas en el sistema.');
+    } catch (error) {
+      setCardBusy(card, false);
+      closeModal(postponeModal);
+      showResult('No se pudo posponer', error.message);
+    } finally {
+      postponeButton.disabled = false;
+    }
   });
 
   document.getElementById('btn-cerrar-modal-posponer').addEventListener('click', () => {

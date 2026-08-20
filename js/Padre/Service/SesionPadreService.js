@@ -23,7 +23,7 @@ export async function iniciarSesionPadre(correoEstudiante, password) {
   }
 
   const tipoContenido = respuesta.headers.get("content-type") || "";
-  const contenido = tipoContenido.includes("application/json")
+  const contenido = tipoContenido.includes("json")
     ? await respuesta.json()
     : null;
 

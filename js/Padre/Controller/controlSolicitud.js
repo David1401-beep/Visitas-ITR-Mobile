@@ -1,3 +1,8 @@
+import {
+  cargarOpcionesSolicitud,
+  crearSolicitudPadre
+} from '../Service/SolicitudPadreService.js';
+
 // Controla la validación y el modal de confirmación del formulario de solicitudes.
 document.addEventListener('DOMContentLoaded', () => {
   const requestForm = document.querySelector('.request-form');
@@ -152,10 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Validación del formulario actual de padres.
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   const form = document.getElementById('formulario-solicitud');
   const dateInput = document.getElementById('fecha-visita');
   const modalElement = document.getElementById('modal-solicitud-exitosa');
+  const guardianSelect = document.getElementById('encargado');
+  const teacherSelect = document.getElementById('docente');
+  const reasonTextarea = document.getElementById('motivo-visita');
+  const submitButton = document.getElementById('btn-enviar-solicitud');
+  const errorMessage = document.getElementById('mensaje-error-solicitud');
   if (!form || !dateInput) return;
 
   const getToday = () => {
@@ -172,7 +182,34 @@ document.addEventListener('DOMContentLoaded', () => {
   validateDate();
   dateInput.addEventListener('input', validateDate);
   dateInput.addEventListener('change', validateDate);
-  form.addEventListener('submit', (event) => {
+
+  try {
+    const opciones = await cargarOpcionesSolicitud();
+
+    guardianSelect.innerHTML = '<option value="">Seleccione un encargado</option>';
+    opciones.relaciones.forEach((relacion) => {
+      guardianSelect.innerHTML += `
+        <option value="${relacion.idEstudianteEncargado}">
+          ${relacion.nombreEncargado} — ${relacion.nombreEstudiante}
+        </option>
+      `;
+    });
+
+    teacherSelect.innerHTML = '<option value="">Seleccione un docente</option>';
+    opciones.docentes.forEach((docente) => {
+      teacherSelect.innerHTML += `
+        <option value="${docente.idEmpleado}">Prof. ${docente.nombre}</option>
+      `;
+    });
+
+    guardianSelect.disabled = false;
+    teacherSelect.disabled = false;
+    submitButton.disabled = false;
+  } catch (error) {
+    if (errorMessage) errorMessage.textContent = error.message;
+  }
+
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
     validateDate();
     form.classList.add('was-validated');
@@ -180,7 +217,28 @@ document.addEventListener('DOMContentLoaded', () => {
       form.reportValidity();
       return;
     }
-    if (modalElement && window.bootstrap?.Modal) bootstrap.Modal.getOrCreateInstance(modalElement).show();
+
+    if (errorMessage) errorMessage.textContent = '';
+    submitButton.disabled = true;
+    submitButton.textContent = 'Enviando...';
+
+    try {
+      await crearSolicitudPadre({
+        idEstudianteEncargado: guardianSelect.value,
+        idEmpleado: teacherSelect.value,
+        fecha: dateInput.value,
+        motivo: reasonTextarea.value
+      });
+
+      if (modalElement && window.bootstrap?.Modal) {
+        bootstrap.Modal.getOrCreateInstance(modalElement).show();
+      }
+    } catch (error) {
+      if (errorMessage) errorMessage.textContent = error.message;
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = 'Enviar solicitud';
+    }
   });
   modalElement?.addEventListener('hidden.bs.modal', () => {
     form.reset();

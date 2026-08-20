@@ -25,19 +25,15 @@
             <form class="request-form needs-validation mx-auto" id="formulario-solicitud" action="#" method="post" novalidate>
                 <div class="request-field guardian-field" id="campo-contenedor-encargado">
                     <label class="form-label" id="etiqueta-encargado" for="encargado">Encargado</label>
-                    <select class="request-control request-select form-select" id="encargado" name="guardian" required>
-                        <option value="Madre">Madre</option>
-                        <option value="Padre">Padre</option>
-                        <option value="Otro">Otro encargado</option>
+                    <select class="request-control request-select form-select" id="encargado" name="guardian" required disabled>
+                        <option value="">Cargando encargados...</option>
                     </select>
                 </div>
 
                 <div class="request-field teacher-field" id="campo-contenedor-docente">
                     <label class="form-label" id="etiqueta-docente" for="docente">Docente</label>
-                    <select class="request-control request-select form-select" id="docente" name="teacher" required>
-                        <option value="Prof. Ricardo De Paz">Prof. Ricardo De Paz</option>
-                        <option value="Prof. Josue Guinea">Prof. Josue Guinea</option>
-                        <option value="Dra. Maria Rodriguez">Dra. Maria Rodriguez</option>
+                    <select class="request-control request-select form-select" id="docente" name="teacher" required disabled>
+                        <option value="">Cargando docentes...</option>
                     </select>
                 </div>
 
@@ -50,12 +46,13 @@
                 <div class="request-field reason-field" id="campo-contenedor-motivo">
                     <label class="visually-hidden" id="etiqueta-motivo-visita" for="motivo-visita">Motivo de la visita</label>
                     <textarea class="request-control request-reason form-control" id="motivo-visita" name="visit_reason"
-                        placeholder="Motivo de la Visita" required></textarea>
+                        placeholder="Motivo de la Visita" maxlength="280" required></textarea>
                 </div>
 
-                <button id="btn-enviar-solicitud" class="request-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
+                <button id="btn-enviar-solicitud" class="request-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit" disabled>
                     Enviar solicitud
                 </button>
+                <p class="text-danger text-center mt-3 mb-0" id="mensaje-error-solicitud" role="alert"></p>
             </form>
         </main>
 
@@ -118,7 +115,7 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <script id="script-control-navegacion" src="../js/Padre/Controller/controlNavegacion.js"></script>
-    <script id="script-control-solicitud" src="../js/Padre/Controller/controlSolicitud.js"></script>
+    <script type="module" id="script-control-solicitud" src="../js/Padre/Controller/controlSolicitud.js"></script>
 </body>
 
 </html>
