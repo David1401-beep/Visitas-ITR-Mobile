@@ -1,5 +1,7 @@
-// Controla las respuestas del encargado y prepara los datos que después recibirá la API.
-document.addEventListener('DOMContentLoaded', () => {
+import { obtenerConvocatoriasPadre } from '../Service/ConvocatoriasService.js';
+
+// Controla las convocatorias recibidas desde la API y las respuestas del encargado.
+document.addEventListener('DOMContentLoaded', async () => {
   const STORAGE_KEY = 'visitasItr.convocatorias.estado.v1';
   const list = document.getElementById('lista-convocatorias');
   const postponeModal = document.getElementById('modal-posponer-convocatoria');
@@ -21,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
     pendiente: 'Pendiente',
     aceptada: 'Aceptada',
     pospuesta: 'Pospuesta',
+    rechazada: 'Rechazada',
+    cancelada: 'Cancelada',
+    finalizada: 'Finalizada',
   };
 
   const getCard = (convocationId) => document.getElementById(`convocatoria-${convocationId}`);
@@ -64,10 +69,87 @@ document.addEventListener('DOMContentLoaded', () => {
     return `${hour12}:${minutes} ${period}`;
   };
 
+  const escapeHtml = (value) => String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+
+  const renderConvocations = (convocatorias) => {
+    list.innerHTML = '';
+
+    if (convocatorias.length === 0) {
+      list.innerHTML = `
+        <p class="text-center text-secondary py-5" id="mensaje-convocatorias-vacias">
+          No hay convocatorias para el estudiante asociado a esta cuenta.
+        </p>
+      `;
+      return;
+    }
+
+    convocatorias.forEach((convocatoria) => {
+      const id = Number(convocatoria.idCita);
+      const article = document.createElement('article');
+      article.className = 'convocation-card card border-0';
+      article.id = `convocatoria-${id}`;
+      article.dataset.convocatoriaId = String(id);
+      article.dataset.estudianteId = String(convocatoria.idEstudiante || '');
+      article.dataset.estudianteEncargadoId = String(convocatoria.idEstudianteEncargado || '');
+      article.dataset.estado = convocatoria.estado;
+
+      article.innerHTML = `
+        <div class="card-body" id="cuerpo-convocatoria-${id}">
+          <div class="convocation-card-heading" id="encabezado-convocatoria-${id}">
+            <h2 class="convocation-title fw-bold" id="asunto-convocatoria-${id}"
+              data-api-field="asunto">${escapeHtml(convocatoria.asunto)}</h2>
+            <span class="convocation-status" id="estado-convocatoria-${id}"
+              data-api-field="estado">${escapeHtml(statusLabels[convocatoria.estado] || convocatoria.estado)}</span>
+          </div>
+
+          <p class="convocation-data" id="fecha-convocatoria-${id}">
+            <strong>Fecha:</strong>
+            <time data-api-field="fecha" datetime="${escapeHtml(convocatoria.fecha)}">${escapeHtml(formatDate(convocatoria.fecha))}</time>
+          </p>
+          <p class="convocation-data" id="hora-convocatoria-${id}">
+            <strong>Hora:</strong>
+            <time data-api-field="hora" datetime="${escapeHtml(convocatoria.hora)}">${escapeHtml(formatTime(convocatoria.hora))}</time>
+          </p>
+          <p class="convocation-data" id="descripcion-convocatoria-${id}">
+            <strong>Descripción:</strong>
+            <span data-api-field="descripcion">${escapeHtml(convocatoria.descripcion)}</span>
+          </p>
+          <p class="convocation-data" id="estudiante-convocatoria-${id}">
+            <strong>Estudiante convocado:</strong>
+            <span data-api-field="estudianteNombre">${escapeHtml(convocatoria.estudianteNombre)}</span>
+          </p>
+
+          <hr class="convocation-divider" id="divisor-convocatoria-${id}">
+
+          <div class="convocation-actions" id="acciones-convocatoria-${id}">
+            <button class="convocation-button convocation-accept btn fw-bold"
+              id="btn-aceptar-convocatoria-${id}" type="button" data-action="aceptar"
+              data-convocatoria-id="${id}">
+              <i class="bi bi-check-lg" aria-hidden="true"></i> Aceptar
+            </button>
+            <button class="convocation-button convocation-postpone btn fw-bold"
+              id="btn-posponer-convocatoria-${id}" type="button" data-action="posponer"
+              data-convocatoria-id="${id}">
+              <i class="bi bi-calendar2-event" aria-hidden="true"></i> Posponer
+            </button>
+          </div>
+        </div>
+      `;
+
+      list.appendChild(article);
+    });
+  };
+
   // Este objeto tiene nombres estables para poder enviarlo luego mediante fetch a la API.
   const buildApiPayload = (card, status, extraData = {}) => ({
     convocatoriaId: Number(card.dataset.convocatoriaId),
     estudianteId: Number(card.dataset.estudianteId),
+    estudianteEncargadoId: Number(card.dataset.estudianteEncargadoId),
     asunto: card.querySelector('[data-api-field="asunto"]')?.textContent.trim() || '',
     fecha: card.querySelector('[data-api-field="fecha"]')?.dateTime || '',
     hora: card.querySelector('[data-api-field="hora"]')?.dateTime || '',
@@ -78,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   const emitApiReadyEvent = (payload) => {
-    // La futura integración puede escuchar este evento y reemplazar localStorage por fetch().
+    // Este evento queda disponible para conectar después las respuestas del encargado con la API.
     window.dispatchEvent(new CustomEvent('convocatoria:actualizada', { detail: payload }));
   };
 
@@ -129,12 +211,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  list.innerHTML = `
+    <p class="text-center text-secondary py-5" id="mensaje-cargando-convocatorias">
+      Cargando convocatorias...
+    </p>
+  `;
+
+  try {
+    const convocatorias = await obtenerConvocatoriasPadre();
+    renderConvocations(convocatorias);
+  } catch (error) {
+    list.innerHTML = `
+      <div class="text-center py-5" id="mensaje-error-convocatorias">
+        <p class="text-danger mb-2">${escapeHtml(error.message)}</p>
+        <a href="inicioSesion.html" class="btn btn-sm btn-outline-dark rounded-pill">Ir al inicio de sesión</a>
+      </div>
+    `;
+    return;
+  }
+
   // Restaura las decisiones aunque se recargue la página.
   const savedStates = readSavedStates();
   document.querySelectorAll('.convocation-card').forEach((card) => {
+    const apiState = { estado: card.dataset.estado || 'pendiente' };
     const savedState = savedStates[card.dataset.convocatoriaId];
-    if (savedState) {
+    if (apiState.estado === 'pendiente' && savedState) {
       applyState(card, savedState);
+    } else {
+      applyState(card, apiState);
     }
   });
 
