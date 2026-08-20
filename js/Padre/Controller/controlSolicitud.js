@@ -151,3 +151,40 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Validación del formulario actual de padres.
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('formulario-solicitud');
+  const dateInput = document.getElementById('fecha-visita');
+  const modalElement = document.getElementById('modal-solicitud-exitosa');
+  if (!form || !dateInput) return;
+
+  const getToday = () => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  };
+  const validateDate = () => {
+    const today = getToday();
+    dateInput.min = today;
+    dateInput.setCustomValidity(dateInput.value && dateInput.value < today
+      ? 'La fecha de la visita no puede ser anterior a hoy.' : '');
+  };
+
+  validateDate();
+  dateInput.addEventListener('input', validateDate);
+  dateInput.addEventListener('change', validateDate);
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    validateDate();
+    form.classList.add('was-validated');
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    if (modalElement && window.bootstrap?.Modal) bootstrap.Modal.getOrCreateInstance(modalElement).show();
+  });
+  modalElement?.addEventListener('hidden.bs.modal', () => {
+    form.reset();
+    form.classList.remove('was-validated');
+    validateDate();
+  });
+});

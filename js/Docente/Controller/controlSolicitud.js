@@ -146,3 +146,55 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+// Validación del formulario actual de docentes.
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('formulario-solicitud');
+  const dateInput = document.getElementById('fecha-visita');
+  const timeInput = document.getElementById('hora-visita');
+  const modalElement = document.getElementById('modal-solicitud-exitosa');
+  if (!form || !dateInput || !timeInput) return;
+
+  const getToday = () => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  };
+  const getCurrentTime = () => {
+    const now = new Date();
+    return `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  };
+  const validateDateTime = () => {
+    const today = getToday();
+    const currentTime = getCurrentTime();
+    const isToday = dateInput.value === today;
+    dateInput.min = today;
+    if (isToday) timeInput.min = currentTime;
+    else timeInput.removeAttribute('min');
+    dateInput.setCustomValidity(dateInput.value && dateInput.value < today
+      ? 'La fecha de la convocatoria no puede ser anterior a hoy.' : '');
+    timeInput.setCustomValidity(isToday && timeInput.value && timeInput.value < currentTime
+      ? 'La hora de la convocatoria no puede ser anterior a la hora actual.' : '');
+  };
+
+  validateDateTime();
+  dateInput.addEventListener('input', validateDateTime);
+  dateInput.addEventListener('change', validateDateTime);
+  timeInput.addEventListener('input', validateDateTime);
+  timeInput.addEventListener('change', validateDateTime);
+  window.setInterval(validateDateTime, 60_000);
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    validateDateTime();
+    form.classList.add('was-validated');
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    if (modalElement && window.bootstrap?.Modal) bootstrap.Modal.getOrCreateInstance(modalElement).show();
+  });
+  modalElement?.addEventListener('hidden.bs.modal', () => {
+    form.reset();
+    form.classList.remove('was-validated');
+    validateDateTime();
+  });
+});
