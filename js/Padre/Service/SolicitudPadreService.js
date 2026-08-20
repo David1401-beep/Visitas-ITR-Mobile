@@ -54,18 +54,25 @@ function obtenerSesionPadre() {
     sesion = null;
   }
 
-  const idsRelaciones = (sesion?.idsEstudianteEncargado || [])
+  const idsEstudiante = (sesion?.idsEstudiante || [])
     .map(id => Number(id))
     .filter(id => Number.isInteger(id) && id > 0);
 
-  if (!sesion || idsRelaciones.length === 0) {
+  if (!sesion || idsEstudiante.length === 0) {
     throw new Error("La sesión no es válida. Vuelva a iniciar sesión.");
   }
 
   return {
     ...sesion,
-    idsEstudianteEncargado: [...new Set(idsRelaciones)]
+    idsEstudiante: [...new Set(idsEstudiante)]
   };
+}
+
+async function obtenerRelacionesSesion(sesion) {
+  const relacionesApi = await solicitarApi("/estudiante-encargados");
+
+  return (Array.isArray(relacionesApi) ? relacionesApi : [])
+    .filter(relacion => sesion.idsEstudiante.includes(Number(relacion.idEstudiante)));
 }
 
 function construirFechaReunion(fecha) {
@@ -85,13 +92,13 @@ function construirFechaReunion(fecha) {
 export async function cargarOpcionesSolicitud() {
   const sesion = obtenerSesionPadre();
   const [relaciones, empleados] = await Promise.all([
-    Promise.all(
-      sesion.idsEstudianteEncargado.map(id =>
-        solicitarApi(`/estudiante-encargados/${encodeURIComponent(id)}`)
-      )
-    ),
+    obtenerRelacionesSesion(sesion),
     solicitarApi("/empleados")
   ]);
+
+  if (relaciones.length === 0) {
+    throw new Error("El estudiante todavía no tiene un encargado asociado.");
+  }
 
   const docentes = (Array.isArray(empleados) ? empleados : [])
     .filter(empleado => empleado.empRol?.toUpperCase().includes("DOCENTE"))
@@ -117,8 +124,10 @@ export async function cargarOpcionesSolicitud() {
 export async function crearSolicitudPadre(datosSolicitud) {
   const sesion = obtenerSesionPadre();
   const idRelacion = Number(datosSolicitud.idEstudianteEncargado);
+  const relaciones = await obtenerRelacionesSesion(sesion);
+  const idsRelaciones = relaciones.map(relacion => Number(relacion.idEstudianteEncargado));
 
-  if (!sesion.idsEstudianteEncargado.includes(idRelacion)) {
+  if (!idsRelaciones.includes(idRelacion)) {
     throw new Error("El encargado seleccionado no pertenece a la sesión.");
   }
 

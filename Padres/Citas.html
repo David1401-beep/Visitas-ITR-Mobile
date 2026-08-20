@@ -22,44 +22,10 @@
         </header>
 
         <main class="appointments-content container-fluid d-flex flex-column align-items-center" id="contenido-citas">
-            <section class="appointments-card card border-0" id="seccion-reunion-padres" aria-labelledby="titulo-reunion-padres">
-                <div class="card-body" id="cuerpo-tarjeta-reunion">
-                    <h2 class="appointments-card-title fw-bold mb-0" id="titulo-reunion-padres">
-                        Reunión de padres
-                    </h2>
-                    <p class="appointments-location mb-0" id="ubicacion-reunion-padres">
-                        <svg class="appointment-pin" id="icono-pin-reunion" viewBox="0 0 16 20" aria-hidden="true">
-                            <path
-                                d="M8 0a6 6 0 0 0-6 6c0 4.5 6 14 6 14s6-9.5 6-14A6 6 0 0 0 8 0Zm0 8.5A2.5 2.5 0 1 1 8 3a2.5 2.5 0 0 1 0 5.5Z"
-                                fill="currentColor" />
-                        </svg>
-                        <strong id="etiqueta-aula-reunion">Aula:</strong> 6.2.12
-                    </p>
-                    <p class="appointments-date mb-0" id="fecha-reunion-padres">
-                        <time id="tiempo-reunion-padres" datetime="2026-08-20T09:00">20 de Agosto - 9:00 A.M</time>
-                    </p>
-                </div>
+            <section class="appointments-list" id="lista-comunicados-padre" aria-label="Comunicados recibidos"
+                aria-live="polite">
+                <p class="text-center text-secondary mb-0">Cargando comunicados...</p>
             </section>
-
-            <section class="appointments-card card border-0" id="seccion-entrega-notas" aria-labelledby="titulo-entrega-notas">
-                <div class="card-body" id="cuerpo-tarjeta-notas">
-                    <h2 class="appointments-card-title fw-bold mb-0" id="titulo-entrega-notas">
-                        Entrega de Notas
-                    </h2>
-                    <p class="appointments-location mb-0" id="ubicacion-entrega-notas">
-                        <svg class="appointment-pin" id="icono-pin-notas" viewBox="0 0 16 20" aria-hidden="true">
-                            <path
-                                d="M8 0a6 6 0 0 0-6 6c0 4.5 6 14 6 14s6-9.5 6-14A6 6 0 0 0 8 0Zm0 8.5A2.5 2.5 0 1 1 8 3a2.5 2.5 0 0 1 0 5.5Z"
-                                fill="currentColor" />
-                        </svg>
-                        <strong id="etiqueta-aula-notas">Aula:</strong> 6.2.13
-                    </p>
-                    <p class="appointments-date mb-0" id="fecha-entrega-notas">
-                        <time id="tiempo-entrega-notas" datetime="2026-04-17T08:00">17 de Abril - 8:00 A.M</time>
-                    </p>
-                </div>
-            </section>
-            //ff
 
             <div class="appointments-actions d-flex flex-column align-items-center" id="contenedor-acciones">
                 <a class="appointments-action appointments-action-create btn rounded-pill fw-bold"
@@ -102,5 +68,6 @@
     </div>
 
     <script id="script-control-navegacion" src="../js/Padre/Controller/controlNavegacion.js"></script>
+    <script type="module" id="script-control-citas" src="../js/Padre/Controller/controlCitas.js"></script>
 </body>
 </html>

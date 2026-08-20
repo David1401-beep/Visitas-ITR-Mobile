@@ -1,12 +1,55 @@
-// Agrega a la pantalla cada comunicado escrito por el docente.
+import {
+  obtenerComunicados,
+  publicarComunicado
+} from '../Service/ComunicadosService.js';
+
+// Guarda localmente y muestra cada comunicado escrito por el docente.
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('communications-form');
-  const messageInput = document.getElementById('communication-message');
-  const communicationsList = document.getElementById('communications-list');
+  const form = document.getElementById('formulario-comunicados');
+  const messageInput = document.getElementById('mensaje-comunicado');
+  const communicationsList = document.getElementById('lista-comunicados');
+  const submitButton = document.getElementById('btn-enviar-comunicado');
+  const statusMessage = document.getElementById('mensaje-estado-comunicado');
 
   if (!form || !messageInput || !communicationsList) {
     return;
   }
+
+  const formatDateTime = (value) => {
+    if (!value) return '';
+    return new Intl.DateTimeFormat('es-SV', {
+      dateStyle: 'medium',
+      timeStyle: 'short'
+    }).format(new Date(value));
+  };
+
+  const createCard = (communication) => {
+    const communicationCard = document.createElement('article');
+    const communicationText = document.createElement('p');
+    const communicationMeta = document.createElement('small');
+
+    communicationCard.className = 'communication-card';
+    communicationCard.id = `comunicado-docente-${communication.idComunicado}`;
+    communicationText.className = 'communication-card-text';
+    communicationMeta.className = 'communication-card-meta';
+    communicationText.textContent = communication.mensaje;
+    communicationMeta.textContent = `${communication.nombreEmpleado || 'Docente'} · ${formatDateTime(communication.fechaPublicacion)}`;
+    communicationCard.append(communicationText, communicationMeta);
+    return communicationCard;
+  };
+
+  const renderCommunications = (communications) => {
+    communicationsList.innerHTML = '';
+
+    if (communications.length === 0) {
+      communicationsList.innerHTML = '<p class="text-center text-secondary mb-0">No hay comunicados publicados.</p>';
+      return;
+    }
+
+    communications.forEach(communication => {
+      communicationsList.appendChild(createCard(communication));
+    });
+  };
 
   messageInput.addEventListener('input', () => {
     // Quita el mensaje de error personalizado tan pronto se vuelve a escribir.
@@ -24,19 +67,23 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const communicationCard = document.createElement('article');
-    communicationCard.className = 'communication-card';
-
-    const communicationText = document.createElement('p');
-    communicationText.className = 'communication-card-text';
-    // textContent evita que el texto ingresado pueda convertirse en HTML ejecutable.
-    communicationText.textContent = message;
-
-    communicationCard.appendChild(communicationText);
-    // Mantiene el orden de envío: cada comunicado nuevo aparece al final de la lista.
-    communicationsList.appendChild(communicationCard);
-
-    form.reset();
-    messageInput.focus();
+    submitButton.disabled = true;
+    try {
+      const communication = publicarComunicado(message);
+      const emptyMessage = communicationsList.querySelector('p.text-secondary');
+      emptyMessage?.remove();
+      communicationsList.prepend(createCard(communication));
+      form.reset();
+      statusMessage.textContent = 'Comunicado guardado localmente.';
+      statusMessage.className = 'text-center small mt-3 mb-0 text-success';
+      messageInput.focus();
+    } catch (error) {
+      statusMessage.textContent = 'No se pudo guardar el comunicado en este navegador.';
+      statusMessage.className = 'text-center small mt-3 mb-0 text-danger';
+    } finally {
+      submitButton.disabled = false;
+    }
   });
+
+  renderCommunications(obtenerComunicados());
 });

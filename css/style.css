@@ -644,6 +644,14 @@ body {
   padding: 8px 32px 56px;
 }
 
+.appointments-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+}
+
 /* Tarjeta gris que muestra el resumen de una cita. */
 .appointments-card {
   width: 100%;
@@ -663,6 +671,7 @@ body {
 .appointments-card-title {
   font-size: 0.875rem;
   line-height: 1.3;
+  overflow-wrap: anywhere;
 }
 
 .appointments-location {
@@ -2138,6 +2147,7 @@ body.teacher-home-page {
 /* Tarjeta que presenta exactamente el texto enviado por el docente. */
 .communication-card {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -2157,6 +2167,13 @@ body.teacher-home-page {
   line-height: 1.35;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
+}
+
+.communication-card-meta {
+  margin-top: 8px;
+  color: #555555;
+  font-size: 0.7rem;
+  line-height: 1.3;
 }
 
 /* ========================================================================== */

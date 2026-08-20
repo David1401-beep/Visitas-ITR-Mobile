@@ -66,17 +66,17 @@ function obtenerSesionPadre() {
     throw new Error("La sesión no es válida. Vuelva a iniciar sesión.");
   }
 
-  const idsEstudianteEncargado = (sesion.idsEstudianteEncargado || [])
+  const idsEstudiante = (sesion.idsEstudiante || [])
     .map(id => Number(id))
     .filter(id => Number.isInteger(id) && id > 0);
 
-  if (idsEstudianteEncargado.length === 0) {
-    throw new Error("El estudiante no tiene un encargado asociado.");
+  if (idsEstudiante.length === 0) {
+    throw new Error("La sesión no contiene un estudiante válido.");
   }
 
   return {
     ...sesion,
-    idsEstudianteEncargado: [...new Set(idsEstudianteEncargado)]
+    idsEstudiante: [...new Set(idsEstudiante)]
   };
 }
 
@@ -122,9 +122,20 @@ function convertirConvocatoria(cita) {
 
 export async function obtenerConvocatoriasPadre() {
   const sesion = obtenerSesionPadre();
+  const relacionesApi = await solicitarApi("/estudiante-encargados");
+  const idsEstudianteEncargado = (Array.isArray(relacionesApi) ? relacionesApi : [])
+    .filter(relacion => sesion.idsEstudiante.includes(Number(relacion.idEstudiante)))
+    .map(relacion => Number(relacion.idEstudianteEncargado))
+    .filter(id => Number.isInteger(id) && id > 0);
+
+  if (idsEstudianteEncargado.length === 0) {
+    return [];
+  }
+
   const parametros = new URLSearchParams();
 
-  sesion.idsEstudianteEncargado.forEach(id => parametros.append("ids", String(id)));
+  [...new Set(idsEstudianteEncargado)]
+    .forEach(id => parametros.append("ids", String(id)));
 
   const citas = await solicitarApi(
     `/citas-reuniones/por-estudiante-encargado?${parametros.toString()}`
