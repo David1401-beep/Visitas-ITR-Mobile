@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Convocatorias - Visitas ITR</title>
+    <link rel="shortcut icon" href="../img/logoRicaldone.png" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="convocations-page" id="cuerpo-convocatorias">
+    <div class="app-container" id="contenedor-aplicacion-convocatorias">
+        <header class="convocations-header d-flex align-items-center justify-content-between"
+            id="encabezado-convocatorias">
+            <h1 class="h5 fw-bold mb-0" id="titulo-convocatorias">Convocatorias</h1>
+            <img class="school-logo" id="logo-convocatorias" src="../img/logoRicaldone.png"
+                alt="Logo del Instituto Técnico Ricaldone">
+        </header>
+
+        <main class="convocations-content container-fluid" id="contenido-convocatorias">
+            <section class="convocations-list" id="lista-convocatorias" aria-label="Convocatorias recibidas">
+                <!-- Cada data-convocatoria-id corresponde al identificador que entregará la API. -->
+                <article class="convocation-card card border-0" id="convocatoria-101"
+                    data-convocatoria-id="101" data-estudiante-id="501" data-estado="pendiente">
+                    <div class="card-body" id="cuerpo-convocatoria-101">
+                        <div class="convocation-card-heading" id="encabezado-convocatoria-101">
+                            <h2 class="convocation-title fw-bold" id="asunto-convocatoria-101"
+                                data-api-field="asunto">Revisión de conducta</h2>
+                            <span class="convocation-status" id="estado-convocatoria-101"
+                                data-api-field="estado">Pendiente</span>
+                        </div>
+
+                        <p class="convocation-data" id="fecha-convocatoria-101">
+                            <strong>Fecha:</strong>
+                            <time data-api-field="fecha" datetime="2026-08-21">Viernes 21 de agosto de 2026</time>
+                        </p>
+                        <p class="convocation-data" id="hora-convocatoria-101">
+                            <strong>Hora:</strong>
+                            <time data-api-field="hora" datetime="09:00">9:00 A.M.</time>
+                        </p>
+                        <p class="convocation-data" id="descripcion-convocatoria-101">
+                            <strong>Descripción:</strong>
+                            <span data-api-field="descripcion">Conversar sobre el comportamiento reciente del estudiante.</span>
+                        </p>
+                        <p class="convocation-data" id="estudiante-convocatoria-101">
+                            <strong>Estudiante convocado:</strong>
+                            <span data-api-field="estudianteNombre">David Eduardo Ramírez Escobar</span>
+                        </p>
+
+                        <hr class="convocation-divider" id="divisor-convocatoria-101">
+
+                        <div class="convocation-actions" id="acciones-convocatoria-101">
+                            <button class="convocation-button convocation-accept btn fw-bold"
+                                id="btn-aceptar-convocatoria-101" type="button" data-action="aceptar"
+                                data-convocatoria-id="101">
+                                <i class="bi bi-check-lg" aria-hidden="true"></i> Aceptar
+                            </button>
+                            <button class="convocation-button convocation-postpone btn fw-bold"
+                                id="btn-posponer-convocatoria-101" type="button" data-action="posponer"
+                                data-convocatoria-id="101">
+                                <i class="bi bi-calendar2-event" aria-hidden="true"></i> Posponer
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="convocation-card card border-0" id="convocatoria-102"
+                    data-convocatoria-id="102" data-estudiante-id="502" data-estado="pendiente">
+                    <div class="card-body" id="cuerpo-convocatoria-102">
+                        <div class="convocation-card-heading" id="encabezado-convocatoria-102">
+                            <h2 class="convocation-title fw-bold" id="asunto-convocatoria-102"
+                                data-api-field="asunto">Rendimiento académico</h2>
+                            <span class="convocation-status" id="estado-convocatoria-102"
+                                data-api-field="estado">Pendiente</span>
+                        </div>
+
+                        <p class="convocation-data" id="fecha-convocatoria-102">
+                            <strong>Fecha:</strong>
+                            <time data-api-field="fecha" datetime="2026-08-24">Lunes 24 de agosto de 2026</time>
+                        </p>
+                        <p class="convocation-data" id="hora-convocatoria-102">
+                            <strong>Hora:</strong>
+                            <time data-api-field="hora" datetime="10:30">10:30 A.M.</time>
+                        </p>
+                        <p class="convocation-data" id="descripcion-convocatoria-102">
+                            <strong>Descripción:</strong>
+                            <span data-api-field="descripcion">Dar seguimiento a las calificaciones del segundo período.</span>
+                        </p>
+                        <p class="convocation-data" id="estudiante-convocatoria-102">
+                            <strong>Estudiante convocado:</strong>
+                            <span data-api-field="estudianteNombre">Samuel Antonio Cabrera Molina</span>
+                        </p>
+
+                        <hr class="convocation-divider" id="divisor-convocatoria-102">
+
+                        <div class="convocation-actions" id="acciones-convocatoria-102">
+                            <button class="convocation-button convocation-accept btn fw-bold"
+                                id="btn-aceptar-convocatoria-102" type="button" data-action="aceptar"
+                                data-convocatoria-id="102">
+                                <i class="bi bi-check-lg" aria-hidden="true"></i> Aceptar
+                            </button>
+                            <button class="convocation-button convocation-postpone btn fw-bold"
+                                id="btn-posponer-convocatoria-102" type="button" data-action="posponer"
+                                data-convocatoria-id="102">
+                                <i class="bi bi-calendar2-event" aria-hidden="true"></i> Posponer
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="convocation-card card border-0" id="convocatoria-103"
+                    data-convocatoria-id="103" data-estudiante-id="503" data-estado="pendiente">
+                    <div class="card-body" id="cuerpo-convocatoria-103">
+                        <div class="convocation-card-heading" id="encabezado-convocatoria-103">
+                            <h2 class="convocation-title fw-bold" id="asunto-convocatoria-103"
+                                data-api-field="asunto">Entrega de notas</h2>
+                            <span class="convocation-status" id="estado-convocatoria-103"
+                                data-api-field="estado">Pendiente</span>
+                        </div>
+
+                        <p class="convocation-data" id="fecha-convocatoria-103">
+                            <strong>Fecha:</strong>
+                            <time data-api-field="fecha" datetime="2026-08-28">Viernes 28 de agosto de 2026</time>
+                        </p>
+                        <p class="convocation-data" id="hora-convocatoria-103">
+                            <strong>Hora:</strong>
+                            <time data-api-field="hora" datetime="14:00">2:00 P.M.</time>
+                        </p>
+                        <p class="convocation-data" id="descripcion-convocatoria-103">
+                            <strong>Descripción:</strong>
+                            <span data-api-field="descripcion">Revisar los resultados académicos y los acuerdos de mejora.</span>
+                        </p>
+                        <p class="convocation-data" id="estudiante-convocatoria-103">
+                            <strong>Estudiante convocado:</strong>
+                            <span data-api-field="estudianteNombre">Jason Steven Miranda Navarrete</span>
+                        </p>
+
+                        <hr class="convocation-divider" id="divisor-convocatoria-103">
+
+                        <div class="convocation-actions" id="acciones-convocatoria-103">
+                            <button class="convocation-button convocation-accept btn fw-bold"
+                                id="btn-aceptar-convocatoria-103" type="button" data-action="aceptar"
+                                data-convocatoria-id="103">
+                                <i class="bi bi-check-lg" aria-hidden="true"></i> Aceptar
+                            </button>
+                            <button class="convocation-button convocation-postpone btn fw-bold"
+                                id="btn-posponer-convocatoria-103" type="button" data-action="posponer"
+                                data-convocatoria-id="103">
+                                <i class="bi bi-calendar2-event" aria-hidden="true"></i> Posponer
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </main>
+
+        <footer id="pie-pagina-convocatorias">
+            <nav id="navegacion-convocatorias" aria-label="Navegación principal">
+                <ul class="bottom-nav" id="lista-navegacion-convocatorias">
+                    <li class="nav-item" id="item-convocatorias-inicio">
+                        <a id="enlace-convocatorias-inicio" href="index.html" aria-label="Inicio">
+                            <i class="bi bi-house-door-fill nav-icon" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item active" id="item-convocatorias-citas">
+                        <a id="enlace-convocatorias-citas" href="Citas.html" aria-label="Citas" aria-current="page">
+                            <i class="bi bi-calendar3 nav-icon" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="item-convocatorias-notificaciones">
+                        <a id="enlace-convocatorias-notificaciones" href="notificaciones.html" aria-label="Notificaciones">
+                            <i class="bi bi-bell-fill nav-icon" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="item-convocatorias-perfil">
+                        <a id="enlace-convocatorias-perfil" href="perfil.html" aria-label="Usuario">
+                            <i class="bi bi-person-circle nav-icon" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+
+        <div class="convocation-modal" id="modal-posponer-convocatoria" role="dialog" aria-modal="true"
+            aria-labelledby="titulo-modal-posponer" hidden>
+            <div class="convocation-modal-dialog" id="dialogo-posponer-convocatoria">
+                <button class="convocation-modal-close" id="btn-cerrar-modal-posponer" type="button"
+                    aria-label="Cerrar ventana">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+                <h2 class="convocation-modal-title" id="titulo-modal-posponer">Posponer convocatoria</h2>
+                <p class="convocation-modal-description" id="descripcion-modal-posponer">
+                    Propón una nueva fecha y hora al docente.
+                </p>
+
+                <form id="formulario-posponer-convocatoria" novalidate>
+                    <input id="id-convocatoria-posponer" name="convocatoriaId" type="hidden">
+
+                    <label class="convocation-form-label" for="nueva-fecha-convocatoria">Nueva fecha</label>
+                    <input class="convocation-form-control form-control" id="nueva-fecha-convocatoria"
+                        name="nuevaFecha" type="date" required>
+
+                    <label class="convocation-form-label" for="nueva-hora-convocatoria">Nueva hora</label>
+                    <input class="convocation-form-control form-control" id="nueva-hora-convocatoria"
+                        name="nuevaHora" type="time" required>
+
+                    <label class="convocation-form-label" for="motivo-posponer-convocatoria">Motivo</label>
+                    <textarea class="convocation-form-control convocation-form-reason form-control"
+                        id="motivo-posponer-convocatoria" name="motivo" maxlength="250" required></textarea>
+
+                    <button class="convocation-modal-submit btn fw-bold" id="btn-confirmar-posponer"
+                        type="submit">Enviar propuesta</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="convocation-modal" id="modal-resultado-convocatoria" role="dialog" aria-modal="true"
+            aria-labelledby="titulo-resultado-convocatoria" hidden>
+            <div class="convocation-modal-dialog convocation-result-dialog" id="dialogo-resultado-convocatoria">
+                <svg class="convocation-result-icon" viewBox="0 0 80 80" aria-hidden="true">
+                    <circle cx="40" cy="40" r="34" fill="none" stroke="currentColor" stroke-width="6"></circle>
+                    <path d="M23 40L34 52L59 26" fill="none" stroke="currentColor" stroke-width="7"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <h2 class="convocation-modal-title" id="titulo-resultado-convocatoria">Convocatoria actualizada</h2>
+                <p class="convocation-result-text" id="mensaje-resultado-convocatoria"></p>
+                <button class="convocation-modal-submit btn fw-bold" id="btn-cerrar-resultado-convocatoria"
+                    type="button">Cerrar</button>
+            </div>
+        </div>
+
+        <p class="visually-hidden" id="anuncios-convocatorias" aria-live="polite"></p>
+    </div>
+
+    <script src="../js/Padre/Controller/controlConvocatorias.js"></script>
+</body>
+
+</html>
