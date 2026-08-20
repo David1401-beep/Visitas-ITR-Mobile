@@ -4,6 +4,7 @@ const hostApi = ["", "localhost", "127.0.0.1"].includes(window.location.hostname
 
 const API_BASE_URL = `http://${hostApi}:8080/api/v1`;
 const CLAVE_CORREO_SESION = "visitasITR.correoPadre";
+const CLAVE_DATOS_SESION = "visitasITR.sesionPadre";
 
 async function solicitarApi(ruta, opciones = {}) {
   const configuracion = {
@@ -67,46 +68,55 @@ function normalizarEstado(estado) {
 
 export async function obtenerConvocatoriasPadre() {
   const correoSesion = localStorage.getItem(CLAVE_CORREO_SESION)?.trim().toLowerCase();
+  let sesion;
 
   if (!correoSesion) {
     throw new Error("Inicie sesión para consultar las convocatorias.");
   }
 
-  const [usuarios, estudiantes, relaciones, citas] = await Promise.all([
-    solicitarApi("/usuarios"),
+  try {
+    sesion = JSON.parse(localStorage.getItem(CLAVE_DATOS_SESION) || "null");
+  } catch (error) {
+    sesion = null;
+  }
+
+  if (!sesion || sesion.correoEstudiante?.trim().toLowerCase() !== correoSesion) {
+    throw new Error("La sesión no es válida. Vuelva a iniciar sesión.");
+  }
+
+  const idsEstudianteSesion = new Set(
+    (sesion.idsEstudiante || []).map(id => Number(id))
+  );
+  const idsRelacionSesion = new Set(
+    (sesion.idsEstudianteEncargado || []).map(id => Number(id))
+  );
+
+  if (idsEstudianteSesion.size === 0 || idsRelacionSesion.size === 0) {
+    throw new Error("El estudiante no tiene un encargado asociado.");
+  }
+
+  const [estudiantes, relaciones, citas] = await Promise.all([
     solicitarApi("/estudiantes"),
     solicitarApi("/estudiante-encargados"),
     solicitarApi("/citas-reuniones")
   ]);
 
-  const usuarioSesion = usuarios.find(
-    usuario => usuario.usuEmail?.trim().toLowerCase() === correoSesion
-  );
-
-  if (!usuarioSesion) {
-    throw new Error("El correo de la sesión no está registrado en la API.");
-  }
-
   const estudiantesSesion = estudiantes.filter(
-    estudiante => Number(estudiante.usuarioEstudiante) === Number(usuarioSesion.idUsuario)
+    estudiante => idsEstudianteSesion.has(Number(estudiante.idEstudiante))
   );
 
   if (estudiantesSesion.length === 0) {
-    throw new Error("El usuario de la sesión no tiene estudiantes asociados.");
+    throw new Error("Los estudiantes de la sesión ya no están disponibles.");
   }
 
-  const idsEstudiantes = new Set(
-    estudiantesSesion.map(estudiante => Number(estudiante.idEstudiante))
-  );
   const relacionesSesion = relaciones.filter(
-    relacion => idsEstudiantes.has(Number(relacion.idEstudiante))
-  );
-  const idsRelaciones = new Set(
-    relacionesSesion.map(relacion => Number(relacion.idEstudianteEncargado))
+    relacion =>
+      idsEstudianteSesion.has(Number(relacion.idEstudiante)) &&
+      idsRelacionSesion.has(Number(relacion.idEstudianteEncargado))
   );
 
   return citas
-    .filter(cita => idsRelaciones.has(Number(cita.idEstudianteEncargado)))
+    .filter(cita => idsRelacionSesion.has(Number(cita.idEstudianteEncargado)))
     .map(cita => {
       const relacion = relacionesSesion.find(
         item => Number(item.idEstudianteEncargado) === Number(cita.idEstudianteEncargado)
