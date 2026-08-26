@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       showStatus('');
     } catch (error) {
       studentSelect.innerHTML = '<option value="">No fue posible cargar estudiantes</option>';
-      showStatus(error.message, true);
+      // showStatus(error.message, true); // Retirado por petición del usuario
     }
   };
 

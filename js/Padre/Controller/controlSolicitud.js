@@ -206,7 +206,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     teacherSelect.disabled = false;
     submitButton.disabled = false;
   } catch (error) {
-    if (errorMessage) errorMessage.textContent = error.message;
+    // Retirado por petición del usuario
+    // if (errorMessage) errorMessage.textContent = error.message;
   }
 
   form.addEventListener('submit', async (event) => {

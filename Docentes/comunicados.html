@@ -30,8 +30,6 @@
                     class="communications-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
                     Enviar
                 </button>
-                <p class="text-center small mt-3 mb-0" id="mensaje-estado-comunicado" role="status"
-                    aria-live="polite"></p>
             </form>
 
             <!-- Los comunicados enviados se agregan aquí sin recargar la pantalla. -->
@@ -65,8 +63,39 @@
                 </ul>
             </nav>
         </footer>
+
+        <!-- Modal de éxito para el comunicado -->
+        <div class="request-success-modal modal fade" id="modal-exito-comunicado" tabindex="-1"
+            aria-labelledby="titulo-exito-comunicado" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" id="dialogo-exito-comunicado">
+                <div class="modal-content" id="contenido-exito-comunicado">
+                    <div class="modal-body d-flex flex-column align-items-center text-center" id="cuerpo-exito-comunicado">
+                        <h2 class="fw-bold" id="titulo-exito-comunicado">Comunicado Enviado Correctamente</h2>
+
+                        <svg class="request-success-icon" id="icono-exito-comunicado" viewBox="0 0 100 100" aria-hidden="true">
+                            <circle cx="48" cy="52" r="34" fill="none" stroke="currentColor" stroke-width="6" />
+                            <path d="M27 48 L47 68 L80 27" fill="none" stroke="currentColor" stroke-width="7"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+
+                        <p class="request-success-message" id="mensaje-exito-comunicado">
+                            El comunicado ha sido enviado con éxito.<br>
+                            Todos los padres recibirán la notificación.
+                        </p>
+
+                        <button class="request-modal-close btn btn-warning rounded-pill fw-bold" id="btn-cerrar-modal-comunicado" type="button"
+                            data-bs-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script id="script-bootstrap" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
     <script type="module" id="script-control-comunicados" src="../js/Docente/Controller/controlComunicados.js"></script>
 </body>
 

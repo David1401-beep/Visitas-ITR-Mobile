@@ -218,8 +218,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (error) {
     list.innerHTML = `
       <div class="text-center py-5" id="mensaje-error-convocatorias">
-        <p class="text-danger mb-2">${escapeHtml(error.message)}</p>
-        <a href="inicioSesion.html" class="btn btn-sm btn-outline-dark rounded-pill">Ir al inicio de sesión</a>
+        <p class="text-secondary mb-2">No se pudieron cargar las convocatorias.</p>
       </div>
     `;
     return;

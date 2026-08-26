@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const messageInput = document.getElementById('mensaje-comunicado');
   const communicationsList = document.getElementById('lista-comunicados');
   const submitButton = document.getElementById('btn-enviar-comunicado');
-  const statusMessage = document.getElementById('mensaje-estado-comunicado');
 
   if (!form || !messageInput || !communicationsList) {
     return;
@@ -74,16 +73,28 @@ document.addEventListener('DOMContentLoaded', () => {
       emptyMessage?.remove();
       communicationsList.prepend(createCard(communication));
       form.reset();
-      statusMessage.textContent = 'Comunicado guardado localmente.';
-      statusMessage.className = 'text-center small mt-3 mb-0 text-success';
-      messageInput.focus();
+      
+      // Mostrar modal de éxito usando Bootstrap
+      const successModalEl = document.getElementById('modal-exito-comunicado');
+      if (successModalEl && typeof bootstrap !== 'undefined') {
+        const successModal = bootstrap.Modal.getOrCreateInstance(successModalEl);
+        successModal.show();
+      }
+      
     } catch (error) {
-      statusMessage.textContent = 'No se pudo guardar el comunicado en este navegador.';
-      statusMessage.className = 'text-center small mt-3 mb-0 text-danger';
+      alert('No se pudo guardar el comunicado en este navegador.');
     } finally {
       submitButton.disabled = false;
     }
   });
+
+  // Al cerrar el modal, devolver foco
+  const successModalEl = document.getElementById('modal-exito-comunicado');
+  if (successModalEl) {
+    successModalEl.addEventListener('hidden.bs.modal', () => {
+      messageInput.focus();
+    });
+  }
 
   renderCommunications(obtenerComunicados());
 });

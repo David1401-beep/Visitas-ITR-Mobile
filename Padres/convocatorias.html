@@ -15,148 +15,15 @@
 </head>
 
 <body class="convocations-page" id="cuerpo-convocatorias">
-    <div class="app-container" id="contenedor-aplicacion-convocatorias">
-        <header class="convocations-header d-flex align-items-center justify-content-between"
-            id="encabezado-convocatorias">
-            <h1 class="h5 fw-bold mb-0" id="titulo-convocatorias">Convocatorias</h1>
-            <img class="school-logo" id="logo-convocatorias" src="../img/logoRicaldone.png"
-                alt="Logo del Instituto Técnico Ricaldone">
+    <div class="app-container" id="contenedor-aplicacion">
+        <header class="home-header d-flex align-items-center justify-content-between" id="encabezado-principal">
+            <h1 class="h6 fw-bold mb-0" id="titulo-encabezado">Convocatorias</h1>
+            <img class="school-logo" id="imagen-logo" src="../img/logoRicaldone.png" alt="Logo del Instituto Técnico Ricaldone">
         </header>
 
         <main class="convocations-content container-fluid" id="contenido-convocatorias">
             <section class="convocations-list" id="lista-convocatorias" aria-label="Convocatorias recibidas">
                 <!-- Cada data-convocatoria-id corresponde al identificador que entregará la API. -->
-                <article class="convocation-card card border-0" id="convocatoria-101"
-                    data-convocatoria-id="101" data-estudiante-id="501" data-estado="pendiente">
-                    <div class="card-body" id="cuerpo-convocatoria-101">
-                        <div class="convocation-card-heading" id="encabezado-convocatoria-101">
-                            <h2 class="convocation-title fw-bold" id="asunto-convocatoria-101"
-                                data-api-field="asunto">Revisión de conducta</h2>
-                            <span class="convocation-status" id="estado-convocatoria-101"
-                                data-api-field="estado">Pendiente</span>
-                        </div>
-
-                        <p class="convocation-data" id="fecha-convocatoria-101">
-                            <strong>Fecha:</strong>
-                            <time data-api-field="fecha" datetime="2026-08-21">Viernes 21 de agosto de 2026</time>
-                        </p>
-                        <p class="convocation-data" id="hora-convocatoria-101">
-                            <strong>Hora:</strong>
-                            <time data-api-field="hora" datetime="09:00">9:00 A.M.</time>
-                        </p>
-                        <p class="convocation-data" id="descripcion-convocatoria-101">
-                            <strong>Descripción:</strong>
-                            <span data-api-field="descripcion">Conversar sobre el comportamiento reciente del estudiante.</span>
-                        </p>
-                        <p class="convocation-data" id="estudiante-convocatoria-101">
-                            <strong>Estudiante convocado:</strong>
-                            <span data-api-field="estudianteNombre">David Eduardo Ramírez Escobar</span>
-                        </p>
-
-                        <hr class="convocation-divider" id="divisor-convocatoria-101">
-
-                        <div class="convocation-actions" id="acciones-convocatoria-101">
-                            <button class="convocation-button convocation-accept btn fw-bold"
-                                id="btn-aceptar-convocatoria-101" type="button" data-action="aceptar"
-                                data-convocatoria-id="101">
-                                <i class="bi bi-check-lg" aria-hidden="true"></i> Aceptar
-                            </button>
-                            <button class="convocation-button convocation-postpone btn fw-bold"
-                                id="btn-posponer-convocatoria-101" type="button" data-action="posponer"
-                                data-convocatoria-id="101">
-                                <i class="bi bi-calendar2-event" aria-hidden="true"></i> Posponer
-                            </button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="convocation-card card border-0" id="convocatoria-102"
-                    data-convocatoria-id="102" data-estudiante-id="502" data-estado="pendiente">
-                    <div class="card-body" id="cuerpo-convocatoria-102">
-                        <div class="convocation-card-heading" id="encabezado-convocatoria-102">
-                            <h2 class="convocation-title fw-bold" id="asunto-convocatoria-102"
-                                data-api-field="asunto">Rendimiento académico</h2>
-                            <span class="convocation-status" id="estado-convocatoria-102"
-                                data-api-field="estado">Pendiente</span>
-                        </div>
-
-                        <p class="convocation-data" id="fecha-convocatoria-102">
-                            <strong>Fecha:</strong>
-                            <time data-api-field="fecha" datetime="2026-08-24">Lunes 24 de agosto de 2026</time>
-                        </p>
-                        <p class="convocation-data" id="hora-convocatoria-102">
-                            <strong>Hora:</strong>
-                            <time data-api-field="hora" datetime="10:30">10:30 A.M.</time>
-                        </p>
-                        <p class="convocation-data" id="descripcion-convocatoria-102">
-                            <strong>Descripción:</strong>
-                            <span data-api-field="descripcion">Dar seguimiento a las calificaciones del segundo período.</span>
-                        </p>
-                        <p class="convocation-data" id="estudiante-convocatoria-102">
-                            <strong>Estudiante convocado:</strong>
-                            <span data-api-field="estudianteNombre">Samuel Antonio Cabrera Molina</span>
-                        </p>
-
-                        <hr class="convocation-divider" id="divisor-convocatoria-102">
-
-                        <div class="convocation-actions" id="acciones-convocatoria-102">
-                            <button class="convocation-button convocation-accept btn fw-bold"
-                                id="btn-aceptar-convocatoria-102" type="button" data-action="aceptar"
-                                data-convocatoria-id="102">
-                                <i class="bi bi-check-lg" aria-hidden="true"></i> Aceptar
-                            </button>
-                            <button class="convocation-button convocation-postpone btn fw-bold"
-                                id="btn-posponer-convocatoria-102" type="button" data-action="posponer"
-                                data-convocatoria-id="102">
-                                <i class="bi bi-calendar2-event" aria-hidden="true"></i> Posponer
-                            </button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="convocation-card card border-0" id="convocatoria-103"
-                    data-convocatoria-id="103" data-estudiante-id="503" data-estado="pendiente">
-                    <div class="card-body" id="cuerpo-convocatoria-103">
-                        <div class="convocation-card-heading" id="encabezado-convocatoria-103">
-                            <h2 class="convocation-title fw-bold" id="asunto-convocatoria-103"
-                                data-api-field="asunto">Entrega de notas</h2>
-                            <span class="convocation-status" id="estado-convocatoria-103"
-                                data-api-field="estado">Pendiente</span>
-                        </div>
-
-                        <p class="convocation-data" id="fecha-convocatoria-103">
-                            <strong>Fecha:</strong>
-                            <time data-api-field="fecha" datetime="2026-08-28">Viernes 28 de agosto de 2026</time>
-                        </p>
-                        <p class="convocation-data" id="hora-convocatoria-103">
-                            <strong>Hora:</strong>
-                            <time data-api-field="hora" datetime="14:00">2:00 P.M.</time>
-                        </p>
-                        <p class="convocation-data" id="descripcion-convocatoria-103">
-                            <strong>Descripción:</strong>
-                            <span data-api-field="descripcion">Revisar los resultados académicos y los acuerdos de mejora.</span>
-                        </p>
-                        <p class="convocation-data" id="estudiante-convocatoria-103">
-                            <strong>Estudiante convocado:</strong>
-                            <span data-api-field="estudianteNombre">Jason Steven Miranda Navarrete</span>
-                        </p>
-
-                        <hr class="convocation-divider" id="divisor-convocatoria-103">
-
-                        <div class="convocation-actions" id="acciones-convocatoria-103">
-                            <button class="convocation-button convocation-accept btn fw-bold"
-                                id="btn-aceptar-convocatoria-103" type="button" data-action="aceptar"
-                                data-convocatoria-id="103">
-                                <i class="bi bi-check-lg" aria-hidden="true"></i> Aceptar
-                            </button>
-                            <button class="convocation-button convocation-postpone btn fw-bold"
-                                id="btn-posponer-convocatoria-103" type="button" data-action="posponer"
-                                data-convocatoria-id="103">
-                                <i class="bi bi-calendar2-event" aria-hidden="true"></i> Posponer
-                            </button>
-                        </div>
-                    </div>
-                </article>
             </section>
         </main>
 
