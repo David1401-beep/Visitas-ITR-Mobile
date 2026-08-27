@@ -1,69 +1,102 @@
-import { obtenerComunicados } from '../Service/ComunicadosService.js';
+import { obtenerAgendaPadre } from "../Service/CitasPadreService.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const communicationsList = document.getElementById('lista-comunicados-padre');
+const listaCitas = document.getElementById("lista-comunicados-padre");
 
-  if (!communicationsList) {
-    return;
+document.addEventListener("DOMContentLoaded", cargarAgenda);
+
+document.addEventListener("visibilitychange", function () {
+  if (!document.hidden) {
+    cargarAgenda();
   }
-
-  const formatDateTime = (value) => {
-    if (!value) return { text: 'Fecha no disponible', dateTime: '' };
-
-    const date = new Date(value);
-    const formattedDate = new Intl.DateTimeFormat('es-SV', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    }).format(date);
-    const formattedTime = new Intl.DateTimeFormat('es-SV', {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true
-    }).format(date);
-
-    return {
-      text: `${formattedDate} - ${formattedTime}`,
-      dateTime: value
-    };
-  };
-
-  const createCard = (communication) => {
-    const publication = formatDateTime(communication.fechaPublicacion);
-    const article = document.createElement('article');
-    article.className = 'appointments-card card border-0';
-    article.id = `comunicado-padre-${communication.idComunicado}`;
-
-    const body = document.createElement('div');
-    const title = document.createElement('h2');
-    const author = document.createElement('p');
-    const date = document.createElement('p');
-    const time = document.createElement('time');
-
-    body.className = 'card-body';
-    title.className = 'appointments-card-title fw-bold mb-0';
-    author.className = 'appointments-location mb-0';
-    date.className = 'appointments-date mb-0';
-    title.textContent = communication.mensaje;
-    author.innerHTML = '<i class="bi bi-megaphone-fill appointment-pin" aria-hidden="true"></i><strong>Docente:</strong> ';
-    author.append(document.createTextNode(communication.nombreEmpleado || 'Instituto Técnico Ricaldone'));
-    time.dateTime = publication.dateTime;
-    time.textContent = publication.text;
-    date.appendChild(time);
-    body.append(title, author, date);
-    article.appendChild(body);
-    return article;
-  };
-
-  const communications = obtenerComunicados();
-  communicationsList.innerHTML = '';
-
-  if (communications.length === 0) {
-    communicationsList.innerHTML = '<p class="text-center text-secondary mb-0">No hay comunicados publicados.</p>';
-    return;
-  }
-
-  communications.forEach(communication => {
-    communicationsList.appendChild(createCard(communication));
-  });
 });
+
+async function cargarAgenda() {
+  if (!listaCitas) {
+    return;
+  }
+
+  try {
+    const agenda = await obtenerAgendaPadre();
+
+    if (agenda.length === 0) {
+      mostrarMensaje(
+        "No tiene citas registradas. Use el botón Crear Solicitud para pedir una reunión."
+      );
+      return;
+    }
+
+    listaCitas.innerHTML = agenda.map(construirTarjeta).join("");
+  } catch (error) {
+    console.error("No fue posible cargar la agenda de citas.", error);
+    mostrarMensaje(error.message, true);
+  }
+}
+
+function construirTarjeta(cita) {
+  return `
+    <article class="appointments-card card border-0" id="cita-${cita.idCita}">
+      <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-start gap-2">
+          <h2 class="appointments-card-title fw-bold mb-0">
+            ${escaparHtml(cita.asunto)}
+          </h2>
+          <span class="badge ${claseEstado(cita.estadoApi)}">
+            ${escaparHtml(cita.estado)}
+          </span>
+        </div>
+
+        <p class="appointments-location mb-0">
+          <i class="bi bi-person-badge appointment-pin" aria-hidden="true"></i>
+          <strong>Docente:</strong> ${escaparHtml(cita.docente)}
+        </p>
+
+        <p class="appointments-location mb-0">
+          <i class="bi bi-mortarboard appointment-pin" aria-hidden="true"></i>
+          <strong>Estudiante:</strong> ${escaparHtml(cita.estudiante)}
+        </p>
+
+        <p class="appointments-date mb-0">
+          <time datetime="${escaparHtml(cita.fechaReunion || "")}">
+            ${escaparHtml(cita.fechaTexto)} - ${escaparHtml(cita.horaTexto)}
+          </time>
+        </p>
+
+        <p class="appointments-location mb-0">
+          <small class="text-secondary">${escaparHtml(cita.origenTexto)}</small>
+        </p>
+
+      </div>
+    </article>
+  `;
+}
+
+function claseEstado(estadoApi) {
+  const clases = {
+    PENDIENTE: "bg-warning text-dark",
+    ACEPTADA: "bg-success",
+    POSPUESTA: "bg-info text-dark",
+    RECHAZADA: "bg-danger",
+    CANCELADA: "bg-secondary",
+    FINALIZADA: "bg-dark"
+  };
+
+  return clases[estadoApi] || "bg-secondary";
+}
+
+function mostrarMensaje(texto, esError = false) {
+  listaCitas.innerHTML = `
+    <p class="text-center ${esError ? "text-danger" : "text-secondary"} mb-0">
+      ${escaparHtml(texto)}
+    </p>
+  `;
+}
+
+function escaparHtml(valor) {
+  return String(valor ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}

@@ -7,6 +7,14 @@ import {
 
 const contenedor = document.getElementById("contenedor-solicitudes");
 
+const modalConfirmarEl = document.getElementById("modal-confirmar-eliminacion");
+const modalExitoEl = document.getElementById("modal-exito-eliminacion");
+const btnConfirmarEliminacion = document.getElementById("btn-confirmar-eliminacion");
+
+const modalConfirmar = modalConfirmarEl ? new bootstrap.Modal(modalConfirmarEl) : null;
+const modalExito = modalExitoEl ? new bootstrap.Modal(modalExitoEl) : null;
+
+let solicitudSeleccionada = null;
 
 let docentesEnMemoria = [];
 
@@ -21,62 +29,74 @@ async function cargarSolicitudes() {
 
   try {
     const solicitudes = await obtenerMisSolicitudes();
-    dibujarSolicitudes(solicitudes);
+
+    if (solicitudes.length === 0) {
+      mostrarMensaje("Todavía no ha enviado solicitudes.");
+      return;
+    }
+
+    contenedor.innerHTML = `
+      <p class="text-center text-secondary mb-2" id="subtitulo-solicitudes">
+        Gestiona tus visitas programadas
+      </p>
+      ${solicitudes.map(construirTarjeta).join("")}
+    `;
   } catch (error) {
     console.error("No fue posible cargar las solicitudes.", error);
     mostrarMensaje(error.message, true);
   }
 }
 
-function dibujarSolicitudes(solicitudes) {
-  if (solicitudes.length === 0) {
-    mostrarMensaje(
-      "Todavía no ha enviado solicitudes. Use el botón Crear solicitud para enviar la primera."
-    );
-    return;
-  }
-
-  contenedor.innerHTML = solicitudes.map(construirTarjeta).join("");
-}
-
 function construirTarjeta(solicitud) {
 
   const acciones = solicitud.editable
     ? `
-      <button type="button" class="btn btn-sm btn-outline-primary btn-editar-solicitud"
+      <button type="button"
+              class="btn btn-solicitud btn-editar fw-semibold d-flex align-items-center gap-2 btn-editar-solicitud"
               data-id="${solicitud.idCita}">
-        <i class="bi bi-pencil-square"></i> Editar
+        <i class="bi bi-pencil-fill" aria-hidden="true"></i> Editar
       </button>
-      <button type="button" class="btn btn-sm btn-outline-danger btn-eliminar-solicitud"
+      <button type="button"
+              class="btn btn-solicitud btn-cancelar fw-semibold d-flex align-items-center gap-2 btn-eliminar-solicitud"
               data-id="${solicitud.idCita}">
-        <i class="bi bi-trash"></i> Eliminar
+        <i class="bi bi-trash-fill" aria-hidden="true"></i> Cancelar
       </button>
     `
-    : `<small class="text-muted">El docente ya respondió esta solicitud.</small>`;
+    : `<span class="solicitud-dato text-secondary">
+         El docente ya respondió esta solicitud.
+       </span>`;
 
   return `
-    <article class="card shadow-sm mb-3 w-100" id="solicitud-${solicitud.idCita}">
+    <article class="card solicitud-card w-100" id="solicitud-${solicitud.idCita}">
       <div class="card-body">
 
-        <div class="d-flex justify-content-between align-items-start mb-2">
-          <h2 class="h6 fw-bold mb-0">${escaparHtml(solicitud.docente)}</h2>
+        <div class="d-flex justify-content-between align-items-start">
+          <h2 class="solicitud-titulo fw-bold mb-0">${escaparHtml(solicitud.asunto)}</h2>
           <span class="badge ${claseEstado(solicitud.estadoApi)}">
             ${escaparHtml(solicitud.estado)}
           </span>
         </div>
 
-        <p class="small text-muted mb-1">
-          <i class="bi bi-person"></i> ${escaparHtml(solicitud.estudiante)}
+        <p class="solicitud-dato mb-1">
+          <strong>Encargado:</strong> ${escaparHtml(solicitud.encargado)}
+        </p>
+        <p class="solicitud-dato mb-1">
+          <strong>Docente:</strong> Prof. ${escaparHtml(solicitud.docente)}
+        </p>
+        <p class="solicitud-dato mb-1">
+          <strong>Estudiante:</strong> ${escaparHtml(solicitud.estudiante)}
+        </p>
+        <p class="solicitud-dato mb-1">
+          <strong>Fecha:</strong> ${escaparHtml(solicitud.fechaTexto)}
+          a las ${escaparHtml(solicitud.horaTexto)}
+        </p>
+        <p class="solicitud-dato mb-2">
+          <strong>Motivo:</strong> ${escaparHtml(solicitud.motivo)}
         </p>
 
-        <p class="small text-muted mb-2">
-          <i class="bi bi-calendar-event"></i>
-          ${escaparHtml(solicitud.fechaTexto)} ${escaparHtml(solicitud.horaTexto)}
-        </p>
+        <hr class="solicitud-divider my-3">
 
-        <p class="mb-3">${escaparHtml(solicitud.motivo)}</p>
-
-        <div class="d-flex gap-2 flex-wrap">${acciones}</div>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">${acciones}</div>
 
       </div>
     </article>
@@ -98,7 +118,7 @@ function claseEstado(estadoApi) {
 
 function mostrarMensaje(texto, esError = false) {
   contenedor.innerHTML = `
-    <p class="text-center ${esError ? "text-danger" : "text-muted"} py-5">
+    <p class="text-center ${esError ? "text-danger" : "text-secondary"} py-5">
       ${escaparHtml(texto)}
     </p>
   `;
@@ -106,9 +126,7 @@ function mostrarMensaje(texto, esError = false) {
 
 // Editar
 async function abrirEdicion(idCita) {
-  const tarjeta = document.getElementById(`solicitud-${idCita}`);
-
-  if (!tarjeta || !window.Swal) {
+  if (!window.Swal) {
     avisoError("No se pudo abrir el formulario de edición.");
     return;
   }
@@ -148,7 +166,8 @@ async function abrirEdicion(idCita) {
                value="${solicitud.fecha}" min="${fechaDeHoy()}">
 
         <label class="form-label mt-2">Hora</label>
-        <input type="time" id="swalHora" class="form-control" value="${solicitud.hora || "08:00"}">
+        <input type="time" id="swalHora" class="form-control"
+               value="${solicitud.hora || "08:00"}">
 
         <label class="form-label mt-2">Motivo</label>
         <textarea id="swalMotivo" class="form-control" rows="3"
@@ -156,12 +175,11 @@ async function abrirEdicion(idCita) {
       </div>
     `,
     showCancelButton: true,
-    confirmButtonText: "Guardar cambios",
+    confirmButtonText: "Guardar",
     cancelButtonText: "Cancelar",
     reverseButtons: true,
     focusConfirm: false,
 
-    // El límite de 250 corresponde a CIT_MOTIVO en la base de datos.
     preConfirm: function () {
       const valores = {
         idDocente: document.getElementById("swalDocente").value,
@@ -203,25 +221,52 @@ async function abrirEdicion(idCita) {
 }
 
 // Eliminar
-async function confirmarEliminacion(idCita) {
-  const confirmado = await confirmarAccion(
-    "¿Eliminar la solicitud?",
-    "La solicitud se retirará y el docente dejará de verla. Esta acción no se puede deshacer.",
-    "Sí, eliminar"
-  );
+async function abrirConfirmacionEliminar(idCita) {
+  const solicitudes = await obtenerMisSolicitudes();
+  const solicitud = solicitudes.find(registro => Number(registro.idCita) === Number(idCita));
 
-  if (!confirmado) {
+  if (!solicitud) {
     return;
   }
 
-  try {
-    await eliminarSolicitud(idCita);
-    await cargarSolicitudes();
-    avisoExito("La solicitud se eliminó correctamente.");
-  } catch (error) {
-    avisoError(error.message);
+  if (!solicitud.editable) {
+    avisoError("Esta solicitud ya fue respondida por el docente y no puede eliminarse.");
+    return;
   }
+
+  solicitudSeleccionada = solicitud;
+
+  escribirHtml("modal-encargado", `<strong>Encargado:</strong> ${escaparHtml(solicitud.encargado)}`);
+  escribirHtml("modal-docente", `<strong>Docente:</strong> Prof. ${escaparHtml(solicitud.docente)}`);
+  escribirHtml("modal-fecha",
+    `<strong>Fecha:</strong> ${escaparHtml(solicitud.fechaTexto)} a las ${escaparHtml(solicitud.horaTexto)}`);
+
+  modalConfirmar?.show();
 }
+
+btnConfirmarEliminacion?.addEventListener("click", async function () {
+  if (!solicitudSeleccionada) {
+    return;
+  }
+
+  btnConfirmarEliminacion.disabled = true;
+
+  try {
+    await eliminarSolicitud(solicitudSeleccionada.idCita);
+
+    modalConfirmar?.hide();
+    modalExito?.show();
+
+    await cargarSolicitudes();
+  } catch (error) {
+    modalConfirmar?.hide();
+    avisoError(error.message);
+  } finally {
+    btnConfirmarEliminacion.disabled = false;
+    solicitudSeleccionada = null;
+  }
+});
+
 
 // Acciones de las tarjetas
 if (contenedor) {
@@ -232,7 +277,7 @@ if (contenedor) {
     if (botonEditar) {
       abrirEdicion(botonEditar.dataset.id);
     } else if (botonEliminar) {
-      confirmarEliminacion(botonEliminar.dataset.id);
+      abrirConfirmacionEliminar(botonEliminar.dataset.id);
     }
   });
 }
@@ -261,28 +306,16 @@ function avisoError(mensaje) {
   }
 }
 
-async function confirmarAccion(titulo, mensaje, textoBoton) {
-  if (!window.Swal) {
-    return window.confirm(`${titulo}\n\n${mensaje}`);
-  }
-
-  const resultado = await Swal.fire({
-    icon: "warning",
-    title: titulo,
-    text: mensaje,
-    showCancelButton: true,
-    confirmButtonText: textoBoton,
-    cancelButtonText: "Cancelar",
-    confirmButtonColor: "#dc3545",
-    cancelButtonColor: "#6c757d",
-    reverseButtons: true
-  });
-
-  return resultado.isConfirmed;
-}
-
 
 // Apoyo
+function escribirHtml(id, html) {
+  const elemento = document.getElementById(id);
+
+  if (elemento) {
+    elemento.innerHTML = html;
+  }
+}
+
 function fechaDeHoy() {
   const hoy = new Date();
 
