@@ -1,118 +1,299 @@
-// Control de interactividad, edición, eliminación y almacenamiento de la lista de solicitudes
-document.addEventListener('DOMContentLoaded', () => {
-    let cardToDelete = null;
-    const deleteModalEl = document.getElementById('deleteConfirmModal');
-    const deleteSuccessModalEl = document.getElementById('deleteSuccessModal');
+import {
+  obtenerMisSolicitudes,
+  actualizarSolicitud,
+  eliminarSolicitud,
+  obtenerDocentes
+} from "../Service/MisSolicitudesService.js";
 
-    const deleteModal = deleteModalEl && typeof bootstrap !== 'undefined' ? bootstrap.Modal.getOrCreateInstance(deleteModalEl) : null;
-    const deleteSuccessModal = deleteSuccessModalEl && typeof bootstrap !== 'undefined' ? bootstrap.Modal.getOrCreateInstance(deleteSuccessModalEl) : null;
+const contenedor = document.getElementById("contenedor-solicitudes");
 
-    // Guardar cambios si venimos de editar
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('edited') === 'true') {
-        const id = urlParams.get('id');
-        const encargado = urlParams.get('encargado');
-        const docente = urlParams.get('docente');
-        const fecha = urlParams.get('fecha');
-        const motivo = urlParams.get('motivo');
 
-        if (id) {
-            let solicitudes = JSON.parse(localStorage.getItem('solicitudes_data') || '{}');
-            solicitudes[id] = { id, encargado, docente, fecha, motivo };
-            localStorage.setItem('solicitudes_data', JSON.stringify(solicitudes));
-        }
+let docentesEnMemoria = [];
+
+document.addEventListener("DOMContentLoaded", cargarSolicitudes);
+
+async function cargarSolicitudes() {
+  if (!contenedor) {
+    return;
+  }
+
+  mostrarMensaje("Cargando sus solicitudes...");
+
+  try {
+    const solicitudes = await obtenerMisSolicitudes();
+    dibujarSolicitudes(solicitudes);
+  } catch (error) {
+    console.error("No fue posible cargar las solicitudes.", error);
+    mostrarMensaje(error.message, true);
+  }
+}
+
+function dibujarSolicitudes(solicitudes) {
+  if (solicitudes.length === 0) {
+    mostrarMensaje(
+      "Todavía no ha enviado solicitudes. Use el botón Crear solicitud para enviar la primera."
+    );
+    return;
+  }
+
+  contenedor.innerHTML = solicitudes.map(construirTarjeta).join("");
+}
+
+function construirTarjeta(solicitud) {
+
+  const acciones = solicitud.editable
+    ? `
+      <button type="button" class="btn btn-sm btn-outline-primary btn-editar-solicitud"
+              data-id="${solicitud.idCita}">
+        <i class="bi bi-pencil-square"></i> Editar
+      </button>
+      <button type="button" class="btn btn-sm btn-outline-danger btn-eliminar-solicitud"
+              data-id="${solicitud.idCita}">
+        <i class="bi bi-trash"></i> Eliminar
+      </button>
+    `
+    : `<small class="text-muted">El docente ya respondió esta solicitud.</small>`;
+
+  return `
+    <article class="card shadow-sm mb-3 w-100" id="solicitud-${solicitud.idCita}">
+      <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <h2 class="h6 fw-bold mb-0">${escaparHtml(solicitud.docente)}</h2>
+          <span class="badge ${claseEstado(solicitud.estadoApi)}">
+            ${escaparHtml(solicitud.estado)}
+          </span>
+        </div>
+
+        <p class="small text-muted mb-1">
+          <i class="bi bi-person"></i> ${escaparHtml(solicitud.estudiante)}
+        </p>
+
+        <p class="small text-muted mb-2">
+          <i class="bi bi-calendar-event"></i>
+          ${escaparHtml(solicitud.fechaTexto)} ${escaparHtml(solicitud.horaTexto)}
+        </p>
+
+        <p class="mb-3">${escaparHtml(solicitud.motivo)}</p>
+
+        <div class="d-flex gap-2 flex-wrap">${acciones}</div>
+
+      </div>
+    </article>
+  `;
+}
+
+function claseEstado(estadoApi) {
+  const clases = {
+    PENDIENTE: "bg-warning text-dark",
+    ACEPTADA: "bg-success",
+    POSPUESTA: "bg-info text-dark",
+    RECHAZADA: "bg-danger",
+    CANCELADA: "bg-secondary",
+    FINALIZADA: "bg-dark"
+  };
+
+  return clases[estadoApi] || "bg-secondary";
+}
+
+function mostrarMensaje(texto, esError = false) {
+  contenedor.innerHTML = `
+    <p class="text-center ${esError ? "text-danger" : "text-muted"} py-5">
+      ${escaparHtml(texto)}
+    </p>
+  `;
+}
+
+// Editar
+async function abrirEdicion(idCita) {
+  const tarjeta = document.getElementById(`solicitud-${idCita}`);
+
+  if (!tarjeta || !window.Swal) {
+    avisoError("No se pudo abrir el formulario de edición.");
+    return;
+  }
+
+  const solicitudes = await obtenerMisSolicitudes();
+  const solicitud = solicitudes.find(registro => Number(registro.idCita) === Number(idCita));
+
+  if (!solicitud) {
+    avisoError("No se encontró la solicitud.");
+    return;
+  }
+
+  if (docentesEnMemoria.length === 0) {
+    docentesEnMemoria = await obtenerDocentes();
+  }
+
+  const opcionesDocente = docentesEnMemoria
+    .map(docente => {
+      const seleccionado = Number(docente.idDocente) === Number(solicitud.idDocente)
+        ? "selected"
+        : "";
+      return `<option value="${docente.idDocente}" ${seleccionado}>
+                ${escaparHtml(docente.nombre)}
+              </option>`;
+    })
+    .join("");
+
+  const resultado = await Swal.fire({
+    title: "Editar solicitud",
+    html: `
+      <div class="text-start">
+        <label class="form-label mt-2">Docente</label>
+        <select id="swalDocente" class="form-select">${opcionesDocente}</select>
+
+        <label class="form-label mt-2">Fecha</label>
+        <input type="date" id="swalFecha" class="form-control"
+               value="${solicitud.fecha}" min="${fechaDeHoy()}">
+
+        <label class="form-label mt-2">Hora</label>
+        <input type="time" id="swalHora" class="form-control" value="${solicitud.hora || "08:00"}">
+
+        <label class="form-label mt-2">Motivo</label>
+        <textarea id="swalMotivo" class="form-control" rows="3"
+                  maxlength="250">${escaparHtml(solicitud.motivo)}</textarea>
+      </div>
+    `,
+    showCancelButton: true,
+    confirmButtonText: "Guardar cambios",
+    cancelButtonText: "Cancelar",
+    reverseButtons: true,
+    focusConfirm: false,
+
+    // El límite de 250 corresponde a CIT_MOTIVO en la base de datos.
+    preConfirm: function () {
+      const valores = {
+        idDocente: document.getElementById("swalDocente").value,
+        fecha: document.getElementById("swalFecha").value,
+        hora: document.getElementById("swalHora").value,
+        motivo: document.getElementById("swalMotivo").value.trim()
+      };
+
+      if (!valores.motivo) {
+        Swal.showValidationMessage("Debe indicar el motivo de la visita.");
+        return false;
+      }
+
+      if (valores.motivo.length > 250) {
+        Swal.showValidationMessage("El motivo no puede exceder 250 caracteres.");
+        return false;
+      }
+
+      if (!valores.fecha || !valores.hora) {
+        Swal.showValidationMessage("Debe indicar fecha y hora.");
+        return false;
+      }
+
+      return valores;
     }
+  });
 
-    // Aplicar los cambios guardados a las tarjetas existentes
-    const stored = JSON.parse(localStorage.getItem('solicitudes_data') || '{}');
-    Object.keys(stored).forEach(id => {
-        const data = stored[id];
-        const card = document.querySelector(`.solicitud-card[data-id="${id}"]`);
-        if (card) {
-            const datos = card.querySelectorAll('.solicitud-dato');
-            if (datos.length >= 4) {
-                datos[0].innerHTML = `<strong>Encargado:</strong> ${data.encargado}`;
-                datos[1].innerHTML = `<strong>Docente:</strong> ${data.docente}`;
-                datos[2].innerHTML = `<strong>Fecha:</strong> ${data.fecha}`;
-                datos[3].innerHTML = `<strong>Motivo:</strong> ${data.motivo}`;
-            }
-        }
-    });
+  if (!resultado.isConfirmed) {
+    return;
+  }
 
-    // Evento para los botones Editar
-    document.querySelectorAll('.btn-editar').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const card = e.target.closest('.solicitud-card');
-            const id = card.getAttribute('data-id') || '1';
-            const titulo = card.querySelector('.solicitud-titulo')?.innerText || '';
-            const datos = card.querySelectorAll('.solicitud-dato');
-            
-            let encargado = '', docente = '', fecha = '', motivo = '';
-            datos.forEach(d => {
-                const text = d.innerText;
-                if (text.includes('Encargado:')) encargado = text.replace('Encargado:', '').trim();
-                if (text.includes('Docente:')) docente = text.replace('Docente:', '').trim();
-                if (text.includes('Fecha:')) fecha = text.replace('Fecha:', '').trim();
-                if (text.includes('Motivo:')) motivo = text.replace('Motivo:', '').trim();
-            });
+  try {
+    await actualizarSolicitud(idCita, resultado.value);
+    await cargarSolicitudes();
+    avisoExito("La solicitud se actualizó correctamente.");
+  } catch (error) {
+    avisoError(error.message);
+  }
+}
 
-            const params = new URLSearchParams({
-                mode: 'edit',
-                id,
-                titulo,
-                encargado,
-                docente,
-                fecha,
-                motivo
-            });
+// Eliminar
+async function confirmarEliminacion(idCita) {
+  const confirmado = await confirmarAccion(
+    "¿Eliminar la solicitud?",
+    "La solicitud se retirará y el docente dejará de verla. Esta acción no se puede deshacer.",
+    "Sí, eliminar"
+  );
 
-            window.location.href = `CrearSolicitud.html?${params.toString()}`;
-        });
-    });
+  if (!confirmado) {
+    return;
+  }
 
-    // Evento para los botones Eliminar
-    document.querySelectorAll('.btn-cancelar').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            cardToDelete = e.target.closest('.solicitud-card');
-            
-            // Extraer datos de la tarjeta para el modal
-            const datos = cardToDelete.querySelectorAll('.solicitud-dato');
-            if (datos.length >= 3) {
-                document.getElementById('modalEncargado').innerHTML = datos[0].innerHTML;
-                document.getElementById('modalDocente').innerHTML = datos[1].innerHTML;
-                document.getElementById('modalFecha').innerHTML = datos[2].innerHTML;
-            }
+  try {
+    await eliminarSolicitud(idCita);
+    await cargarSolicitudes();
+    avisoExito("La solicitud se eliminó correctamente.");
+  } catch (error) {
+    avisoError(error.message);
+  }
+}
 
-            if (deleteModal) {
-                deleteModal.show();
-            }
-        });
-    });
+// Acciones de las tarjetas
+if (contenedor) {
+  contenedor.addEventListener("click", function (evento) {
+    const botonEditar = evento.target.closest(".btn-editar-solicitud");
+    const botonEliminar = evento.target.closest(".btn-eliminar-solicitud");
 
-    const btnConfirmDelete = document.getElementById('btnConfirmDelete');
-    if (btnConfirmDelete) {
-        btnConfirmDelete.addEventListener('click', () => {
-            if (cardToDelete) {
-                const id = cardToDelete.getAttribute('data-id');
-                if (id) {
-                    let solicitudes = JSON.parse(localStorage.getItem('solicitudes_data') || '{}');
-                    delete solicitudes[id];
-                    localStorage.setItem('solicitudes_data', JSON.stringify(solicitudes));
-                }
-                cardToDelete.remove();
-                cardToDelete = null;
-            }
-
-            if (deleteModal) {
-                deleteModal.hide();
-            }
-
-            if (deleteModalEl && deleteSuccessModal) {
-                deleteModalEl.addEventListener('hidden.bs.modal', function onHidden() {
-                    deleteModalEl.removeEventListener('hidden.bs.modal', onHidden);
-                    deleteSuccessModal.show();
-                });
-            }
-        });
+    if (botonEditar) {
+      abrirEdicion(botonEditar.dataset.id);
+    } else if (botonEliminar) {
+      confirmarEliminacion(botonEliminar.dataset.id);
     }
-});
+  });
+}
+
+
+// Avisos
+function avisoExito(mensaje) {
+  if (window.Swal) {
+    Swal.fire({
+      icon: "success",
+      title: "Listo",
+      text: mensaje,
+      timer: 1800,
+      showConfirmButton: false
+    });
+  } else {
+    alert(mensaje);
+  }
+}
+
+function avisoError(mensaje) {
+  if (window.Swal) {
+    Swal.fire({ icon: "error", title: "Ocurrió un problema", text: mensaje });
+  } else {
+    alert(mensaje);
+  }
+}
+
+async function confirmarAccion(titulo, mensaje, textoBoton) {
+  if (!window.Swal) {
+    return window.confirm(`${titulo}\n\n${mensaje}`);
+  }
+
+  const resultado = await Swal.fire({
+    icon: "warning",
+    title: titulo,
+    text: mensaje,
+    showCancelButton: true,
+    confirmButtonText: textoBoton,
+    cancelButtonText: "Cancelar",
+    confirmButtonColor: "#dc3545",
+    cancelButtonColor: "#6c757d",
+    reverseButtons: true
+  });
+
+  return resultado.isConfirmed;
+}
+
+
+// Apoyo
+function fechaDeHoy() {
+  const hoy = new Date();
+
+  return `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, "0")}-${String(hoy.getDate()).padStart(2, "0")}`;
+}
+
+function escaparHtml(valor) {
+  return String(valor ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}

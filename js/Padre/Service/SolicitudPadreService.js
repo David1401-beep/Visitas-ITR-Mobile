@@ -6,6 +6,9 @@ const API_BASE_URL = `http://${hostApi}:8080/api/v1`;
 const CLAVE_DATOS_SESION = "visitasITR.sesionPadre";
 const MARCADOR_SOLICITUD_PADRE = "[SOLICITUD_PADRE]";
 
+const LIMITE_MOTIVO = 250;
+const LIMITE_OBSERVACIONES = 300;
+
 async function solicitarApi(ruta, opciones = {}) {
   const configuracion = {
     ...opciones,
@@ -86,26 +89,30 @@ function construirFechaReunion(fecha) {
   ahora.setMinutes(ahora.getMinutes() + 5);
   const horas = String(ahora.getHours()).padStart(2, "0");
   const minutos = String(ahora.getMinutes()).padStart(2, "0");
+
   return `${fecha}T${horas}:${minutos}:00`;
 }
 
 export async function cargarOpcionesSolicitud() {
   const sesion = obtenerSesionPadre();
-  const [relaciones, empleados] = await Promise.all([
+
+  const [relaciones, docentesApi] = await Promise.all([
     obtenerRelacionesSesion(sesion),
-    solicitarApi("/empleados")
+    solicitarApi("/docentes")
   ]);
 
   if (relaciones.length === 0) {
     throw new Error("El estudiante todavía no tiene un encargado asociado.");
   }
 
-  const docentes = (Array.isArray(empleados) ? empleados : [])
-    .filter(empleado => empleado.empRol?.toUpperCase().includes("DOCENTE"))
-    .map(empleado => ({
-      idEmpleado: Number(empleado.idEmpleado),
-      nombre: `${empleado.empNombre || ""} ${empleado.empApellido || ""}`.trim()
-    }));
+  const docentes = (Array.isArray(docentesApi) ? docentesApi : []).map(docente => ({
+    // La propiedad se sigue llamando idEmpleado porque el controller
+    // de la pantalla la usa con ese nombre.
+    idEmpleado: Number(docente.idDocente),
+    idDocente: Number(docente.idDocente),
+    nombre: `${docente.docNombre || ""} ${docente.docApellido || ""}`.trim(),
+    tipo: docente.docTipo || ""
+  }));
 
   if (docentes.length === 0) {
     throw new Error("No hay docentes disponibles para recibir la solicitud.");
@@ -124,25 +131,42 @@ export async function cargarOpcionesSolicitud() {
 export async function crearSolicitudPadre(datosSolicitud) {
   const sesion = obtenerSesionPadre();
   const idRelacion = Number(datosSolicitud.idEstudianteEncargado);
+
   const relaciones = await obtenerRelacionesSesion(sesion);
   const idsRelaciones = relaciones.map(relacion => Number(relacion.idEstudianteEncargado));
 
+  // Impide que alguien envíe una solicitud a nombre de un estudiante
+  // que no le corresponde manipulando el formulario.
   if (!idsRelaciones.includes(idRelacion)) {
     throw new Error("El encargado seleccionado no pertenece a la sesión.");
   }
 
+  const idDocente = Number(datosSolicitud.idDocente ?? datosSolicitud.idEmpleado);
+
+  if (!idDocente) {
+    throw new Error("Debe seleccionar un docente.");
+  }
+
   const motivoCompleto = datosSolicitud.motivo.trim();
-  const observaciones = `${MARCADOR_SOLICITUD_PADRE} ${motivoCompleto}`.slice(0, 300);
+
+  if (!motivoCompleto) {
+    throw new Error("Debe indicar el motivo de la visita.");
+  }
+
+  const observaciones = `${MARCADOR_SOLICITUD_PADRE} ${motivoCompleto}`
+    .slice(0, LIMITE_OBSERVACIONES);
 
   return solicitarApi("/citas-reuniones", {
     method: "POST",
     body: JSON.stringify({
-      idEmpleado: Number(datosSolicitud.idEmpleado),
+      idDocente,
       idEstudianteEncargado: idRelacion,
-      motivo: motivoCompleto.slice(0, 200),
-      estado: "PENDIENTE",
-      observaciones,
-      fechaReunion: construirFechaReunion(datosSolicitud.fecha)
+      citMotivo: motivoCompleto.slice(0, LIMITE_MOTIVO),
+      citEstado: "PENDIENTE",
+      citObservaciones: observaciones,
+      citFechaReunion: construirFechaReunion(datosSolicitud.fecha)
     })
   });
 }
+
+export { MARCADOR_SOLICITUD_PADRE };

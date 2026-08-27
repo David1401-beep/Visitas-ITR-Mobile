@@ -3,9 +3,9 @@ const hostApi = ["", "localhost", "127.0.0.1"].includes(window.location.hostname
   : window.location.hostname;
 
 const API_BASE_URL = `http://${hostApi}:8080/api/v1`;
-const CLAVE_CORREO_SESION = "visitasITR.correoPadre";
 const CLAVE_DATOS_SESION = "visitasITR.sesionPadre";
 const MARCADOR_SOLICITUD_PADRE = "[SOLICITUD_PADRE]";
+const LIMITE_OBSERVACIONES = 300;
 
 async function solicitarApi(ruta, opciones = {}) {
   const configuracion = {
@@ -41,20 +41,13 @@ async function solicitarApi(ruta, opciones = {}) {
     );
   }
 
-  if (contenido && Object.prototype.hasOwnProperty.call(contenido, "data")) {
-    return contenido.data;
-  }
-
-  return contenido;
+  return contenido && Object.prototype.hasOwnProperty.call(contenido, "data")
+    ? contenido.data
+    : contenido;
 }
 
-function obtenerSesionPadre() {
-  const correoSesion = localStorage.getItem(CLAVE_CORREO_SESION)?.trim().toLowerCase();
+export function obtenerSesionPadre() {
   let sesion;
-
-  if (!correoSesion) {
-    throw new Error("Inicie sesión para consultar las convocatorias.");
-  }
 
   try {
     sesion = JSON.parse(localStorage.getItem(CLAVE_DATOS_SESION) || "null");
@@ -62,16 +55,12 @@ function obtenerSesionPadre() {
     sesion = null;
   }
 
-  if (!sesion || sesion.correoEstudiante?.trim().toLowerCase() !== correoSesion) {
-    throw new Error("La sesión no es válida. Vuelva a iniciar sesión.");
-  }
-
-  const idsEstudiante = (sesion.idsEstudiante || [])
+  const idsEstudiante = (sesion?.idsEstudiante || [])
     .map(id => Number(id))
     .filter(id => Number.isInteger(id) && id > 0);
 
-  if (idsEstudiante.length === 0) {
-    throw new Error("La sesión no contiene un estudiante válido.");
+  if (!sesion || idsEstudiante.length === 0) {
+    throw new Error("La sesión no es válida. Vuelva a iniciar sesión.");
   }
 
   return {
@@ -80,14 +69,21 @@ function obtenerSesionPadre() {
   };
 }
 
-function separarFechaHora(fechaReunion) {
-  if (!fechaReunion) return { fecha: "", hora: "" };
+export async function obtenerRelacionesSesion(sesion) {
+  const relaciones = await solicitarApi("/estudiante-encargados");
 
-  const [fecha = "", horaCompleta = ""] = fechaReunion.split("T");
-  return {
-    fecha,
-    hora: horaCompleta.slice(0, 5)
-  };
+  return (Array.isArray(relaciones) ? relaciones : [])
+    .filter(relacion => sesion.idsEstudiante.includes(Number(relacion.idEstudiante)));
+}
+
+function separarFechaHora(fechaReunion) {
+  if (!fechaReunion) {
+    return { fecha: "", hora: "" };
+  }
+
+  const [fecha = "", horaCompleta = ""] = String(fechaReunion).split("T");
+
+  return { fecha, hora: horaCompleta.slice(0, 5) };
 }
 
 function normalizarEstado(estado) {
@@ -103,86 +99,103 @@ function normalizarEstado(estado) {
   return estados[estado] || estado?.toLowerCase() || "pendiente";
 }
 
-function convertirConvocatoria(cita) {
-  const fechaHora = separarFechaHora(cita.fechaReunion);
+export function convertirConvocatoria(cita) {
+  const fechaHora = separarFechaHora(cita.citFechaReunion);
 
   return {
     idCita: Number(cita.idCita),
-    idEstudiante: Number(cita.idEstudiante),
+    idDocente: Number(cita.idDocente),
     idEstudianteEncargado: Number(cita.idEstudianteEncargado),
-    asunto: cita.motivo,
-    descripcion: cita.observaciones || "Sin descripción.",
+    asunto: cita.citMotivo || "Sin asunto",
+    descripcion: cita.citObservaciones || "Sin descripción.",
     fecha: fechaHora.fecha,
     hora: fechaHora.hora,
-    fechaReunion: cita.fechaReunion,
+    fechaReunion: cita.citFechaReunion,
     estudianteNombre: cita.nombreEstudiante || "Estudiante no disponible",
-    estado: normalizarEstado(cita.estado)
+    docenteNombre: cita.nombreDocente || "Docente no disponible",
+    estado: normalizarEstado(cita.citEstado),
+    estadoApi: cita.citEstado
   };
 }
 
 export async function obtenerConvocatoriasPadre() {
   const sesion = obtenerSesionPadre();
-  const relacionesApi = await solicitarApi("/estudiante-encargados");
-  const idsEstudianteEncargado = (Array.isArray(relacionesApi) ? relacionesApi : [])
-    .filter(relacion => sesion.idsEstudiante.includes(Number(relacion.idEstudiante)))
-    .map(relacion => Number(relacion.idEstudianteEncargado))
-    .filter(id => Number.isInteger(id) && id > 0);
 
-  if (idsEstudianteEncargado.length === 0) {
+  const [relaciones, citas] = await Promise.all([
+    obtenerRelacionesSesion(sesion),
+    solicitarApi("/citas-reuniones")
+  ]);
+
+  const idsRelacion = new Set(
+    relaciones.map(relacion => Number(relacion.idEstudianteEncargado))
+  );
+
+  if (idsRelacion.size === 0) {
     return [];
   }
 
-  const parametros = new URLSearchParams();
-
-  [...new Set(idsEstudianteEncargado)]
-    .forEach(id => parametros.append("ids", String(id)));
-
-  const citas = await solicitarApi(
-    `/citas-reuniones/por-estudiante-encargado?${parametros.toString()}`
-  );
-
   return (Array.isArray(citas) ? citas : [])
-    .filter(cita => !cita.observaciones?.startsWith(MARCADOR_SOLICITUD_PADRE))
+    // Solo las que creó el docente: las del encargado llevan marcador.
+    .filter(cita => !cita.citObservaciones?.startsWith(MARCADOR_SOLICITUD_PADRE))
+    .filter(cita => idsRelacion.has(Number(cita.idEstudianteEncargado)))
     .map(convertirConvocatoria)
     .sort((primera, segunda) =>
-      (primera.fechaReunion || "").localeCompare(segunda.fechaReunion || "")
+      (segunda.fechaReunion || "").localeCompare(primera.fechaReunion || "")
     );
 }
 
-export async function aceptarConvocatoria(idCita, idEstudianteEncargado) {
+
+export async function aceptarConvocatoria(idCita) {
   const citaActualizada = await solicitarApi(
-    `/citas-reuniones/${encodeURIComponent(idCita)}/respuesta-encargado`,
+    `/citas-reuniones/${encodeURIComponent(idCita)}`,
     {
       method: "PATCH",
-      body: JSON.stringify({
-        idEstudianteEncargado: Number(idEstudianteEncargado),
-        estado: "ACEPTADA"
-      })
+      body: JSON.stringify({ citEstado: "ACEPTADA" })
     }
   );
 
   return convertirConvocatoria(citaActualizada);
 }
 
-export async function posponerConvocatoria(
-  idCita,
-  idEstudianteEncargado,
-  nuevaFecha,
-  nuevaHora,
-  motivoReprogramacion
-) {
+export async function rechazarConvocatoria(idCita, motivo) {
+  const cuerpo = { citEstado: "RECHAZADA" };
+
+  if (motivo && motivo.trim()) {
+    cuerpo.citObservaciones = `Encargado: ${motivo.trim()}`.slice(0, LIMITE_OBSERVACIONES);
+  }
+
   const citaActualizada = await solicitarApi(
-    `/citas-reuniones/${encodeURIComponent(idCita)}/respuesta-encargado`,
-    {
-      method: "PATCH",
-      body: JSON.stringify({
-        idEstudianteEncargado: Number(idEstudianteEncargado),
-        estado: "POSPUESTA",
-        nuevaFechaReunion: `${nuevaFecha}T${nuevaHora}:00`,
-        motivoReprogramacion: motivoReprogramacion.trim()
-      })
-    }
+    `/citas-reuniones/${encodeURIComponent(idCita)}`,
+    { method: "PATCH", body: JSON.stringify(cuerpo) }
   );
 
   return convertirConvocatoria(citaActualizada);
 }
+
+export async function posponerConvocatoria(idCita, nuevaFecha, nuevaHora, motivoReprogramacion) {
+  if (!nuevaFecha || !nuevaHora) {
+    throw new Error("Debe indicar la nueva fecha y hora.");
+  }
+
+  const observaciones = motivoReprogramacion?.trim()
+    ? `Encargado propone otra fecha: ${motivoReprogramacion.trim()}`.slice(0, LIMITE_OBSERVACIONES)
+    : undefined;
+
+  const cuerpo = {
+    citEstado: "POSPUESTA",
+    citFechaReunion: `${nuevaFecha}T${nuevaHora}:00`
+  };
+
+  if (observaciones) {
+    cuerpo.citObservaciones = observaciones;
+  }
+
+  const citaActualizada = await solicitarApi(
+    `/citas-reuniones/${encodeURIComponent(idCita)}`,
+    { method: "PATCH", body: JSON.stringify(cuerpo) }
+  );
+
+  return convertirConvocatoria(citaActualizada);
+}
+
+export { MARCADOR_SOLICITUD_PADRE, solicitarApi };
