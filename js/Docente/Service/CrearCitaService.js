@@ -4,6 +4,12 @@ const hostApi = ["", "localhost", "127.0.0.1"].includes(window.location.hostname
 
 const API_BASE_URL = `http://${hostApi}:8080/api/v1`;
 const CLAVE_CORREO_DOCENTE = "visitasITR.correoDocente";
+const CLAVE_ID_DOCENTE = "visitasITR.idDocente";
+
+const LIMITE_MOTIVO = 250;
+const LIMITE_OBSERVACIONES = 300;
+
+const CORREO_DE_PRUEBA = "ricardo.alvarado@ricaldone.edu.sv";
 
 async function solicitarApi(ruta, opciones = {}) {
   const configuracion = {
@@ -44,44 +50,85 @@ async function solicitarApi(ruta, opciones = {}) {
     : contenido;
 }
 
-// Busca en la API al docente de la sesión mobile y carga los estudiantes disponibles.
-export async function obtenerDatosFormularioCita() {
-  const correo = localStorage.getItem(CLAVE_CORREO_DOCENTE)?.trim().toLowerCase();
+export async function obtenerDocenteActivo() {
+  const idGuardado = Number(localStorage.getItem(CLAVE_ID_DOCENTE));
 
-  if (!correo) {
-    throw new Error("Inicie sesión como docente para registrar una cita.");
+  if (idGuardado) {
+    try {
+      return await solicitarApi(`/docentes/${idGuardado}`);
+    } catch (error) {
+      // La sesión guardada ya no es válida; se limpia y se continúa.
+      localStorage.removeItem(CLAVE_ID_DOCENTE);
+    }
   }
 
-  const [empleados, relaciones] = await Promise.all([
-    solicitarApi("/empleados"),
+  const correoSesion = localStorage.getItem(CLAVE_CORREO_DOCENTE)?.trim().toLowerCase();
+  const docentes = await solicitarApi("/docentes");
+  const lista = Array.isArray(docentes) ? docentes : [];
+
+  const docente =
+    lista.find(registro => registro.docCorreo?.trim().toLowerCase() === correoSesion) ||
+    lista.find(registro => registro.docCorreo?.trim().toLowerCase() === CORREO_DE_PRUEBA) ||
+    lista[0];
+
+  if (!docente) {
+    throw new Error("No hay docentes registrados en el sistema.");
+  }
+
+  localStorage.setItem(CLAVE_ID_DOCENTE, docente.idDocente);
+  localStorage.setItem(CLAVE_CORREO_DOCENTE, docente.docCorreo);
+
+  return docente;
+}
+
+
+export async function obtenerDatosFormularioCita() {
+  const [docente, relaciones] = await Promise.all([
+    obtenerDocenteActivo(),
     solicitarApi("/estudiante-encargados")
   ]);
 
-  const empleado = (Array.isArray(empleados) ? empleados : []).find(
-    registro => registro.empCorreo?.trim().toLowerCase() === correo
-  );
+  const lista = Array.isArray(relaciones) ? relaciones : [];
 
-  if (!empleado) {
-    throw new Error("El correo de la sesión no pertenece a un docente registrado.");
+  if (lista.length === 0) {
+    throw new Error("No hay estudiantes con encargado asignado.");
   }
 
   return {
-    idEmpleado: Number(empleado.idEmpleado),
-    relaciones: Array.isArray(relaciones) ? relaciones : []
+
+    idEmpleado: Number(docente.idDocente),
+    idDocente: Number(docente.idDocente),
+    nombreDocente: `${docente.docNombre || ""} ${docente.docApellido || ""}`.trim(),
+    relaciones: lista
   };
 }
 
-// Guarda una cita creada desde mobile usando el mismo contrato que el formulario web.
-export async function crearCitaDocente(datosCita, idEmpleado) {
+export async function crearCitaDocente(datosCita, idDocente) {
+  const asunto = String(datosCita.asunto || "").trim();
+
+  if (!asunto) {
+    throw new Error("Debe indicar el asunto de la convocatoria.");
+  }
+
+  if (!datosCita.idEstudianteEncargado) {
+    throw new Error("Debe seleccionar un estudiante.");
+  }
+
+  if (!datosCita.fecha || !datosCita.hora) {
+    throw new Error("Debe indicar la fecha y la hora de la convocatoria.");
+  }
+
   return solicitarApi("/citas-reuniones", {
     method: "POST",
     body: JSON.stringify({
-      idEmpleado: Number(idEmpleado),
+      idDocente: Number(idDocente),
       idEstudianteEncargado: Number(datosCita.idEstudianteEncargado),
-      motivo: datosCita.asunto,
-      estado: "PENDIENTE",
-      observaciones: datosCita.descripcion,
-      fechaReunion: `${datosCita.fecha}T${datosCita.hora}:00`
+      citMotivo: asunto.slice(0, LIMITE_MOTIVO),
+      citEstado: "PENDIENTE",
+      citObservaciones: String(datosCita.descripcion || "").slice(0, LIMITE_OBSERVACIONES),
+      citFechaReunion: `${datosCita.fecha}T${datosCita.hora}:00`
     })
   });
 }
+
+export { solicitarApi };

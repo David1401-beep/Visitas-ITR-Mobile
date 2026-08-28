@@ -1,90 +1,174 @@
-const hostApi = ["", "localhost", "127.0.0.1"].includes(window.location.hostname)
-  ? "localhost"
-  : window.location.hostname;
+import { solicitarApi, obtenerDocenteActivo } from "./CrearCitaService.js";
 
-const API_BASE_URL = `http://${hostApi}:8080/api/v1`;
-const CLAVE_CORREO_DOCENTE = "visitasITR.correoDocente";
 const MARCADOR_SOLICITUD_PADRE = "[SOLICITUD_PADRE]";
-
-async function solicitarApi(ruta) {
-  let respuesta;
-
-  try {
-    respuesta = await fetch(`${API_BASE_URL}${ruta}`, {
-      headers: { Accept: "application/json" }
-    });
-  } catch (error) {
-    throw new Error(
-      "No se pudo conectar con la API. Compruebe que esté ejecutándose en el puerto 8080."
-    );
-  }
-
-  const tipoContenido = respuesta.headers.get("content-type") || "";
-  const contenido = tipoContenido.includes("json")
-    ? await respuesta.json()
-    : null;
-
-  if (!respuesta.ok) {
-    throw new Error(
-      contenido?.message ||
-      contenido?.detail ||
-      contenido?.error ||
-      `La API respondió con el estado ${respuesta.status}.`
-    );
-  }
-
-  return contenido && Object.prototype.hasOwnProperty.call(contenido, "data")
-    ? contenido.data
-    : contenido;
-}
+const LIMITE_OBSERVACIONES = 300;
 
 function separarFechaHora(fechaReunion) {
-  const [fecha = "", horaCompleta = ""] = (fechaReunion || "").split("T");
+  const [fecha = "", horaCompleta = ""] = String(fechaReunion || "").split("T");
   return { fecha, hora: horaCompleta.slice(0, 5) };
 }
 
 export async function obtenerSolicitudesDocente() {
-  const correo = localStorage.getItem(CLAVE_CORREO_DOCENTE)?.trim().toLowerCase();
-
-  if (!correo) {
-    throw new Error("Inicie sesión como docente para consultar las solicitudes.");
-  }
-
-  const empleados = await solicitarApi("/empleados");
-  const empleado = (Array.isArray(empleados) ? empleados : []).find(
-    registro => registro.empCorreo?.trim().toLowerCase() === correo
-  );
-
-  if (!empleado) {
-    throw new Error("El correo de la sesión no pertenece a un docente registrado.");
-  }
+  const docente = await obtenerDocenteActivo();
 
   const citas = await solicitarApi(
-    `/citas-reuniones/por-empleado/${encodeURIComponent(empleado.idEmpleado)}`
+    `/citas-reuniones/por-docente/${encodeURIComponent(docente.idDocente)}`
   );
 
   return (Array.isArray(citas) ? citas : [])
     .filter(cita =>
-      cita.estado === "PENDIENTE" &&
-      cita.observaciones?.startsWith(MARCADOR_SOLICITUD_PADRE)
+      cita.citEstado === "PENDIENTE" &&
+      cita.citObservaciones?.startsWith(MARCADOR_SOLICITUD_PADRE)
     )
-    .map(cita => {
-      const fechaHora = separarFechaHora(cita.fechaReunion);
-
-      return {
-        idCita: Number(cita.idCita),
-        nombreEncargado: cita.nombreEncargado || "Encargado no disponible",
-        nombreEstudiante: cita.nombreEstudiante || "Estudiante no disponible",
-        motivo: cita.motivo || "Sin motivo",
-        descripcion: cita.observaciones
-          .slice(MARCADOR_SOLICITUD_PADRE.length)
-          .trim() || cita.motivo,
-        fecha: fechaHora.fecha,
-        hora: fechaHora.hora,
-        fechaReunion: cita.fechaReunion
-      };
-    })
+    .map(convertirSolicitud)
+    // Las más próximas primero: son las que el docente debe atender antes.
     .sort((primera, segunda) =>
       (primera.fechaReunion || "").localeCompare(segunda.fechaReunion || "")
     );
 }
+
+export async function obtenerHistorialSolicitudes() {
+  const docente = await obtenerDocenteActivo();
+
+  const citas = await solicitarApi(
+    `/citas-reuniones/por-docente/${encodeURIComponent(docente.idDocente)}`
+  );
+
+  return (Array.isArray(citas) ? citas : [])
+    .filter(cita => cita.citObservaciones?.startsWith(MARCADOR_SOLICITUD_PADRE))
+    .map(convertirSolicitud)
+    .sort((primera, segunda) =>
+      (segunda.fechaReunion || "").localeCompare(primera.fechaReunion || "")
+    );
+}
+
+export async function obtenerSolicitudPorId(idCita) {
+  const cita = await solicitarApi(`/citas-reuniones/${encodeURIComponent(idCita)}`);
+  return convertirSolicitud(cita);
+}
+
+export async function aceptarSolicitud(idCita) {
+  const cita = await solicitarApi(`/citas-reuniones/${encodeURIComponent(idCita)}`, {
+    method: "PATCH",
+    body: JSON.stringify({ citEstado: "ACEPTADA" })
+  });
+
+  return convertirSolicitud(cita);
+}
+
+export async function rechazarSolicitud(idCita, motivo) {
+  const cuerpo = { citEstado: "RECHAZADA" };
+
+  if (motivo && motivo.trim()) {
+    cuerpo.citObservaciones =
+      `${MARCADOR_SOLICITUD_PADRE} ${motivo.trim()}`.slice(0, LIMITE_OBSERVACIONES);
+  }
+
+  const cita = await solicitarApi(`/citas-reuniones/${encodeURIComponent(idCita)}`, {
+    method: "PATCH",
+    body: JSON.stringify(cuerpo)
+  });
+
+  return convertirSolicitud(cita);
+}
+
+export async function posponerSolicitud(idCita, fecha, hora, justificacion) {
+  if (!fecha || !hora) {
+    throw new Error("Debe indicar la nueva fecha y hora.");
+  }
+
+  const cuerpo = {
+    citEstado: "POSPUESTA",
+    citFechaReunion: `${fecha}T${hora}:00`
+  };
+
+  if (justificacion && justificacion.trim()) {
+    cuerpo.citObservaciones =
+      `${MARCADOR_SOLICITUD_PADRE} ${justificacion.trim()}`.slice(0, LIMITE_OBSERVACIONES);
+  }
+
+  const cita = await solicitarApi(`/citas-reuniones/${encodeURIComponent(idCita)}`, {
+    method: "PATCH",
+    body: JSON.stringify(cuerpo)
+  });
+
+  return convertirSolicitud(cita);
+}
+
+
+// Conversión
+const nombresEstado = {
+  PENDIENTE: "Pendiente",
+  ACEPTADA: "Aceptada",
+  POSPUESTA: "Pospuesta",
+  RECHAZADA: "Rechazada",
+  CANCELADA: "Cancelada",
+  FINALIZADA: "Finalizada"
+};
+
+function convertirSolicitud(cita) {
+  const fechaHora = separarFechaHora(cita.citFechaReunion);
+
+  return {
+    idCita: Number(cita.idCita),
+    idDocente: Number(cita.idDocente),
+    idEstudianteEncargado: Number(cita.idEstudianteEncargado),
+
+    nombreEncargado: cita.nombreEncargado || "Encargado no disponible",
+    nombreEstudiante: cita.nombreEstudiante || "Estudiante no disponible",
+
+    motivo: cita.citMotivo || "Sin motivo",
+
+    descripcion: quitarMarcador(cita.citObservaciones) || cita.citMotivo || "",
+
+    fecha: fechaHora.fecha,
+    hora: fechaHora.hora,
+    fechaReunion: cita.citFechaReunion,
+    fechaTexto: formatearFecha(fechaHora.fecha),
+    horaTexto: formatearHora(fechaHora.hora),
+
+    estado: nombresEstado[cita.citEstado] || cita.citEstado,
+    estadoApi: cita.citEstado
+  };
+}
+
+function quitarMarcador(observaciones) {
+  if (!observaciones) {
+    return "";
+  }
+
+  return observaciones.startsWith(MARCADOR_SOLICITUD_PADRE)
+    ? observaciones.slice(MARCADOR_SOLICITUD_PADRE.length).trim()
+    : observaciones;
+}
+
+export function formatearFecha(fecha) {
+  if (!fecha) {
+    return "Sin fecha";
+  }
+
+  const [anio, mes, dia] = fecha.split("-").map(Number);
+
+  const meses = [
+    "enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+  ];
+
+  return `${dia} de ${meses[mes - 1]} de ${anio}`;
+}
+
+export function formatearHora(hora) {
+  if (!hora) {
+    return "";
+  }
+
+  const [horasTexto, minutos] = hora.split(":");
+  let horas = Number(horasTexto);
+  const periodo = horas >= 12 ? "P.M" : "A.M";
+
+  horas = horas % 12 || 12;
+
+  return `${horas}:${minutos} ${periodo}`;
+}
+
+export { MARCADOR_SOLICITUD_PADRE };

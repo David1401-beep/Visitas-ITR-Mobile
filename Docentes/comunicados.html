@@ -23,8 +23,9 @@
         <main class="communications-content container-fluid" id="contenido-comunicados">
             <form class="communications-form" id="formulario-comunicados" action="#" method="post">
                 <label class="visually-hidden" id="etiqueta-mensaje-comunicado" for="mensaje-comunicado">Contenido del comunicado</label>
+
                 <textarea class="communications-textarea form-control" id="mensaje-comunicado"
-                    name="communication_message" placeholder="Escribe un Aviso..." maxlength="250" required></textarea>
+                    name="communication_message" placeholder="Escribe un Aviso..." maxlength="500" required></textarea>
 
                 <button id="btn-enviar-comunicado"
                     class="communications-submit btn btn-warning rounded-pill d-block mx-auto fw-bold" type="submit">
@@ -32,7 +33,6 @@
                 </button>
             </form>
 
-            <!-- Los comunicados enviados se agregan aquí sin recargar la pantalla. -->
             <section class="communications-list" id="lista-comunicados" aria-label="Comunicados enviados"
                 aria-live="polite"></section>
         </main>
@@ -80,7 +80,7 @@
 
                         <p class="request-success-message" id="mensaje-exito-comunicado">
                             El comunicado ha sido enviado con éxito.<br>
-                            Todos los padres recibirán la notificación.
+                            Los encargados lo verán en su pantalla de inicio.
                         </p>
 
                         <button class="request-modal-close btn btn-warning rounded-pill fw-bold" id="btn-cerrar-modal-comunicado" type="button"
@@ -96,6 +96,7 @@
     <script id="script-bootstrap" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" id="script-control-comunicados" src="../js/Docente/Controller/controlComunicados.js"></script>
 </body>
 

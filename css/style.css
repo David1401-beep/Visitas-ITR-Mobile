@@ -2492,3 +2492,67 @@ body.convocations-page {
     font-size: 0.8125rem;
   }
 }
+
+/* La tarjeta se ensancha un poco y respira más por dentro. */
+.request-summary-card {
+  max-width: 350px;
+  padding: 18px 20px 22px;
+  border-radius: 12px;
+  gap: 4px;
+}
+
+/* El nombre del encargado es el dato principal de la tarjeta,
+   así que se hace claramente más grande que el resto. */
+.request-summary-student {
+  margin: 0 0 14px;
+  font-size: clamp(1rem, 4.6vw, 1.15rem);
+  line-height: 1.25;
+}
+
+.request-summary-details {
+  /* Antes bajaba a 10px. El mínimo ahora es 13px, que es el límite
+     por debajo del cual el texto deja de leerse cómodo en móvil. */
+  font-size: clamp(0.8125rem, 3.9vw, 0.95rem);
+  line-height: 1.4;
+}
+
+/* Cada pareja etiqueta-valor pasa de fila a columna.
+   Al apilarlas, un valor de varias líneas ya no descentra su
+   etiqueta: ambas quedan centradas una debajo de la otra. */
+.request-summary-details div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.request-summary-details dt {
+  font-weight: 700;
+  /* Un tono más tenue separa la etiqueta del dato sin recurrir a
+     otro tamaño de letra. */
+  color: #4a4a4a;
+}
+
+.request-summary-details dd {
+  margin: 0;
+  /* Corta palabras muy largas, como un correo, en lugar de
+     desbordar la tarjeta. */
+  overflow-wrap: anywhere;
+}
+
+/* Los botones también estaban pequeños: 9px en el mínimo. */
+.request-summary-actions {
+  gap: 16px;
+  padding-top: 18px;
+}
+
+.request-list-action {
+  width: auto;
+  min-width: 96px;
+  min-height: 36px;
+  padding: 8px 18px;
+  font-size: clamp(0.8125rem, 3.4vw, 0.9rem);
+}
+

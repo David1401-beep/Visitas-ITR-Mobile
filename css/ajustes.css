@@ -1,0 +1,209 @@
+/* Agenda del docente */
+
+.agenda-resumen {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+  margin-bottom: 28px;
+  padding: 16px 10px;
+  border-radius: 12px;
+  background-color: #1e2530;
+  color: #ffffff;
+}
+
+.agenda-contador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 62px;
+}
+
+.agenda-contador-numero {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.agenda-contador-numero.vacio {
+  color: #6c7684;
+}
+
+.agenda-contador-etiqueta {
+  margin-top: 5px;
+  font-size: 0.72rem;
+  color: #c9cdd4;
+  text-align: center;
+}
+
+.agenda-resumen-error {
+  width: 100%;
+  margin: 0;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.agenda-actions {
+  gap: 18px;
+  margin-top: 24px;
+}
+
+
+/* Actividades pendientes del inicio del docente */
+
+.teacher-home-page .task-grupo {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.teacher-home-page .task-grupo:last-child {
+  border-bottom: 0;
+}
+
+.teacher-home-page .task-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-bottom: 0;
+  color: #ffffff;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.teacher-home-page .task-cabecera span {
+  color: #ffffff;
+}
+
+.teacher-home-page .task-cabecera-derecha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.teacher-home-page .task-chevron {
+  transition: transform 0.2s ease;
+}
+
+.teacher-home-page .task-cabecera.abierto .task-chevron {
+  transform: rotate(180deg);
+}
+
+.teacher-home-page .task-cabecera:hover,
+.teacher-home-page .task-cabecera:focus-visible {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.teacher-home-page .task-detalle {
+  padding: 0.5rem 1rem 0.9rem;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.teacher-home-page .task-detalle-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.teacher-home-page .task-detalle-item:last-of-type {
+  border-bottom: 0;
+}
+
+.teacher-home-page .task-detalle-texto {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.teacher-home-page .task-detalle-texto small {
+  color: #c9cdd4;
+}
+
+.teacher-home-page .task-detalle-item .badge {
+  flex-shrink: 0;
+  font-size: 0.62rem;
+}
+
+.teacher-home-page .task-detalle-pie {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.7rem;
+}
+
+.teacher-home-page .tasks-card {
+  min-height: auto;
+}
+
+.teacher-home-page .tasks-container {
+  margin-bottom: 1.5rem;
+}
+
+
+/* Tarjetas de verSolicitud */
+
+.request-summary-card {
+  max-width: 350px;
+  padding: 18px 20px 22px;
+  border-radius: 12px;
+  gap: 4px;
+}
+
+.request-summary-student {
+  margin: 0 0 14px;
+  font-size: clamp(1rem, 4.6vw, 1.15rem);
+  line-height: 1.25;
+}
+
+.request-summary-details {
+  font-size: clamp(0.8125rem, 3.9vw, 0.95rem);
+  line-height: 1.4;
+}
+
+.request-summary-details div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.request-summary-details dt {
+  font-weight: 700;
+  color: #4a4a4a;
+}
+
+.request-summary-details dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.request-summary-actions {
+  gap: 16px;
+  padding-top: 18px;
+}
+
+.request-list-action {
+  width: auto;
+  min-width: 96px;
+  min-height: 36px;
+  padding: 8px 18px;
+  font-size: clamp(0.8125rem, 3.4vw, 0.9rem);
+}
+
+
+/* Pantallas angostas */
+
+@media (max-width: 340px) {
+  .agenda-contador-numero {
+    font-size: 1.5rem;
+  }
+
+  .agenda-contador-etiqueta {
+    font-size: 0.65rem;
+  }
+}

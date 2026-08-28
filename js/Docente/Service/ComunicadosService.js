@@ -1,44 +1,78 @@
-const CLAVE_COMUNICADOS = "visitasITR.comunicadosLocales";
-const CLAVE_CORREO_DOCENTE = "visitasITR.correoDocente";
+import { solicitarApi, obtenerDocenteActivo } from "./CrearCitaService.js";
 
-function leerComunicadosLocales() {
-  try {
-    const comunicados = JSON.parse(localStorage.getItem(CLAVE_COMUNICADOS) || "[]");
-    return Array.isArray(comunicados) ? comunicados : [];
-  } catch (error) {
-    return [];
-  }
-}
 
-function obtenerNombreDocente() {
-  const correo = localStorage.getItem(CLAVE_CORREO_DOCENTE)?.trim();
+const LIMITE_MENSAJE = 500;
 
-  if (!correo) {
-    return "Docente";
-  }
+export async function obtenerComunicados() {
+  const docente = await obtenerDocenteActivo();
 
-  return correo
-    .split("@")[0]
-    .replace(/[._-]+/g, " ")
-    .replace(/\b\w/g, letra => letra.toUpperCase());
-}
-
-export function obtenerComunicados() {
-  return leerComunicadosLocales().sort(
-    (primero, segundo) => new Date(segundo.fechaPublicacion) - new Date(primero.fechaPublicacion)
+  const comunicados = await solicitarApi(
+    `/comunicados/por-docente/${docente.idDocente}`
   );
+
+  return (Array.isArray(comunicados) ? comunicados : []).map(convertirComunicado);
 }
 
-export function publicarComunicado(mensaje) {
-  const comunicados = leerComunicadosLocales();
-  const comunicado = {
-    idComunicado: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-    mensaje: mensaje.trim(),
-    nombreEmpleado: obtenerNombreDocente(),
-    fechaPublicacion: new Date().toISOString()
-  };
+export async function publicarComunicado(mensaje) {
+  const texto = String(mensaje || "").trim();
 
-  comunicados.unshift(comunicado);
-  localStorage.setItem(CLAVE_COMUNICADOS, JSON.stringify(comunicados));
-  return comunicado;
+  if (!texto) {
+    throw new Error("Escriba un comunicado antes de enviarlo.");
+  }
+
+  const docente = await obtenerDocenteActivo();
+
+  const comunicado = await solicitarApi("/comunicados", {
+    method: "POST",
+    body: JSON.stringify({
+      idDocente: Number(docente.idDocente),
+      comMensaje: texto.slice(0, LIMITE_MENSAJE)
+    })
+  });
+
+  return convertirComunicado(comunicado);
+}
+
+export async function actualizarComunicado(idComunicado, mensaje) {
+  const texto = String(mensaje || "").trim();
+
+  if (!texto) {
+    throw new Error("El comunicado no puede quedar vacío.");
+  }
+
+  const docente = await obtenerDocenteActivo();
+
+  const comunicado = await solicitarApi(`/comunicados/${idComunicado}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      idDocente: Number(docente.idDocente),
+      comMensaje: texto.slice(0, LIMITE_MENSAJE)
+    })
+  });
+
+  return convertirComunicado(comunicado);
+}
+
+export async function retirarComunicado(idComunicado) {
+  const comunicado = await solicitarApi(`/comunicados/${idComunicado}/retirar`, {
+    method: "PATCH"
+  });
+
+  return convertirComunicado(comunicado);
+}
+
+export async function eliminarComunicado(idComunicado) {
+  await solicitarApi(`/comunicados/${idComunicado}`, { method: "DELETE" });
+  return true;
+}
+
+function convertirComunicado(comunicado) {
+  return {
+    idComunicado: comunicado.idComunicado,
+    idDocente: comunicado.idDocente,
+    mensaje: comunicado.comMensaje,
+    nombreEmpleado: comunicado.nombreDocente || "Docente",
+    fechaPublicacion: comunicado.comFecha,
+    activo: comunicado.comActivo === "S"
+  };
 }

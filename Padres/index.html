@@ -21,11 +21,12 @@
         </header>
 
         <main class="home-content container-fluid d-flex flex-column align-items-center" id="contenido-inicio">
+
             <section class="home-card appointment-card card border-0 text-center" id="seccion-cita-pendiente"
                 aria-labelledby="titulo-cita-pendiente">
                 <div class="card-body d-flex flex-column align-items-center w-100" id="cuerpo-tarjeta-cita">
                     <h2 id="titulo-cita-pendiente" class="card-title fs-6 fw-bold mb-0">
-                        Tienes una cita pendiente:
+                        Consultando sus citas...
                     </h2>
                     <p class="appointment-description mb-0" id="descripcion-cita-pendiente">
                         Oprime el botón amarillo<br>
@@ -37,19 +38,11 @@
                 </div>
             </section>
 
-            <section class="home-card notices-card card border-0 text-center" id="seccion-avisos-importantes" aria-labelledby="titulo-avisos-importantes">
+            <section class="home-card notices-card card border-0 text-center" id="seccion-avisos-importantes"
+                aria-labelledby="titulo-avisos-importantes">
                 <div class="card-body w-100" id="cuerpo-tarjeta-avisos">
                     <h2 id="titulo-avisos-importantes" class="card-title fs-6 fw-bold">¡Avisos Importantes!</h2>
-                    <p id="aviso-reunion-junio">
-                        Reunion General Día<br>
-                        20 de Junio a las<br>
-                        8:00 A.M.
-                    </p>
-                    <p class="mb-0" id="aviso-reunion-septiembre">
-                        Reunion General Día<br>
-                        15 de Septiembre a las<br>
-                        2:00 P.M.
-                    </p>
+                    <p class="mb-0 text-secondary" id="avisos-cargando">Cargando avisos...</p>
                 </div>
             </section>
         </main>
@@ -83,6 +76,8 @@
     </div>
 
     <script id="script-control-navegacion" src="../js/Padre/Controller/controlNavegacion.js"></script>
+
+    <script type="module" id="script-control-inicio" src="../js/Padre/Controller/controlInicioPadre.js"></script>
 </body>
 
 </html>
