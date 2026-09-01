@@ -1,5 +1,6 @@
 import { obtenerSesionPadre } from "../Service/ConvocatoriasService.js";
 import { obtenerAgendaPadre } from "../Service/CitasPadreService.js";
+import { limpiarSesion } from "../../sesionService.js";
 
 const nombreUsuario = document.getElementById("nombre-usuario");
 const correoUsuario = document.getElementById("correo-usuario");
@@ -70,10 +71,9 @@ async function agregarResumenCitas() {
   }
 }
 
+// La sesión se borra antes de que el navegador siga el enlace.
 btnCerrarSesion?.addEventListener("click", function () {
-  localStorage.removeItem("visitasITR.sesionPadre");
-  localStorage.removeItem("visitasITR.correoEstudiante");
-  localStorage.removeItem("visitasITR.correoPadre");
+  limpiarSesion();
 });
 
 function escribir(elemento, valor) {
