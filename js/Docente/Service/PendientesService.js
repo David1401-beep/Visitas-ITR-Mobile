@@ -16,7 +16,7 @@ export async function obtenerPendientes() {
   const grupos = [];
 
   const solicitudes = lista.filter(cita =>
-    cita.esSolicitud && cita.estadoApi === "PENDIENTE"
+    cita.esSolicitud && ["PENDIENTE", "POSPUESTA"].includes(cita.estadoApi)
   );
 
   if (solicitudes.length > 0) {

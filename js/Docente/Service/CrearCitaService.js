@@ -3,13 +3,10 @@ const hostApi = ["", "localhost", "127.0.0.1"].includes(window.location.hostname
   : window.location.hostname;
 
 const API_BASE_URL = `http://${hostApi}:8080/api/v1`;
-const CLAVE_CORREO_DOCENTE = "visitasITR.correoDocente";
 const CLAVE_ID_DOCENTE = "visitasITR.idDocente";
 
 const LIMITE_MOTIVO = 250;
 const LIMITE_OBSERVACIONES = 300;
-
-const CORREO_DE_PRUEBA = "ricardo.alvarado@ricaldone.edu.sv";
 
 async function solicitarApi(ruta, opciones = {}) {
   const configuracion = {
@@ -53,32 +50,17 @@ async function solicitarApi(ruta, opciones = {}) {
 export async function obtenerDocenteActivo() {
   const idGuardado = Number(localStorage.getItem(CLAVE_ID_DOCENTE));
 
-  if (idGuardado) {
-    try {
-      return await solicitarApi(`/docentes/${idGuardado}`);
-    } catch (error) {
-      // La sesión guardada ya no es válida; se limpia y se continúa.
-      localStorage.removeItem(CLAVE_ID_DOCENTE);
-    }
+  if (!idGuardado) {
+    throw new Error("No hay una sesión de docente activa. Inicie sesión nuevamente.");
   }
 
-  const correoSesion = localStorage.getItem(CLAVE_CORREO_DOCENTE)?.trim().toLowerCase();
-  const docentes = await solicitarApi("/docentes");
-  const lista = Array.isArray(docentes) ? docentes : [];
-
-  const docente =
-    lista.find(registro => registro.docCorreo?.trim().toLowerCase() === correoSesion) ||
-    lista.find(registro => registro.docCorreo?.trim().toLowerCase() === CORREO_DE_PRUEBA) ||
-    lista[0];
-
-  if (!docente) {
-    throw new Error("No hay docentes registrados en el sistema.");
+  try {
+    return await solicitarApi(`/docentes/${idGuardado}`);
+  } catch (error) {
+    // La sesión guardada ya no es válida; se limpia y se exige iniciar sesión de nuevo.
+    localStorage.removeItem(CLAVE_ID_DOCENTE);
+    throw new Error("No hay una sesión de docente activa. Inicie sesión nuevamente.");
   }
-
-  localStorage.setItem(CLAVE_ID_DOCENTE, docente.idDocente);
-  localStorage.setItem(CLAVE_CORREO_DOCENTE, docente.docCorreo);
-
-  return docente;
 }
 
 

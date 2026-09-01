@@ -1,3 +1,5 @@
+import { aceptarSolicitud, rechazarSolicitud } from "../Service/SolicitudDocenteService.js";
+
 // Crea un modal compatible: usa Bootstrap cuando está disponible y una alternativa local si el CDN falla.
 function createCompatibleModal(modalElement) {
     if (window.bootstrap?.Modal) {
@@ -44,57 +46,85 @@ function createCompatibleModal(modalElement) {
     };
 }
 
-// Controla la lectura de parámetros URL, actualización de datos y modales de aceptación y rechazo para Docentes.
+function mostrarError(mensaje) {
+    if (window.Swal) {
+        Swal.fire({ icon: 'error', title: 'Ocurrió un problema', text: mensaje });
+    } else {
+        alert(mensaje);
+    }
+}
+
+// Lee la solicitud desde los parámetros que envía verSolicitud.html y conecta
+// los botones Aceptar/Rechazar a la API (antes solo mostraban un modal falso).
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
-    const nombre = params.get('nombre') || 'Jholman Alegria';
-    const motivo = params.get('motivo') || 'Reunion Academica';
-    const descripcion = params.get('descripcion') || 'Quisiera aclarar unas dudas con respecto a las notas de mi hijo';
+    const idCita = params.get('solicitud');
+    const nombre = params.get('nombre') || 'Encargado';
+    const motivo = params.get('motivo') || '';
+    const descripcion = params.get('descripcion') || '';
 
-    const elemNombre = document.getElementById('review-nombre');
-    const elemMotivo = document.getElementById('review-motivo');
-    const elemDescripcion = document.getElementById('review-descripcion');
+    const elemNombre = document.getElementById('nombre-solicitante-revision');
+    const elemMotivo = document.getElementById('motivo-solicitud');
+    const elemDescripcion = document.getElementById('descripcion-solicitud');
 
     if (elemNombre) elemNombre.textContent = nombre;
     if (elemMotivo) elemMotivo.textContent = motivo;
     if (elemDescripcion) elemDescripcion.textContent = descripcion;
 
-    // Actualizar nombre en los modales
-    const modalNombreAceptar = document.getElementById('modal-solicitante-nombre');
-    const modalTextoAceptar = document.getElementById('modal-solicitante-texto');
-    if (modalNombreAceptar) modalNombreAceptar.textContent = nombre;
-    if (modalTextoAceptar) modalTextoAceptar.textContent = nombre;
+    const textoAceptar = document.getElementById('texto-solicitante-aceptar');
+    if (textoAceptar) textoAceptar.textContent = nombre;
 
-    const modalNombreRechazo = document.getElementById('modal-solicitante-rechazo-nombre');
-    if (modalNombreRechazo) modalNombreRechazo.textContent = nombre;
+    const textoRechazar = document.getElementById('texto-solicitante-rechazar-nombre');
+    if (textoRechazar) textoRechazar.textContent = nombre;
 
-    // Modal de Aceptar
+    const comentarios = document.getElementById('comentarios-revision');
+
     const btnAceptar = document.getElementById('btn-aceptar-solicitud');
-    const acceptModalEl = document.getElementById('acceptSuccessModal');
-    if (btnAceptar && acceptModalEl) {
-        const acceptModal = createCompatibleModal(acceptModalEl);
-        btnAceptar.addEventListener('click', (e) => {
-            e.preventDefault();
-            acceptModal.show();
-        });
+    const acceptModalEl = document.getElementById('modal-exito-aceptar');
+    const acceptModal = acceptModalEl ? createCompatibleModal(acceptModalEl) : null;
 
-        acceptModalEl.addEventListener('hidden.bs.modal', () => {
-            window.location.href = 'verSolicitud.html';
-        });
-    }
-
-    // Modal de Rechazar
     const btnRechazar = document.getElementById('btn-rechazar-solicitud');
-    const rejectModalEl = document.getElementById('rejectSuccessModal');
-    if (btnRechazar && rejectModalEl) {
-        const rejectModal = createCompatibleModal(rejectModalEl);
-        btnRechazar.addEventListener('click', (e) => {
-            e.preventDefault();
-            rejectModal.show();
-        });
+    const rejectModalEl = document.getElementById('modal-exito-rechazar');
+    const rejectModal = rejectModalEl ? createCompatibleModal(rejectModalEl) : null;
 
-        rejectModalEl.addEventListener('hidden.bs.modal', () => {
-            window.location.href = 'verSolicitud.html';
-        });
+    if (!idCita) {
+        mostrarError('No se pudo identificar la solicitud. Vuelva a la lista e inténtelo de nuevo.');
+        if (btnAceptar) btnAceptar.disabled = true;
+        if (btnRechazar) btnRechazar.disabled = true;
+        return;
     }
+
+    btnAceptar?.addEventListener('click', async () => {
+        btnAceptar.disabled = true;
+
+        try {
+            await aceptarSolicitud(idCita);
+            acceptModal?.show();
+        } catch (error) {
+            mostrarError(error.message);
+        } finally {
+            btnAceptar.disabled = false;
+        }
+    });
+
+    btnRechazar?.addEventListener('click', async () => {
+        btnRechazar.disabled = true;
+
+        try {
+            await rechazarSolicitud(idCita, comentarios?.value || '');
+            rejectModal?.show();
+        } catch (error) {
+            mostrarError(error.message);
+        } finally {
+            btnRechazar.disabled = false;
+        }
+    });
+
+    acceptModalEl?.addEventListener('hidden.bs.modal', () => {
+        window.location.href = 'verSolicitud.html';
+    });
+
+    rejectModalEl?.addEventListener('hidden.bs.modal', () => {
+        window.location.href = 'verSolicitud.html';
+    });
 });

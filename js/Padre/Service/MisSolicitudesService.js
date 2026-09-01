@@ -80,16 +80,65 @@ export async function actualizarSolicitud(idCita, datos) {
     })
   });
 
-  const convertida = convertirSolicitud(citaActualizada);
-  const indice = solicitudesEnMemoria.findIndex(
+  return reemplazarEnMemoria(citaActualizada);
+}
+
+export async function aceptarSolicitud(idCita) {
+  const solicitud = solicitudesEnMemoria.find(
     registro => Number(registro.idCita) === Number(idCita)
   );
 
-  if (indice >= 0) {
-    solicitudesEnMemoria[indice] = convertida;
+  if (!solicitud) {
+    throw new Error("No se encontró la solicitud.");
   }
 
-  return convertida;
+  if (solicitud.estadoApi !== "POSPUESTA") {
+    throw new Error("Esta solicitud no tiene una propuesta de reprogramación pendiente.");
+  }
+
+  const citaActualizada = await solicitarApi(`/citas-reuniones/${idCita}`, {
+    method: "PATCH",
+    body: JSON.stringify({ citEstado: "ACEPTADA" })
+  });
+
+  return reemplazarEnMemoria(citaActualizada);
+}
+
+export async function posponerSolicitud(idCita, fecha, hora, justificacion) {
+  const solicitud = solicitudesEnMemoria.find(
+    registro => Number(registro.idCita) === Number(idCita)
+  );
+
+  if (!solicitud) {
+    throw new Error("No se encontró la solicitud.");
+  }
+
+  if (solicitud.estadoApi !== "POSPUESTA") {
+    throw new Error("Esta solicitud no tiene una propuesta de reprogramación pendiente.");
+  }
+
+  if (!fecha || !hora) {
+    throw new Error("Debe indicar la nueva fecha y hora.");
+  }
+
+  const motivo = (justificacion || "").trim();
+
+  if (!motivo) {
+    throw new Error("Debe indicar el motivo de la reprogramación.");
+  }
+
+  const cuerpo = {
+    citEstado: "POSPUESTA",
+    citFechaReunion: `${fecha}T${hora}:00`,
+    citObservaciones: `${MARCADOR_SOLICITUD_PADRE} ${motivo}`.slice(0, LIMITE_OBSERVACIONES)
+  };
+
+  const citaActualizada = await solicitarApi(`/citas-reuniones/${idCita}`, {
+    method: "PATCH",
+    body: JSON.stringify(cuerpo)
+  });
+
+  return reemplazarEnMemoria(citaActualizada);
 }
 
 export async function eliminarSolicitud(idCita) {
@@ -123,6 +172,19 @@ export async function obtenerDocentes() {
 
 
 // Conversión y formato
+function reemplazarEnMemoria(cita) {
+  const convertida = convertirSolicitud(cita);
+  const indice = solicitudesEnMemoria.findIndex(
+    registro => Number(registro.idCita) === convertida.idCita
+  );
+
+  if (indice >= 0) {
+    solicitudesEnMemoria[indice] = convertida;
+  }
+
+  return convertida;
+}
+
 function convertirSolicitud(cita) {
   const [fecha = "", horaCompleta = ""] = String(cita.citFechaReunion || "").split("T");
 

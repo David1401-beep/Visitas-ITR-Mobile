@@ -1,6 +1,8 @@
 import {
   obtenerMisSolicitudes,
   actualizarSolicitud,
+  aceptarSolicitud,
+  posponerSolicitud,
   eliminarSolicitud,
   obtenerDocentes
 } from "../Service/MisSolicitudesService.js";
@@ -47,10 +49,9 @@ async function cargarSolicitudes() {
   }
 }
 
-function construirTarjeta(solicitud) {
-
-  const acciones = solicitud.editable
-    ? `
+function construirAcciones(solicitud) {
+  if (solicitud.editable) {
+    return `
       <button type="button"
               class="btn btn-solicitud btn-editar fw-semibold d-flex align-items-center gap-2 btn-editar-solicitud"
               data-id="${solicitud.idCita}">
@@ -61,10 +62,34 @@ function construirTarjeta(solicitud) {
               data-id="${solicitud.idCita}">
         <i class="bi bi-trash-fill" aria-hidden="true"></i> Cancelar
       </button>
-    `
-    : `<span class="solicitud-dato text-secondary">
-         El docente ya respondió esta solicitud.
-       </span>`;
+    `;
+  }
+
+  // El docente propuso una nueva fecha: el encargado puede aceptarla o
+  // proponer otra, hasta que ambos queden de acuerdo.
+  if (solicitud.estadoApi === "POSPUESTA") {
+    return `
+      <button type="button"
+              class="btn btn-solicitud btn-aceptar fw-semibold d-flex align-items-center gap-2 btn-aceptar-solicitud"
+              data-id="${solicitud.idCita}">
+        <i class="bi bi-check-lg" aria-hidden="true"></i> Aceptar
+      </button>
+      <button type="button"
+              class="btn btn-solicitud btn-posponer fw-semibold d-flex align-items-center gap-2 btn-posponer-solicitud"
+              data-id="${solicitud.idCita}">
+        <i class="bi bi-calendar2-week-fill" aria-hidden="true"></i> Posponer
+      </button>
+    `;
+  }
+
+  return `<span class="solicitud-dato text-secondary">
+       El docente ya respondió esta solicitud.
+     </span>`;
+}
+
+function construirTarjeta(solicitud) {
+
+  const acciones = construirAcciones(solicitud);
 
   return `
     <article class="card solicitud-card w-100" id="solicitud-${solicitud.idCita}">
@@ -220,6 +245,97 @@ async function abrirEdicion(idCita) {
   }
 }
 
+// Aceptar la fecha propuesta por el docente
+async function abrirAceptar(idCita) {
+  if (!window.Swal) {
+    avisoError("No se pudo abrir la confirmación.");
+    return;
+  }
+
+  const resultado = await Swal.fire({
+    title: "¿Aceptar la nueva fecha?",
+    text: "Se aceptará la fecha y hora que propuso el docente.",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Sí, aceptar",
+    cancelButtonText: "Cancelar",
+    reverseButtons: true
+  });
+
+  if (!resultado.isConfirmed) {
+    return;
+  }
+
+  try {
+    await aceptarSolicitud(idCita);
+    await cargarSolicitudes();
+    avisoExito("Se aceptó la nueva fecha propuesta.");
+  } catch (error) {
+    avisoError(error.message);
+  }
+}
+
+// Proponer otra fecha en respuesta a la del docente
+async function abrirPosponer(idCita) {
+  if (!window.Swal) {
+    avisoError("No se pudo abrir el formulario de reprogramación.");
+    return;
+  }
+
+  const resultado = await Swal.fire({
+    title: "Proponer otra fecha",
+    html: `
+      <div class="text-start">
+        <label class="form-label mt-2">Fecha</label>
+        <input type="date" id="swalFechaPosponer" class="form-control" min="${fechaDeHoy()}">
+
+        <label class="form-label mt-2">Hora</label>
+        <input type="time" id="swalHoraPosponer" class="form-control" value="08:00">
+
+        <label class="form-label mt-2">Motivo de la reprogramación</label>
+        <textarea id="swalMotivoPosponer" class="form-control" rows="3" maxlength="300"></textarea>
+      </div>
+    `,
+    showCancelButton: true,
+    confirmButtonText: "Enviar propuesta",
+    cancelButtonText: "Cancelar",
+    reverseButtons: true,
+    focusConfirm: false,
+
+    preConfirm: function () {
+      const valores = {
+        fecha: document.getElementById("swalFechaPosponer").value,
+        hora: document.getElementById("swalHoraPosponer").value,
+        motivo: document.getElementById("swalMotivoPosponer").value.trim()
+      };
+
+      if (!valores.fecha || !valores.hora) {
+        Swal.showValidationMessage("Debe indicar fecha y hora.");
+        return false;
+      }
+
+      if (!valores.motivo) {
+        Swal.showValidationMessage("Debe indicar el motivo de la reprogramación.");
+        return false;
+      }
+
+      return valores;
+    }
+  });
+
+  if (!resultado.isConfirmed) {
+    return;
+  }
+
+  try {
+    await posponerSolicitud(idCita, resultado.value.fecha, resultado.value.hora, resultado.value.motivo);
+    await cargarSolicitudes();
+    avisoExito("Se envió la nueva propuesta de fecha.");
+  } catch (error) {
+    avisoError(error.message);
+  }
+}
+
 // Eliminar
 async function abrirConfirmacionEliminar(idCita) {
   const solicitudes = await obtenerMisSolicitudes();
@@ -273,11 +389,17 @@ if (contenedor) {
   contenedor.addEventListener("click", function (evento) {
     const botonEditar = evento.target.closest(".btn-editar-solicitud");
     const botonEliminar = evento.target.closest(".btn-eliminar-solicitud");
+    const botonAceptar = evento.target.closest(".btn-aceptar-solicitud");
+    const botonPosponer = evento.target.closest(".btn-posponer-solicitud");
 
     if (botonEditar) {
       abrirEdicion(botonEditar.dataset.id);
     } else if (botonEliminar) {
       abrirConfirmacionEliminar(botonEliminar.dataset.id);
+    } else if (botonAceptar) {
+      abrirAceptar(botonAceptar.dataset.id);
+    } else if (botonPosponer) {
+      abrirPosponer(botonPosponer.dataset.id);
     }
   });
 }

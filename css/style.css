@@ -235,6 +235,28 @@ body {
   border: none;
 }
 
+.btn-aceptar {
+  background-color: #3f8f4f;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-aceptar:hover {
+  background-color: #357342;
+  color: #ffffff;
+}
+
+.btn-posponer {
+  background-color: #0f7ea3;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-posponer:hover {
+  background-color: #0c6684;
+  color: #ffffff;
+}
+
 /* Modal de confirmación para eliminar solicitud */
 .confirm-delete-modal .modal-dialog {
   max-width: 320px;

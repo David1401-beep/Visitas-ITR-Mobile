@@ -17,7 +17,9 @@ export async function obtenerSolicitudesDocente() {
 
   return (Array.isArray(citas) ? citas : [])
     .filter(cita =>
-      cita.citEstado === "PENDIENTE" &&
+      // PENDIENTE: solicitud nueva. POSPUESTA: el encargado propuso otra
+      // fecha y el docente debe aceptarla o volver a reprogramar.
+      ["PENDIENTE", "POSPUESTA"].includes(cita.citEstado) &&
       cita.citObservaciones?.startsWith(MARCADOR_SOLICITUD_PADRE)
     )
     .map(convertirSolicitud)

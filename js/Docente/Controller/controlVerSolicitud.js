@@ -24,6 +24,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     return `${hour % 12 || 12}:${minutes} ${hour >= 12 ? 'P.M' : 'A.M'}`;
   };
 
+  // PENDIENTE y POSPUESTA se muestran juntas en esta lista; el badge
+  // distingue si es una solicitud nueva o una reprogramación del encargado.
+  const claseBadgeEstado = (estadoApi) => (estadoApi === 'POSPUESTA' ? 'bg-info text-dark' : 'bg-warning text-dark');
+
   const renderRequests = (requests) => {
     requestList.innerHTML = '';
 
@@ -54,9 +58,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       requestList.innerHTML += `
         <article class="request-summary-card" id="tarjeta-solicitud-${request.idCita}"
           data-id-cita="${request.idCita}">
-          <h2 class="request-summary-student fw-bold" id="nombre-solicitante-${request.idCita}">
-            ${escapeHtml(request.nombreEncargado)}
-          </h2>
+          <div class="d-flex justify-content-between align-items-start">
+            <h2 class="request-summary-student fw-bold mb-0" id="nombre-solicitante-${request.idCita}">
+              ${escapeHtml(request.nombreEncargado)}
+            </h2>
+            <span class="badge ${claseBadgeEstado(request.estadoApi)}">${escapeHtml(request.estado)}</span>
+          </div>
 
           <dl class="request-summary-details" id="detalles-solicitud-${request.idCita}">
             <div id="contenedor-estudiante-${request.idCita}">
