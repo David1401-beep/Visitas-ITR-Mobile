@@ -94,18 +94,22 @@ function convertirCita(cita) {
 
   return {
     idCita: Number(cita.idCita),
+    idEstudianteEncargado: Number(cita.idEstudianteEncargado),
     fecha,
     hora,
     horaTexto: formatearHora(hora),
     fechaReunion: cita.citFechaReunion,
     asunto: cita.citMotivo || "Sin asunto",
+    descripcion: cita.citObservaciones || "",
     estudiante: cita.nombreEstudiante || "Estudiante no disponible",
     encargado: cita.nombreEncargado || "Encargado",
     estado: nombresEstado[cita.citEstado] || cita.citEstado,
     estadoApi: cita.citEstado,
 
-    // Distingue lo que pidió el encargado de lo que convocó el docente.
-    esSolicitud: Boolean(cita.citObservaciones?.startsWith(MARCADOR_SOLICITUD_PADRE))
+    // Distingue lo que pidió el encargado de lo que convocó el docente:
+    // solo lo que convocó el docente se puede editar o cancelar desde la agenda.
+    esSolicitud: Boolean(cita.citObservaciones?.startsWith(MARCADOR_SOLICITUD_PADRE)),
+    editable: !cita.citObservaciones?.startsWith(MARCADOR_SOLICITUD_PADRE) && cita.citEstado === "PENDIENTE"
   };
 }
 

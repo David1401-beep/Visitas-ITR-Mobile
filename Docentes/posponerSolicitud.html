@@ -10,7 +10,7 @@
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../css/style.css">
-  <script type="module" src="../js/guardia.js"></script>
+  <script type="module" src="../js/guardian.js"></script>
 
 </head>
 
@@ -47,37 +47,6 @@
             </form>
         </main>
 
-        <!-- Panel de éxito -->
-        <section class="postpone-success-panel" id="panel-exito-posponer" role="dialog" aria-modal="true"
-            aria-labelledby="titulo-exito-posponer" hidden>
-            <svg class="postpone-success-icon" id="icono-exito-posponer" viewBox="0 0 100 100" aria-hidden="true">
-                <circle cx="48" cy="52" r="34" fill="none" stroke="currentColor" stroke-width="6" />
-                <path d="M27 48 L47 68 L80 27" fill="none" stroke="currentColor" stroke-width="7"
-                    stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-
-            <h2 class="postpone-success-title fw-bold" id="titulo-exito-posponer">
-                Propuesta enviada<br>correctamente.
-            </h2>
-
-            <p class="postpone-success-message" id="mensaje-exito-posponer">
-                Tu propuesta de reprogramación<br>
-                ha sido enviada con éxito al<br>
-                solicitante.
-            </p>
-
-            <div class="postpone-success-details" id="detalles-exito-posponer">
-                <h3 class="fw-bold" id="titulo-detalles-exito">Detalles de la propuesta:</h3>
-                <p id="parrafo-fecha-exito"><strong>Nueva Fecha:</strong> <span id="fecha-exito-posponer"></span></p>
-                <p id="parrafo-hora-exito"><strong>Nueva Hora:</strong> <span id="hora-exito-posponer"></span></p>
-            </div>
-
-            <button class="postpone-success-close btn btn-warning rounded-pill fw-bold" id="btn-cerrar-exito-posponer"
-                type="button">
-                Cerrar
-            </button>
-        </section>
-
         <footer id="pie-pagina">
             <nav id="navegacion-principal" aria-label="Navegación principal">
                 <ul class="bottom-nav" id="lista-navegacion-inferior">
@@ -106,6 +75,45 @@
         </footer>
     </div>
 
+    <!-- Modal de confirmación al enviar la propuesta de reprogramación -->
+    <div class="modal fade postpone-success-modal" id="modal-exito-posponer" tabindex="-1"
+        aria-labelledby="titulo-exito-posponer" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" id="dialogo-modal-posponer">
+            <div class="modal-content text-center border-0" id="contenido-modal-posponer">
+                <div class="modal-body d-flex flex-column align-items-center justify-content-center"
+                    id="cuerpo-modal-posponer">
+                    <h2 class="accept-success-title fw-bold" id="titulo-exito-posponer">Propuesta Enviada</h2>
+
+                    <div class="accept-success-icon my-3" aria-hidden="true">
+                        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="40" cy="40" r="36" stroke="#70c745" stroke-width="6" />
+                            <path d="M24 40L36 52L58 28" stroke="#70c745" stroke-width="6" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+
+                    <p class="accept-success-text mb-3" id="mensaje-exito-posponer">
+                        Tu propuesta de reprogramación ha sido enviada con éxito al solicitante.
+                    </p>
+
+                    <div class="modal-summary-card p-3 rounded-4 mb-3 text-start w-100" id="detalles-exito-posponer">
+                        <p class="mb-1" id="parrafo-fecha-exito"><strong>Nueva fecha:</strong>
+                            <span id="fecha-exito-posponer"></span>
+                        </p>
+                        <p class="mb-0" id="parrafo-hora-exito"><strong>Nueva hora:</strong>
+                            <span id="hora-exito-posponer"></span>
+                        </p>
+                    </div>
+
+                    <button class="btn btn-delete-success-close rounded-pill fw-bold" id="btn-cerrar-exito-posponer"
+                        type="button" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="script-bootstrap" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
     <script id="script-control-posponer-solicitud" type="module" src="../js/Docente/Controller/controlPosponerSolicitud.js"></script>
 </body>
 

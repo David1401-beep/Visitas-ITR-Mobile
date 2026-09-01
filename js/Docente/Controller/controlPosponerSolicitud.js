@@ -1,20 +1,66 @@
 import { posponerSolicitud } from "../Service/SolicitudDocenteService.js";
 
+// Crea un modal compatible: usa Bootstrap cuando está disponible y una alternativa local si el CDN falla.
+function createCompatibleModal(modalElement) {
+  if (window.bootstrap?.Modal) {
+    return window.bootstrap.Modal.getOrCreateInstance(modalElement);
+  }
+
+  const backdropId = `fallback-backdrop-${modalElement.id}`;
+
+  const hide = () => {
+    modalElement.classList.remove('show');
+    modalElement.style.display = 'none';
+    modalElement.setAttribute('aria-hidden', 'true');
+    modalElement.removeAttribute('aria-modal');
+    document.getElementById(backdropId)?.remove();
+    document.body.classList.remove('modal-open');
+    modalElement.dispatchEvent(new Event('hidden.bs.modal'));
+  };
+
+  modalElement.querySelectorAll('[data-bs-dismiss="modal"]').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      hide();
+    });
+  });
+
+  return {
+    show() {
+      if (!document.getElementById(backdropId)) {
+        const backdrop = document.createElement('div');
+        backdrop.id = backdropId;
+        backdrop.className = 'modal-backdrop fade show';
+        backdrop.addEventListener('click', hide);
+        document.body.appendChild(backdrop);
+      }
+
+      modalElement.style.display = 'block';
+      modalElement.classList.add('show');
+      modalElement.removeAttribute('aria-hidden');
+      modalElement.setAttribute('aria-modal', 'true');
+      document.body.classList.add('modal-open');
+      modalElement.querySelector('button, textarea, input, select, a')?.focus();
+    },
+    hide
+  };
+}
+
 // Lee la solicitud desde los parámetros que envía verSolicitud.html y envía
 // la propuesta de reprogramación a la API (antes solo simulaba el éxito).
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('formulario-posponer-solicitud');
-  const formContent = document.getElementById('contenido-posponer-solicitud');
-  const successPanel = document.getElementById('panel-exito-posponer');
   const dateInput = document.getElementById('fecha-sugerida');
   const timeInput = document.getElementById('hora-sugerida');
   const reasonInput = document.getElementById('motivo-reprogramacion');
   const dateOutput = document.getElementById('fecha-exito-posponer');
   const timeOutput = document.getElementById('hora-exito-posponer');
   const submitButton = document.getElementById('btn-enviar-propuesta');
-  const closeButton = document.getElementById('btn-cerrar-exito-posponer');
 
-  if (!form || !formContent || !successPanel || !dateInput || !timeInput || !closeButton) return;
+  const successModalEl = document.getElementById('modal-exito-posponer');
+  const successModal = successModalEl ? createCompatibleModal(successModalEl) : null;
+
+  if (!form || !dateInput || !timeInput) return;
 
   const params = new URLSearchParams(window.location.search);
   const idCita = params.get('solicitud');
@@ -84,13 +130,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       await posponerSolicitud(idCita, dateInput.value, timeInput.value, reasonInput?.value || '');
 
-      dateOutput.textContent = formatDate(dateInput.value);
-      timeOutput.textContent = formatTime(timeInput.value);
+      if (dateOutput) dateOutput.textContent = formatDate(dateInput.value);
+      if (timeOutput) timeOutput.textContent = formatTime(timeInput.value);
 
-      formContent.hidden = true;
-      successPanel.hidden = false;
-      document.body.classList.add('postpone-success-visible');
-      closeButton.focus();
+      successModal?.show();
     } catch (error) {
       mostrarError(error.message);
     } finally {
@@ -98,5 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  closeButton.addEventListener('click', () => { window.location.href = 'verSolicitud.html'; });
+  // Al cerrar la confirmación, se vuelve al listado de solicitudes.
+  successModalEl?.addEventListener('hidden.bs.modal', () => {
+    window.location.href = 'verSolicitud.html';
+  });
 });

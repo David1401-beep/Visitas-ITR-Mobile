@@ -85,7 +85,7 @@ export async function obtenerDatosFormularioCita() {
   };
 }
 
-export async function crearCitaDocente(datosCita, idDocente) {
+function construirCuerpoCita(datosCita, idDocente) {
   const asunto = String(datosCita.asunto || "").trim();
 
   if (!asunto) {
@@ -100,17 +100,32 @@ export async function crearCitaDocente(datosCita, idDocente) {
     throw new Error("Debe indicar la fecha y la hora de la convocatoria.");
   }
 
+  return {
+    idDocente: Number(idDocente),
+    idEstudianteEncargado: Number(datosCita.idEstudianteEncargado),
+    citMotivo: asunto.slice(0, LIMITE_MOTIVO),
+    citEstado: "PENDIENTE",
+    citObservaciones: String(datosCita.descripcion || "").slice(0, LIMITE_OBSERVACIONES),
+    citFechaReunion: `${datosCita.fecha}T${datosCita.hora}:00`
+  };
+}
+
+export async function crearCitaDocente(datosCita, idDocente) {
   return solicitarApi("/citas-reuniones", {
     method: "POST",
-    body: JSON.stringify({
-      idDocente: Number(idDocente),
-      idEstudianteEncargado: Number(datosCita.idEstudianteEncargado),
-      citMotivo: asunto.slice(0, LIMITE_MOTIVO),
-      citEstado: "PENDIENTE",
-      citObservaciones: String(datosCita.descripcion || "").slice(0, LIMITE_OBSERVACIONES),
-      citFechaReunion: `${datosCita.fecha}T${datosCita.hora}:00`
-    })
+    body: JSON.stringify(construirCuerpoCita(datosCita, idDocente))
   });
+}
+
+export async function editarCitaDocente(idCita, datosCita, idDocente) {
+  return solicitarApi(`/citas-reuniones/${idCita}`, {
+    method: "PUT",
+    body: JSON.stringify(construirCuerpoCita(datosCita, idDocente))
+  });
+}
+
+export async function eliminarCitaDocente(idCita) {
+  return solicitarApi(`/citas-reuniones/${idCita}`, { method: "DELETE" });
 }
 
 export { solicitarApi };
